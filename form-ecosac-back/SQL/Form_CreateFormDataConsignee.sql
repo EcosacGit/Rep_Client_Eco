@@ -1,6 +1,6 @@
 USE [SINCRO_PCPNISIRA]
 GO
-/****** Object:  StoredProcedure [dbo].[Form_CreateFormDataConsignee]    Script Date: 16/05/2024 07:47:27 ******/
+/****** Object:  StoredProcedure [dbo].[Form_CreateFormDataConsignee]    Script Date: 17/05/2024 15:11:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -18,8 +18,8 @@ BEGIN
         @FilasAfectadas INT,
 
         -- Parámetros JSON
-        @nameConsignee varchar(100),
-		@addressConsignee varchar(100),
+        @nameConsignee varchar(150),
+		@addressConsignee varchar(200),
         @telef1 varchar(25),
         @telef2 varchar(25),
         @EORI varchar(100),
@@ -28,12 +28,12 @@ BEGIN
         @taxID varchar(120),
         @email varchar(40),
         @website varchar(70),
-
         @descCountry varchar(100);
 
     -- Parsear los valores del JSON
     SELECT
         @nameConsignee = ISNULL(JSON_VALUE(@json, '$.nameConsignee'), ''),
+        @addressConsignee = ISNULL(JSON_VALUE(@json, '$.addressConsignee'), ''),
         @telef1 = ISNULL(JSON_VALUE(@json, '$.telef1'), ''),
         @telef2 = ISNULL(JSON_VALUE(@json, '$.telef2'), ''),
         @EORI = ISNULL(JSON_VALUE(@json, '$.EORI'), ''),
@@ -52,16 +52,11 @@ BEGIN
     FROM FormCountry
     WHERE descCountry = @descCountry OR descCountryUs = @descCountry;
 
-    IF @idRegion IS NULL
-    BEGIN
-        SELECT 'El país especificado no existe en la base de datos.' AS ErrorMessage;
-        RETURN;
-    END;
 
     -- Verificar si el país pertenece a la región EUROPA
-    IF EXISTS (SELECT 1 FROM FormRegion WHERE idRegion = @idRegion AND descRegion = 'EUROPA' )
+    IF EXISTS (SELECT 1 FROM FormRegion WHERE idRegion = @idRegion AND (descRegion = 'EUROPA' OR descRegion = 'UK' OR descRegion = 'RUSIA'))
     BEGIN
-        -- Si el país pertenece a EUROPA y no se proporcionó EORI, devolver un mensaje de error
+        -- Si el país pertenece a EUROPA o UK y no se proporcionó EORI, devolver un mensaje de error
         IF @EORI IS NULL OR @EORI = ''
         BEGIN
             SELECT 'You must complete the EORI field' AS ErrorMessage;
@@ -72,6 +67,7 @@ BEGIN
     -- Insertar los datos en la tabla FormDataConsignee
     INSERT INTO FormDataConsignee(
         nameConsignee,
+		addressConsignee,
         telef1,
         telef2,
         EORI,
@@ -82,12 +78,11 @@ BEGIN
         website,
         estado,
         secCreate,
-        secUpdate,
-		addressConsignee
+        secUpdate
 	)
     VALUES (
         @nameConsignee,
-
+		@addressConsignee,
         @telef1,
         @telef2,
         @EORI,
@@ -98,8 +93,7 @@ BEGIN
         @website,
         1,
         GETDATE(),
-        null,
-		@addressConsignee
+        null
     );
 
     SET @FilasAfectadas = @@ROWCOUNT;
@@ -116,4 +110,7 @@ BEGIN
 
     SELECT @msg_error AS mensaje;
 END;
+
+
+
 

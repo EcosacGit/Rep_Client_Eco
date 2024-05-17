@@ -392,7 +392,7 @@
                         required
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="6" class="s-col-form">
+                    <v-col cols="6" class="s-col-form" v-if="showEORIField">
                       <label class="label-field">EORI</label>
                       <v-text-field
                         outlined
@@ -510,7 +510,7 @@
                           required
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="6" class="s-col-form">
+                      <v-col cols="6" class="s-col-form" v-if="showEORIField">
                         <label class="label-field">EORI</label>
                         <v-text-field
                           outlined
@@ -632,48 +632,53 @@
                     </v-col>
                   </v-row>
 
-                  <v-row>
-                    <v-col cols="6" class="s-col-form">
-                      <label class="label-field">Nombre</label>
-                      <v-text-field
-                        outlined
-                        color="success"
-                        v-model="phytoName"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
                   <v-row class="mt-5">
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field">Nombre para la Factura</label>
+                      <label class="label-field">Nombre </label>
                       <v-select
-                        v-model="billNameSelectedOption"
-                        :items="billNameOptions"
+                        v-model="phytoNameSelectedOption"
+                        :items="phytoNameOptions"
                         outlined
                         color="success"
                         dense
-                        @change="toggleTextFieldBillName"
+                        @change="toggleTextFieldPhytoName"
                       ></v-select>
                     </v-col>
                     <v-col
-                      v-if="billNameSelectedOption === 'Otra (Detallar)'"
+                      v-if="phytoNameSelectedOption === 'Otra (Detallar)'"
                       cols="8"
                       class="s-col-form align-self-end"
                     >
                       <v-text-field
                         outlined
                         color="success"
-                        v-model="billNameCustomOption"
+                        v-model="phytoNameCustomOption"
                         dense
                       ></v-text-field>
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col cols="6" class="s-col-form">
-                      <label class="label-field">Dirección</label>
+                    <v-col cols="4" class="s-col-form">
+                      <label class="label-field">Dirección </label>
+                      <v-select
+                        v-model="phytoAddressSelectedOption"
+                        :items="phytoAddressOptions"
+                        outlined
+                        color="success"
+                        dense
+                        @change="toggleTextFieldPhytoAddress"
+                      ></v-select>
+                    </v-col>
+                    <v-col
+                      v-if="phytoAddressSelectedOption === 'Otra (Detallar)'"
+                      cols="8"
+                      class="s-col-form align-self-end"
+                    >
                       <v-text-field
                         outlined
                         color="success"
-                        v-model="phytoAddress"
+                        v-model="phytoAddressCustomOption"
+                        dense
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -1288,6 +1293,14 @@ export default {
       billDirectionCustomOption: "",
       billDirectionOptions: ["Misma del consignatario", "Otra (Detallar)"],
 
+      phytoNameSelectedOption: null,
+      phytoNameCustomOption: "",
+      phytoNameOptions: ["Misma del consignatario", "Otra (Detallar)"],
+
+      phytoAddressSelectedOption: null,
+      phytoAddressCustomOption: "",
+      phytoAddressOptions: ["Misma del consignatario", "Otra (Detallar)"],
+
       //INFO ADICIONAL FACTURA
       checkBoxValueInfoBill: false,
       textFieldValueInfoBill: "",
@@ -1409,6 +1422,7 @@ export default {
 
       //Create
       idCountry: null,
+      idRegion: null,
       destinationPort: null,
       destinationFinal: null,
 
@@ -1438,8 +1452,6 @@ export default {
       webisteConsignee: "",
 
       //certificate!!
-      phytoName: "",
-      phytoAddress: "",
       phytoCountryPort: "",
       phytoTransitCountry: "",
 
@@ -1449,6 +1461,9 @@ export default {
 
       //redirect
       foobar: null,
+
+      //eori validation
+      showEORIField: false,
     };
   },
   watch: {
@@ -1460,8 +1475,13 @@ export default {
         console.log("descCountry seleccionado: " + country.descCountry);
         console.log("idCountry seleccionado: " + country.idCountry);
 
+        this.idRegion = country.idRegion;
         this.selectedCountry = country.descCountry;
         this.idCountry = country.idCountry;
+
+        this.showEORIField = this.idRegion === "11" ? true : false;
+
+        console.log("data example EORI ", this.showEORIField);
 
         this.getFormPort(country.idCountry);
         this.getFormFinalDestiny(country.idCountry);
@@ -1631,6 +1651,7 @@ export default {
         .getFormCountryES()
         .then((response) => {
           this.country = response.data.map((item) => ({
+            idRegion: item.idRegion,
             idCountry: item.idCountry,
             descCountry: item.descCountry,
           }));
@@ -1644,7 +1665,7 @@ export default {
       let param = {
         idCountry: idCountry,
       };
-      console.log("idCountry " + param.idCountry);
+
       _Form
         .getFormPort(param)
         .then((response) => {
@@ -1662,7 +1683,7 @@ export default {
       let param = {
         idCountry: idCountry,
       };
-      console.log("idCountry " + param.idCountry);
+
       _Form
         .getFormPortDestination(param)
         .then((response) => {
@@ -1915,6 +1936,20 @@ export default {
         billInfoAdd = this.textFieldValueInfoBill;
       }
 
+      let phytoName;
+      if (this.phytoNameSelectedOption === "Misma del consignatario") {
+        phytoName = this.nameConsignee;
+      } else if (this.phytoNameSelectedOption === "Otra (Detallar)") {
+        phytoName = this.phytoNameCustomOption;
+      }
+
+      let phytoAddress;
+      if (this.phytoAddressSelectedOption === "Misma del consignatario") {
+        phytoAddress = this.directionConsignee;
+      } else if (this.phytoAddressSelectedOption === "Otra (Detallar)") {
+        phytoAddress = this.phytoAddressCustomOption;
+      }
+
       //
       let isAllowedPhyto;
       if (this.isAllowedPhyto == false) {
@@ -2025,8 +2060,8 @@ export default {
           FreightPayerInfoAdd: this.freightPayerInfoAdd,
           BLDataInfoAdd: this.BLInfoAdd,
           IsAllowedPhyto: isAllowedPhyto,
-          PhytoName: this.phytoName,
-          PhytoAddress: this.phytoAddress,
+          PhytoName: phytoName,
+          PhytoAddress: phytoAddress,
           PhytoCountryPort: this.phytoCountryPort,
           PhytoInfoAdd: phytoInfoAdd,
           PhytoTransitCountry: this.phytoTransitCountry,
