@@ -1,0 +1,14 @@
+$body-font-family: "Poppins",
+"Roboto",
+sans-serif !default;
+// $font-size-root: 14px;
+$input-font-size: 12px;
+// $text-field-label-active-transform :translateY(-18px) scale(.80) !default;
+// $text-field-padding:6px 0 4px !default;
+// $text-field-dense-padding:0px !default;
+// $text-field-dense-label-active-transform :translateY(-10px) scale(.80) !default;
+$text-field-dense-label-active-transform: translateY(-10px) scale(0.8) translateX(-1.5px) !important;
+$text-field-label-active-transform: translateY(-18px) translateX(-1.5px) scale(0.8) !important;
+$text-field-filled-full-width-label-active-transform: translateY(-6px) scale(0.8) !important;
+// $text-field-filled-full-width-outlined-single-line-slot-min-height: 35px;
+// $text-field-outlined-dense-label-position-x: 8px !important;

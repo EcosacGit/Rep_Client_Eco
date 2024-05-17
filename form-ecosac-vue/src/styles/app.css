@@ -1,0 +1,685 @@
+/* body div.v-application .v-card {
+    box-shadow: 0 3px 11px 0 #e8eafc, 0 3px 3px -2px hsla(0, 0%, 69.8%, 0.1), 0 1px 8px 0 hsla(0, 0%, 60.4%, 0.1) !important;
+} */
+
+@import "~vuetify/dist/vuetify.min.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
+.v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
+  > .v-input__control
+  > .v-input__slot,
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  border-radius: 0.5rem !important;
+}
+
+.theme--light.v-text-field--outlined:not(.v-input--is-focused):not(
+    .v-input--has-state
+  )
+  > .v-input__control
+  > .v-input__slot
+  fieldset {
+  border-color: #e2e2e2;
+}
+
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  display: none;
+}
+.label-title {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 600;
+  color: grey;
+  letter-spacing: -0.3px !important;
+}
+.label-alert {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 1.125rem !important;
+  font-weight: 400;
+  line-height: 2.5rem;
+  letter-spacing: -1 !important;
+  color: rgb(129, 129, 129);
+  /* font-style: italic; */
+}
+
+.fs-13 {
+  font-size: 13px;
+}
+
+.fs-12 {
+  font-size: 12px !important;
+}
+
+.v-input--selection-controls {
+  font-weight: 900;
+}
+
+.v-list-item--dense,
+.v-list--dense .v-list-item {
+  min-height: 30px !important;
+}
+
+.v-select.v-text-field:not(.v-text-field--single-line) input {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+}
+
+.theme--light.v-list-item:not(.v-list-item--active):not(
+    .v-list-item--disabled
+  ) {
+  font-family: "Ubuntu", sans-serif;
+  min-height: 32px;
+}
+.v-list-item--dense .v-list-item__title,
+.v-list-item--dense .v-list-item__subtitle,
+.v-list--dense .v-list-item .v-list-item__title,
+.v-list--dense .v-list-item .v-list-item__subtitle {
+  font-size: 12px !important;
+  color: grey;
+  font-weight: 400 !important;
+}
+.opensans {
+  font-family: "Ubuntu", sans-serif;
+}
+table tr th {
+  font-weight: 700 !important;
+}
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  border-left: solid 2px white !important;
+  border-right: solid 2px white !important;
+  height: 32px !important;
+  font-weight: 500 !important;
+  /* background-color: #074C97 !important; */
+  color: #074c97 !important;
+}
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
+  border-left: solid 0.5px #e2e2e2 !important;
+  border-right: solid 0.5px #e2e2e2 !important;
+  border-bottom: solid 0.5px #e2e2e2 !important;
+  border-top: solid 0.5px #e2e2e2 !important;
+  height: 32px !important;
+  font-weight: 600;
+}
+.theme--light.v-data-table
+  .v-data-table-header
+  th.sortable
+  .v-data-table-header__icon {
+  color: #074c97 !important;
+}
+
+.v-input--dense > .v-input__control > .v-input__slot {
+  margin-bottom: 0px !important;
+}
+
+.v-list-item__content {
+  padding: 8px 0 !important;
+}
+.v-list-item {
+  font-family: "Ubuntu", sans-serif;
+  min-height: 32px;
+}
+
+.v-list-item {
+  font-family: "Ubuntu", sans-serif;
+  min-height: 32px;
+}
+
+.v-input__slot {
+  margin-bottom: 0px !important;
+}
+
+.v-text-field--full-width .v-input__prepend-outer,
+.v-text-field--full-width .v-input__prepend-inner,
+.v-text-field--full-width .v-input__append-inner,
+.v-text-field--full-width .v-input__append-outer,
+.v-text-field--enclosed .v-input__prepend-outer,
+.v-text-field--enclosed .v-input__prepend-inner,
+.v-text-field--enclosed .v-input__append-inner,
+.v-text-field--enclosed .v-input__append-outer {
+  margin-top: 2px !important;
+}
+
+body {
+  /* font-family: 'Source Sans 3', sans-serif !important; */
+  font-family: "Ubuntu", sans-serif;
+}
+
+/*estilo padding fila de tabla*/
+.v-data-table-header {
+  color: black !important;
+  font-weight: 700 !important;
+}
+tr {
+  color: black !important;
+  font-weight: 700 !important;
+}
+.text-center {
+  font-weight: 800 !important;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+}
+.text-end {
+  font-weight: 800 !important;
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+}
+.text-start {
+  font-weight: 800 !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.text-right {
+  padding-left: 10px !important;
+  padding-right: 0px !important;
+}
+
+.text-left {
+  padding-left: 10px !important;
+  padding-right: 0px !important;
+}
+
+/*estilo scroll*/
+
+::-webkit-scrollbar {
+  width: 10px;
+  /* Tamaño del scroll en vertical */
+  height: 10px;
+  /* Tamaño del scroll en horizontal */
+  /*  display: none;  Ocultar scroll */
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+
+::-webkit-scrollbar-thumb {
+  background: rgb(193, 192, 192);
+  /* 163, 161, 161 */
+  border-radius: 3px;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(170, 170, 170);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+
+::-webkit-scrollbar-thumb:active {
+  background-color: rgb(150, 150, 150);
+}
+
+::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+
+::-webkit-scrollbar-track:hover,
+::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
+}
+
+/* Tamaño de input y combos*/
+
+.v-input__slot {
+  min-height: 28px !important;
+  max-height: 28px !important;
+}
+
+.v-text-field {
+  margin-top: 4px;
+}
+
+.v-textarea .v-input__slot {
+  min-height: none !important;
+  max-height: none !important;
+}
+
+.v-input--selection-controls .v-input__slot {
+  min-height: none !important;
+  max-height: none !important;
+}
+
+.v-input__icon {
+  min-width: 18px !important;
+  width: 18px !important;
+}
+
+.v-text-field--full-width.v-input--dense:not(
+    .v-text-field--solo
+  ).v-text-field--outlined
+  .v-input__prepend-outer,
+.v-text-field--full-width.v-input--dense:not(
+    .v-text-field--solo
+  ).v-text-field--outlined
+  .v-input__prepend-inner,
+.v-text-field--full-width.v-input--dense:not(
+    .v-text-field--solo
+  ).v-text-field--outlined
+  .v-input__append-inner,
+.v-text-field--full-width.v-input--dense:not(
+    .v-text-field--solo
+  ).v-text-field--outlined
+  .v-input__append-outer,
+.v-text-field--enclosed.v-input--dense:not(
+    .v-text-field--solo
+  ).v-text-field--outlined
+  .v-input__prepend-outer,
+.v-text-field--enclosed.v-input--dense:not(
+    .v-text-field--solo
+  ).v-text-field--outlined
+  .v-input__prepend-inner,
+.v-text-field--enclosed.v-input--dense:not(
+    .v-text-field--solo
+  ).v-text-field--outlined
+  .v-input__append-inner,
+.v-text-field--enclosed.v-input--dense:not(
+    .v-text-field--solo
+  ).v-text-field--outlined
+  .v-input__append-outer {
+  margin-top: 3px !important;
+  margin-left: 1px !important;
+}
+
+.v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
+  > .v-input__control
+  > .v-input__slot,
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+@media (max-width: 960px) {
+  .v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
+    > .v-input__control
+    > .v-input__slot,
+  .v-text-field.v-text-field--enclosed .v-text-field__details {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+  .v-input__icon {
+    min-width: 16px !important;
+    width: 16px !important;
+  }
+}
+
+.v-application--is-ltr .v-text-field .v-input__append-inner {
+  padding-left: 0px !important;
+}
+
+.v-picker__title {
+  padding: 8px 16px !important;
+}
+
+.v-time-picker-title__time .v-picker__title__btn,
+.v-time-picker-title__time span {
+  font-size: 55px !important;
+  height: 55px !important;
+}
+
+/* Fonts*/
+
+@font-face {
+  font-family: "Ubuntu";
+  font-weight: 500;
+  src: url("./../styles/Ubuntu-Regular.ttf");
+}
+
+.s-col-text {
+  padding-left: 12px !important;
+  padding-top: 4px !important;
+  padding-bottom: 0px !important;
+  padding-right: 12px !important;
+}
+
+html {
+  overflow-y: auto;
+  font-size: 12px !important;
+  font-family: "Ubuntu" !important;
+}
+
+.v-application {
+  font-family: "Ubuntu" !important;
+}
+
+.capitalize {
+  text-transform: capitalize !important;
+}
+
+.justify-center {
+  -webkit-box-pack: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+}
+
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  font-size: 12px !important;
+}
+
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+  font-size: 11px !important;
+  font-weight: 300 !important;
+}
+
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+  height: 28px !important;
+}
+
+.v-treeview-node__root {
+  min-height: 28px !important;
+}
+
+.v-label {
+  font-size: 10.5px !important;
+}
+
+.v-label--active {
+  font-size: 12px !important;
+}
+
+.v-list-item--dense .v-list-item__title,
+.v-list-item--dense .v-list-item__subtitle,
+.v-list--dense .v-list-item .v-list-item__title,
+.v-list--dense .v-list-item .v-list-item__subtitle {
+}
+
+.mdi:before,
+.mdi-set {
+  font-size: 16px;
+}
+
+.mdi30:before,
+.mdi30-set {
+  font-size: 30px;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-size: 11px !important;
+}
+
+.v-btn__content {
+  font-size: 11px !important;
+}
+
+/* .v-text-field > .v-input__control > .v-input__slot:before {
+    border-style: none !important; POR QUE DEBERIA ESTAR COMENTADO ? afecta al loggin quitandole el borde
+} */
+h3 {
+  color: rgba(110, 110, 110);
+}
+.vs-input {
+  border: 2px solid;
+  background: rgba(var(--vs-gray-2), 1) !important;
+  color: rgba(var(--vs-text), 1);
+  border-radius: 16px !important;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  padding: 7px 13px 7px 10px;
+  width: 200px;
+}
+
+.v-breadcrumbs li:nth-child(even) {
+  padding: 0 4px !important;
+}
+
+.v-btn {
+  letter-spacing: 0px !important;
+}
+
+.v-data-table table thead tr th {
+  font-weight: 700 !important;
+  font-size: 11px;
+  padding: 0px 8px;
+}
+
+.v-data-table--fixed-header > .v-data-table__wrapper > table > thead > tr > th {
+  z-index: 0 !important;
+}
+
+.v-input {
+  font-size: 12px !important;
+}
+
+.v-application--is-ltr .v-data-footer__select {
+  margin-right: 14px;
+  height: 16px;
+}
+
+tr:hover {
+  background: #f4f7fb !important;
+  color: black !important;
+}
+
+.v-data-table > .v-data-table__wrapper > table {
+  border-spacing: 0px !important;
+}
+
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > td:not(.v-data-table__mobile-row),
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:not(:last-child)
+  > th:not(.v-data-table__mobile-row) {
+  border-bottom: thin solid rgba(0, 0, 0, 0.02) !important;
+}
+
+.v-data-footer {
+  font-size: 11px !important;
+  padding-right: 0px !important;
+  padding-left: 4px !important;
+}
+
+.v-data-footer .v-btn--icon.v-size--default {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .v-data-footer .v-btn--icon.v-size--default {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+}
+
+.v-breadcrumbs li {
+  font-size: 13px !important;
+}
+
+.v-data-table__selected {
+  background: #e6effc !important;
+  color: #2955c8 !important;
+}
+
+.v-data-table__selected:hover {
+  background: #e6effc !important;
+  color: #2955c8 !important;
+}
+
+.v-card__subtitle,
+.v-card__text {
+  font-size: 12px !important;
+}
+
+/*SWEETALERT */
+
+.swal2-title {
+  /* font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif; */
+  font-family: "Ubuntu" !important;
+  font-size: 14px;
+}
+
+/* SCRUD */
+
+.s-card-border-top {
+  color: rgb(100, 100, 100) !important;
+  border-top: 3px solid var(--v-primary-lighten3) !important;
+}
+
+.s-toolbar-border-bottom {
+  border-bottom: 1px solid rgba(215, 215, 215, 0.5) !important;
+}
+
+.s-toolbar-search.v-text-field--outlined.v-input--is-focused fieldset {
+  border: 1px solid currentColor !important;
+}
+
+.s-color-title {
+  color: rgba(80, 80, 80, 1) !important;
+}
+
+.s-col-form {
+  padding-left: 12px !important;
+  padding-top: 4px !important;
+  padding-bottom: 0px !important;
+  padding-right: 12px !important;
+}
+
+@media (max-width: 960px) {
+  .s-col-form {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+}
+
+/* .s-card {
+  border-top: 3px solid var(--v-primary-lighten3) !important;
+}
+
+.s-card .v-card__title h3 {
+  font-weight: 500;
+}
+
+.s-card .v-card__title {
+  padding: 4px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  height: 48px;
+} */
+
+.theme--light.v-card > .v-card__text,
+.theme--light.v-card .v-card__subtitle {
+  color: rgb(0 0 0 / 90%) !important;
+}
+
+.v-tab {
+  font-size: 12px !important;
+  font-family: "Ubuntu" !important;
+  letter-spacing: 0px !important;
+}
+
+.theme--light.v-data-table .v-data-footer {
+  border-top: 0px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr:last-child
+  > th {
+  border-bottom: 0 solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.v-data-table--dense > .v-data-table__wrapper > table > tbody > tr > th,
+.v-data-table--dense > .v-data-table__wrapper > table > thead > tr > th,
+.v-data-table--dense > .v-data-table__wrapper > table > tfoot > tr > th {
+  height: 24px !important;
+  /* font-weight: 300px !important; */
+}
+
+.theme--light.v-data-table.v-data-table--fixed-header thead th {
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.12) !important;
+  font-size: 0.9rem !important;
+}
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  /* font-weight: 300 !important; */
+  background-color: #f4f7f8;
+  border-left: dotted 1px #d4d4d4;
+  border-right: dotted 1px #d4d4d4;
+}
+
+.v-application .title {
+  font-family: "Ubuntu" !important;
+  letter-spacing: 0px !important;
+}
+
+.v-application {
+  font-family: "Ubuntu" !important;
+  font-weight: 300px !important;
+  letter-spacing: 0px !important;
+}
+
+.v-card {
+  font-family: "Ubuntu" !important;
+  letter-spacing: 0px !important;
+}
+
+.v-toolbar__title {
+  font-size: 17px !important;
+}
+
+.s-card-title {
+  font-weight: 300 !important;
+  font-size: 17px !important;
+  border-bottom: 1px solid rgba(215, 215, 215, 0.5) !important;
+}
+
+.background {
+  height: 100%;
+
+  background-repeat: no-repeat;
+  /* Indicamos que no se repetira */
+  background-size: cover !important;
+  /* Encajamos la imagen al 100% del ancho */
+  background-attachment: fixed !important;
+  /* Establecemos una posicion fija para la imagen */
+  background-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0)
+    ),
+    url("./../assets/ecosac-logo.png");
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
