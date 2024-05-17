@@ -957,7 +957,7 @@
                     >
                   </v-row>
                   <v-row class="mt-1">
-                    <v-col cols="12" class="s-col-form">
+                    <v-col cols="5" class="s-col-form">
                       <v-checkbox
                         v-model="isConsigneeSendDoc"
                         label="Misma del Consignatario"
@@ -967,6 +967,24 @@
                           )
                         "
                       ></v-checkbox>
+                      <div style="display: flex; gap: 1rem">
+                        <v-checkbox
+                          style="align-self: flex-end"
+                          v-model="isNotifierSendDoc"
+                          label="Misma del Notificante"
+                          @change="
+                            handleCheckboxChangeConsigneeSendDocs(
+                              'isNotifierSendDoc'
+                            )
+                          "
+                        ></v-checkbox>
+                        <v-combobox
+                          v-if="isNotifierSendDoc"
+                          color="success"
+                          :items="itemsNotifierSendDoc"
+                        ></v-combobox>
+                      </div>
+
                       <v-checkbox
                         v-model="isOtherSendDoc"
                         label="Otros (Detallar)"
@@ -1342,6 +1360,8 @@ export default {
         "Otra (Detallar)",
       ],
 
+      itemsNotifierSendDoc: ["1", "2"],
+
       certificateAddressOriginSelectedOption: null,
       certificateAddressOriginCustomOption: "",
       certificateAddressOriginOptions: [
@@ -1369,6 +1389,7 @@ export default {
 
       //Dirección Envio
       isConsigneeSendDoc: false,
+      isNotifierSendDoc: false,
       isOtherSendDoc: false,
 
       otherSends: [],
@@ -1594,14 +1615,22 @@ export default {
       if (checkboxName === "isConsigneeSendDoc") {
         if (this.isConsigneeSendDoc) {
           this.isOtherSendDoc = false;
+          this.isNotifierSendDoc = false;
           this.otherSends = [];
         }
       } else if (checkboxName === "isOtherSendDoc") {
         if (this.isOtherSendDoc) {
           this.isConsigneeSendDoc = false;
+          this.isNotifierSendDoc = false;
           this.addOtherSendDoc();
         } else {
           this.otherSends = [];
+        }
+      } else if (checkboxName === "isNotifierSendDoc") {
+        if (this.isNotifierSendDoc) {
+          this.isOtherSendDoc = false;
+          this.isConsigneeSendDoc = false;
+          this.ortherSends = [];
         }
       }
     },
