@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Form\FormController;
+use App\Http\Controllers\ApiController;
 
 
 /*
@@ -66,3 +67,8 @@ Route::post('form/create-send-physical-documents', [FormController::class, 'crea
 
 Route::post('form/create', [FormController::class, 'create']);
 Route::post('form/upload-file', [FormController::class, 'uploadFile']);
+
+
+
+//Third Api
+Route::post('api/get-selectors-business-part', [ApiController::class, 'getApi']);
