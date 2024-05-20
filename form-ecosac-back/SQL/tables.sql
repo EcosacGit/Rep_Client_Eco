@@ -109,7 +109,7 @@ create table FormSendPhysicalDocuments
 
 create table Form (
 	idForm int IDENTITY(1,1) PRIMARY KEY,
-    idClient int not null,
+    idClient varchar(100) not null,
 	nameClient varchar(200) not null,
 
 	--country - port

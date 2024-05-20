@@ -1,6 +1,6 @@
 USE [SINCRO_PCPNISIRA]
 GO
-/****** Object:  StoredProcedure [dbo].[Form_CreateForm]    Script Date: 20/05/2024 09:41:45 ******/
+/****** Object:  StoredProcedure [dbo].[Form_CreateForm]    Script Date: 20/05/2024 10:36:39 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -13,7 +13,7 @@ BEGIN
     SET NOCOUNT ON;
 	DECLARE
         -- Variables para los parámetros
-        @idClient INT,
+        @idClient varchar(100),
         @nameClient VARCHAR(200),
         @CountryName INT,
         @DestinationPort INT,
