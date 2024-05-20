@@ -142,6 +142,20 @@ export default {
         });
     },
 
+    getClientData() {
+      let param = {
+        bspCardCode: "CL000712244593",
+      };
+      _Form
+        .showBusinessPartners(param)
+        .then((response) => {
+          console.log("Respuesta: " + JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+
     getFormRequiredDocs() {
       _Form
         .getFormRequiredDocs()

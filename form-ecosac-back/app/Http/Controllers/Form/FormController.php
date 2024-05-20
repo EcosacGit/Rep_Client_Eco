@@ -7,6 +7,7 @@ use App\Services\Form\Contracts\IFormService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class FormController extends Controller
 {
@@ -243,6 +244,22 @@ class FormController extends Controller
             }
         } catch (Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+    public function showBusinessPartners(Request $request)
+    {
+        try {
+            $postData = $request->all(); // Obtener todos los datos del formulario
+
+            $businessPartners = $this->formService->getBusinessPartners($postData);
+
+            if (isset($businessPartners['error'])) {
+                return response()->json($businessPartners, 500);
+            }
+
+            return response()->json($businessPartners, 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

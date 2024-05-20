@@ -90,4 +90,9 @@ export default {
   uploadFile(params) {
     return api.post(`${form}/upload-file`, params);
   },
+
+  //obtener tercerizado
+  showBusinessPartners(obj, requestID) {
+    return api.post(form + "/get-business-partner-by-id", obj);
+  },
 };

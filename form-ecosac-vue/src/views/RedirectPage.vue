@@ -14,7 +14,7 @@
             </p>
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn style="color: black" @click="goHome">Go to Home</v-btn>
+            <v-btn style="color: black" @click="goHome">Go to Form</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

@@ -11,10 +11,16 @@
       <h2 style="margin-left: 1rem; margin-top: 1rem; text-align: center">
         FORMULARIO ECOSAC
       </h2>
-      <div style="align-self: flex-end; display: flex; gap: 0.2rem">
-        <v-btn @click="switchLocale('en')">EN</v-btn>
-        <v-btn @click="switchLocale('es')">ES</v-btn>
-      </div>
+      <v-switch
+        style="font-weight: bold; color: black"
+        v-model="locale"
+        :label="locale.toUpperCase()"
+        false-value="es"
+        true-value="en"
+        hide-details
+        @click="switchLocale(locale === 'en' ? 'es' : 'en')"
+        color="success"
+      ></v-switch>
     </div>
     <v-card elevation="0" flat dense outlined rounded class="mt-1 mb-1">
       <v-card-text>
@@ -24,7 +30,6 @@
               <v-col cols="12" class="s-col-form">
                 <label class="label-field">Nombre del Cliente</label>
                 <v-text-field
-                  :rules="[(v) => !!v || 'Texto es requerido']"
                   outlined
                   color="success"
                   v-model="clientName"
@@ -1250,9 +1255,10 @@
               </v-form>
             </v-container>
           </v-tab-item>
+
           <v-btn
-            color="green darken-2"
-            class="ml-auto"
+            color="green darker -2"
+            class="mt-2 ml-auto"
             style="
               width: 15%;
               padding: 1rem 0rem 1.8rem 0rem;
@@ -1451,6 +1457,8 @@ export default {
       emissionType: "",
       txtDataBL: "",
 
+      locale: "es",
+
       //Consignatario
       nameConsignee: "",
       directionConsignee: "",
@@ -1476,11 +1484,18 @@ export default {
 
       //eori validation
       showEORIField: false,
+
       selectedNotifierAddress: "",
       notifierAddresses: {},
       selectedNotifier: "",
+      idClient: "",
     };
   },
+
+  created() {
+    this.getClientData();
+  },
+
   watch: {
     //Pais
     selectedCountry: function (newVal) {
@@ -1715,6 +1730,25 @@ export default {
             idPortFinal: item.idPort,
             descPortFinal: item.descPort,
           }));
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+
+    getClientData() {
+      let param = {
+        bspCardCode: "CE00000000367",
+      };
+      _Form
+        .showBusinessPartners(param)
+        .then((response) => {
+          let data = response.data;
+
+          console.log("Respuesta: " + JSON.stringify(data));
+          console.log("Respuesta: " + data[0].BspCardName);
+          this.clientName = data[0].BspCardName;
+          this.idClient = data[0].BspCardCode;
         })
         .catch((error) => {
           console.log("error", error);
@@ -2096,7 +2130,7 @@ export default {
         this.createAddressEmail();
 
         let param = {
-          idClient: "CL000712244593",
+          idClient: this.idClient,
           nameClient: this.clientName,
           CountryName: this.idCountry,
           DestinationPort: this.destinationPort,

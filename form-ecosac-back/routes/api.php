@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Form\FormController;
-use App\Http\Controllers\ApiController;
 
 
 /*
@@ -71,4 +70,4 @@ Route::post('form/upload-file', [FormController::class, 'uploadFile']);
 
 
 //Third Api
-Route::post('api/get-selectors-business-part', [ApiController::class, 'getApi']);
+Route::post('form/get-business-partner-by-id', [FormController::class, 'showBusinessPartners']);

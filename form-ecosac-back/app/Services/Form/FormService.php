@@ -5,14 +5,21 @@ namespace App\Services\Form;
 use App\Repositories\Form\Contracts\IFormRepository;
 use App\Services\Form\Contracts\IFormService;
 use Exception;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 
 class FormService implements IFormService
 {
     protected $formRepository;
+    protected $client;
+
 
     public function __construct(IFormRepository $formRepository)
     {
         $this->formRepository = $formRepository;
+        $this->client = new Client();
     }
 
     public function getForm($idClient)
@@ -228,6 +235,50 @@ class FormService implements IFormService
             return ['status' => 'success', 'message' => $response[0]->mensaje];
         } catch (Exception $e) {
             return $e->getMessage();
+        }
+    }
+
+    public function getBusinessPartners($postData)
+    {
+        $url = 'http://api.ecosac.com.pe:58000/api/maeBusinessPartner/get-business-partner-by-id';
+
+        try {
+            $response = $this->client->request('POST', $url, [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $postData,
+            ]);
+
+            $statusCode = $response->getStatusCode();
+            $body = $response->getBody()->getContents();
+
+            if ($statusCode == 200) {
+                return json_decode($body, true);
+            }
+
+            return [
+                'error' => 'Failed to fetch data',
+                'status' => $statusCode,
+            ];
+        } catch (ClientException $e) {
+            // Errores 4xx
+            return [
+                'error' => 'Client error: ' . $e->getMessage(),
+                'response' => $e->getResponse()->getBody()->getContents(),
+            ];
+        } catch (ServerException $e) {
+            // Errores 5xx
+            return [
+                'error' => 'Server error: ' . $e->getMessage(),
+                'response' => $e->getResponse()->getBody()->getContents(),
+            ];
+        } catch (RequestException $e) {
+            // Otros errores de la solicitud
+            return [
+                'error' => 'Request error: ' . $e->getMessage(),
+            ];
         }
     }
 }
