@@ -154,9 +154,8 @@ create table Form (
 	FOREIGN KEY (idDocReq) REFERENCES FormRequiredDocuments(idDocReq),
 
 	--direccion de envio de documentos
-	isConsigneeSendDoc tinyint null,
-    isNotifier1SendDoc tinyint null,
-    isNotifier2SendDoc tinyint null,
+	isConsigneeSendDoc VARCHAR(200) null,
+    isNotifierSendDoc varchar(200) null,
 
 	idAddressOriginalsDoc int null
 	FOREIGN KEY (idAddressOriginalsDoc) REFERENCES FormAddressOriginalsDoc(idAddressOriginalsDoc),

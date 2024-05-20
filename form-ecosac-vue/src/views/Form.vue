@@ -1,12 +1,19 @@
 <template>
   <div>
-    <div style="display: flex; width: 100%; justify-content: space-between">
+    <div
+      style="
+        display: flex;
+        width: 90%;
+        margin: 0 auto;
+        justify-content: space-between;
+      "
+    >
       <h2 style="margin-left: 1rem; margin-top: 1rem; text-align: center">
         FORMULARIO ECOSAC
       </h2>
-      <div style="align-self: flex-end; display: flex; gap: 1rem">
-        <v-btn @click="switchLocale('en')">English</v-btn>
-        <v-btn @click="switchLocale('es')">Español</v-btn>
+      <div style="align-self: flex-end; display: flex; gap: 0.2rem">
+        <v-btn @click="switchLocale('en')">EN</v-btn>
+        <v-btn @click="switchLocale('es')">ES</v-btn>
       </div>
     </div>
     <v-card elevation="0" flat dense outlined rounded class="mt-1 mb-1">
@@ -17,6 +24,7 @@
               <v-col cols="12" class="s-col-form">
                 <label class="label-field">Nombre del Cliente</label>
                 <v-text-field
+                  :rules="[(v) => !!v || 'Texto es requerido']"
                   outlined
                   color="success"
                   v-model="clientName"
@@ -132,7 +140,7 @@
             </v-row>
           </v-form>
         </v-container>
-        <v-tabs v-model="activeTab" centered>
+        <v-tabs v-model="activeTab" style="width: 90%; margin: 0 auto" centered>
           <v-tabs-slider></v-tabs-slider>
           <v-tab
             @click="activateTab('tab1-1')"
@@ -957,7 +965,7 @@
                     >
                   </v-row>
                   <v-row class="mt-1">
-                    <v-col cols="5" class="s-col-form">
+                    <v-col cols="6" class="s-col-form">
                       <v-checkbox
                         v-model="isConsigneeSendDoc"
                         label="Misma del Consignatario"
@@ -981,7 +989,12 @@
                         <v-combobox
                           v-if="isNotifierSendDoc"
                           color="success"
-                          :items="itemsNotifierSendDoc"
+                          :items="
+                            notifiers.map(
+                              (notifier) => notifier.directionNotifier
+                            )
+                          "
+                          v-model="selectedNotifierAddress"
                         ></v-combobox>
                       </div>
 
@@ -1121,28 +1134,6 @@
                   </v-row>
                 </div>
 
-                <!-- <div class="mt-3 data-email">
-                  <v-row>
-                    <v-col cols="6" class="s-col-form">
-                      <label class="label-field">Correo Electrónico 1</label>
-                      <v-text-field
-                        outlined
-                        color="success"
-                        v-model="email"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="6" class="s-col-form">
-                      <label class="label-field">Correo Electrónico 2</label>
-                      <v-text-field
-                        outlined
-                        color="success"
-                        v-model="email"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </div> -->
                 <div class="mt-3 data-email">
                   <v-row>
                     <v-col
@@ -1360,7 +1351,7 @@ export default {
         "Otra (Detallar)",
       ],
 
-      itemsNotifierSendDoc: ["1", "2"],
+      itemsNotifierSendDoc: [],
 
       certificateAddressOriginSelectedOption: null,
       certificateAddressOriginCustomOption: "",
@@ -1485,6 +1476,9 @@ export default {
 
       //eori validation
       showEORIField: false,
+      selectedNotifierAddress: "",
+      notifierAddresses: {},
+      selectedNotifier: "",
     };
   },
   watch: {
@@ -1556,6 +1550,7 @@ export default {
 
     addNotifier() {
       this.notifiers.push(Object.assign({}, this.newNotifier));
+      this.itemsNotifierSendDoc.push(this.notifiers.length.toString()); // Agrega un nuevo ítem al array
     },
 
     handleBLChange(selected) {
@@ -1630,7 +1625,7 @@ export default {
         if (this.isNotifierSendDoc) {
           this.isOtherSendDoc = false;
           this.isConsigneeSendDoc = false;
-          this.ortherSends = [];
+          this.otherSends = [];
         }
       }
     },
@@ -1796,6 +1791,8 @@ export default {
     },
 
     createDataNotifier() {
+      this.notifierAddresses = {}; // Diccionario para almacenar direcciones de notifiers
+
       for (let notifier of this.notifiers) {
         let param = {
           nameNotifier: notifier.nameNotifier,
@@ -1810,6 +1807,13 @@ export default {
           website: notifier.websiteNotifier,
           descCountry: this.selectedCountry,
         };
+        this.notifierAddresses[notifier.nameNotifier] =
+          notifier.directionNotifier;
+
+        if (notifier.nameNotifier === this.selectedNotifierAddress) {
+          this.isNotifierSendDoc = notifier.directionNotifier;
+        }
+
         _Form
           .createDataNotifier(param)
           .then((response) => {
@@ -2027,15 +2031,33 @@ export default {
         certificateInfoAdd = this.textFieldValuePhytoInfoAdd;
       }
 
+      this.createDataNotifier();
+
       //direccion envio
       let isConsigneeSendDoc;
-      if (this.isConsigneeSendDoc == false && this.isOtherSendDoc == true) {
-        isConsigneeSendDoc = 0;
+      let isNotifierSendDoc;
+      if (
+        this.isConsigneeSendDoc == false &&
+        this.isOtherSendDoc == true &&
+        this.isNotifierSendDoc == false
+      ) {
+        isConsigneeSendDoc = null;
+        isNotifierSendDoc = null;
       } else if (
         this.isConsigneeSendDoc == true &&
-        this.isOtherSendDoc == false
+        this.isOtherSendDoc == false &&
+        this.isNotifierSendDoc == false
       ) {
-        isConsigneeSendDoc = 1;
+        isConsigneeSendDoc = this.directionConsignee;
+        isNotifierSendDoc = null;
+      } else if (
+        this.isConsigneeSendDoc == false &&
+        this.isOtherSendDoc == false &&
+        this.isNotifierSendDoc == true
+      ) {
+        console.log("DIRECCION DEL NOTIFIER ", this.selectedNotifierAddress);
+        isConsigneeSendDoc = null;
+        isNotifierSendDoc = this.selectedNotifierAddress;
       }
 
       let isSendScanning;
@@ -2069,7 +2091,6 @@ export default {
 
         console.log("nameNotifier value:", this.nameNotifier);
 
-        this.createDataNotifier();
         this.createRequiredDocument();
         this.createAddressOriginalsDoc();
         this.createAddressEmail();
@@ -2099,6 +2120,7 @@ export default {
           CertificateAddressOrigin: certificateAddressOrigin,
           CertificateInfoAdd: certificateInfoAdd,
           isConsigneeSendDoc: isConsigneeSendDoc,
+          isNotifierSendDoc: isNotifierSendDoc,
           IsSendScanning: isSendScanning,
         };
 

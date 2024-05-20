@@ -1,6 +1,6 @@
 USE [SINCRO_PCPNISIRA]
 GO
-/****** Object:  StoredProcedure [dbo].[Form_CreateForm]    Script Date: 16/05/2024 07:15:08 ******/
+/****** Object:  StoredProcedure [dbo].[Form_CreateForm]    Script Date: 20/05/2024 09:41:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -32,11 +32,12 @@ BEGIN
         @PhytoCountryPort VARCHAR(200),
         @PhytoInfoAdd VARCHAR(500),
         @PhytoTransitCountry VARCHAR(100),
-        @PhytoExportSENASA VARBINARY(MAX),
+        @PhytoExportSENASA varchar(500),
         @CertificateNameOrigin VARCHAR(200),
         @CertificateAddressOrigin VARCHAR(200),
         @CertificateInfoAdd VARCHAR(500),
-        @isConsigneeSendDoc TINYINT,
+        @isConsigneeSendDoc VARCHAR(200),
+		@isNotifierSendDoc varchar(200),
         @IsSendScanning TINYINT,
 		@msg_error VARCHAR(200) = '',
         @FilasAfectadas INT;
@@ -63,11 +64,12 @@ BEGIN
         @PhytoCountryPort = JSON_VALUE(@json, '$.PhytoCountryPort'),
         @PhytoInfoAdd = JSON_VALUE(@json, '$.PhytoInfoAdd'),
         @PhytoTransitCountry = JSON_VALUE(@json, '$.PhytoTransitCountry'),
-        @PhytoExportSENASA = TRY_CAST(JSON_VALUE(@json, '$.PhytoExportSENASA') AS VARBINARY(MAX)),
+        @PhytoExportSENASA = JSON_VALUE(@json, '$.PhytoExportSENASA'),
         @CertificateNameOrigin = JSON_VALUE(@json, '$.CertificateNameOrigin'),
         @CertificateAddressOrigin = JSON_VALUE(@json, '$.CertificateAddressOrigin'),
         @CertificateInfoAdd = JSON_VALUE(@json, '$.CertificateInfoAdd'),
         @isConsigneeSendDoc = JSON_VALUE(@json, '$.isConsigneeSendDoc'),
+		@isNotifierSendDoc = JSON_VALUE(@json, '$.isNotifierSendDoc'),
         @IsSendScanning = JSON_VALUE(@json, '$.IsSendScanning');
 
 	DECLARE @LastConsigneeId INT;
@@ -123,8 +125,12 @@ BEGIN
         SET @LastSendPhysicalDocument = NULL; -- Si IsSendScanning es 1, idSendPhysicalDocument será NULL
     END;
 
-
-	IF @isConsigneeSendDoc = 0
+	IF @isNotifierSendDoc IS NOT NULL
+    BEGIN
+        SET @isConsigneeSendDoc = NULL;
+        SET @LastSendOriginalDocument = NULL;
+    END;
+	ELSE IF @isConsigneeSendDoc IS NULL and @isNotifierSendDoc IS NULL
 	BEGIN
 		SELECT TOP 1 @LastSendOriginalDocument = idAddressOriginalsDoc
 		FROM FormAddressOriginalsDoc
@@ -167,6 +173,7 @@ BEGIN
             CertificateInfoAdd,
             idDocReq,
             isConsigneeSendDoc,
+			isNotifierSendDoc,
             idAddressOriginalsDoc,
 
             IsSendScanning,
@@ -204,6 +211,8 @@ BEGIN
             @CertificateInfoAdd,
             @LastDocReq,
             @isConsigneeSendDoc,
+			@isNotifierSendDoc,
+
             @LastSendOriginalDocument,
 
             @IsSendScanning ,
@@ -231,3 +240,8 @@ BEGIN
     END CATCH
 	SELECT @msg_error AS mensaje;
 END
+
+
+
+
+
