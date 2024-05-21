@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*'],  //aqui creo que deberias colocar la ruta  tipo ej: 10.10.100.155.4856  -->
 
     'allowed_origins_patterns' => [],
 

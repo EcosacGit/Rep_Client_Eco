@@ -33,5 +33,6 @@ class Kernel extends ConsoleKernel
     protected $middleware = [
         // Otras entradas de middleware...
         \Fruitcake\Cors\HandleCors::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
     ];
 }
