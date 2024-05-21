@@ -9,7 +9,7 @@
       "
     >
       <h2 style="margin-left: 1rem; margin-top: 1rem; text-align: center">
-        FORMULARIO ECOSAC
+        {{ $t("form.title") }}
       </h2>
       <v-switch
         style="font-weight: bold; color: black"
@@ -28,7 +28,7 @@
           <v-form ref="miFormulario" v-model="isFormValid" lazy-validation>
             <v-row>
               <v-col cols="12" class="s-col-form">
-                <label class="label-field">Nombre del Cliente</label>
+                <label class="label-field">{{ $t("form.nameClient") }}</label>
                 <v-text-field
                   outlined
                   color="success"
@@ -39,7 +39,7 @@
             <v-row>
               <v-col cols="4" class="s-col-form">
                 <div class="label-warn">
-                  <label class="label-field">País de Destino</label>
+                  <label class="label-field">{{ $t("form.country") }}</label>
                 </div>
                 <v-row>
                   <v-col cols="12">
@@ -53,7 +53,7 @@
                       color="success"
                       return-object
                       dense
-                      placeholder="Seleccione un país"
+                      :placeholder="$t('form.messageCountry')"
                     >
                     </v-combobox>
                   </v-col>
@@ -61,7 +61,9 @@
               </v-col>
               <v-col cols="4" class="s-col-form">
                 <div class="label-warn">
-                  <label class="label-field">Puerto de Destinto</label>
+                  <label class="label-field">{{
+                    $t("form.puertoDestino")
+                  }}</label>
                 </div>
                 <v-row>
                   <v-col cols="12">
@@ -75,7 +77,7 @@
                       color="success"
                       return-object
                       dense
-                      placeholder="Seleccione un puerto"
+                      :placeholder="$t('form.messagePuertoDestino')"
                     >
                     </v-combobox>
                   </v-col>
@@ -83,7 +85,9 @@
               </v-col>
               <v-col cols="4" class="s-col-form">
                 <div class="label-warn">
-                  <label class="label-field">Destino Final</label>
+                  <label class="label-field">{{
+                    $t("form.puertoFinal")
+                  }}</label>
                 </div>
                 <v-row>
                   <v-col cols="12">
@@ -97,7 +101,7 @@
                       return-object
                       color="success"
                       dense
-                      placeholder="Seleccione un destino"
+                      :placeholder="$t('form.messageDestinoFinal')"
                     >
                     </v-combobox>
                   </v-col>
@@ -115,7 +119,7 @@
                   v-model="selectedCountryField"
                 ></v-text-field>
                 <small v-if="!selectedCountry" class="text-red"
-                  >En caso de no encontrarlo, escribir el País de Destino</small
+                  >{{ $t("form.alert") }} {{ $t("form.country") }}</small
                 >
               </v-col>
               <v-col cols="4">
@@ -127,7 +131,7 @@
                   v-model="selectedPortField"
                 ></v-text-field>
                 <small v-if="!selectedPort" class="text-red"
-                  >En caso de no encontrarlo, escribir el Puerto Destino</small
+                  >{{ $t("form.alert") }} {{ $t("form.puertoDestino") }}</small
                 >
               </v-col>
               <v-col cols="4">
@@ -139,7 +143,7 @@
                   v-model="selectedPortFinalField"
                 ></v-text-field>
                 <small v-if="!selectedPortFinal" class="text-red"
-                  >En caso de no encontrarlo, escribir el Puerto Destino</small
+                  >{{ $t("form.alert") }} {{ $t("form.puertoFinal") }}</small
                 >
               </v-col>
             </v-row>
@@ -151,25 +155,25 @@
             @click="activateTab('tab1-1')"
             href="#tab1-1"
             :class="{ 'tab-selected': activeTab === 'tab1-1' }"
-            >Datos pára la Factura</v-tab
+            >{{ $t("form.factura") }}</v-tab
           >
           <v-tab
             @click="activateTab('tab1-2')"
             href="#tab1-2"
             :class="{ 'tab-selected': activeTab === 'tab1-2' }"
-            >Conocimiento de Embarque</v-tab
+            >{{ $t("form.embarque") }}</v-tab
           >
           <v-tab
             @click="activateTab('tab1-3')"
             href="#tab1-3"
             :class="{ 'tab-selected': activeTab === 'tab1-3' }"
-            >Certificados</v-tab
+            >{{ $t("form.certificado") }}</v-tab
           >
           <v-tab
             @click="activateTab('tab1-4')"
             href="#tab1-4"
             :class="{ 'tab-selected': activeTab === 'tab1-4' }"
-            >Dirección y Envio</v-tab
+            >{{ $t("form.direccion") }}</v-tab
           >
         </v-tabs>
 
@@ -189,7 +193,7 @@
                 </v-row>
                 <v-row class="mt-5">
                   <v-col cols="4" class="s-col-form">
-                    <label class="label-field">Nombre para la Factura</label>
+                    <label class="label-field">{{ $t("form.billName") }}</label>
                     <v-select
                       v-model="billNameSelectedOption"
                       :items="billNameOptions"
@@ -200,7 +204,10 @@
                     ></v-select>
                   </v-col>
                   <v-col
-                    v-if="billNameSelectedOption === 'Otra (Detallar)'"
+                    v-if="
+                      billNameSelectedOption == 'Otra (Detallar)' ||
+                      billNameSelectedOption == 'Other (Describe)'
+                    "
                     cols="8"
                     class="s-col-form align-self-end"
                   >
@@ -215,7 +222,9 @@
 
                 <v-row>
                   <v-col cols="4" class="s-col-form">
-                    <label class="label-field">Dirección para la Factura</label>
+                    <label class="label-field">{{
+                      $t("form.billAddress")
+                    }}</label>
                     <v-select
                       v-model="billDirectionSelectedOption"
                       :items="billDirectionOptions"
@@ -226,7 +235,10 @@
                     ></v-select>
                   </v-col>
                   <v-col
-                    v-if="billDirectionSelectedOption === 'Otra (Detallar)'"
+                    v-if="
+                      billDirectionSelectedOption === 'Otra (Detallar)' ||
+                      billDirectionSelectedOption === 'Other (Describe)'
+                    "
                     cols="8"
                     class="s-col-form align-self-end"
                   >
@@ -241,12 +253,11 @@
 
                 <v-row>
                   <v-col cols="4" class="s-col-form">
-                    <label class="label-field"
-                      >Información Adicional para la Factura (opcional)</label
-                    >
+                    <label class="label-field">{{ $t("form.billInfo") }}</label>
                     <v-checkbox
+                      class="mt-2"
                       v-model="checkBoxValueInfoBill"
-                      label="¿Agregar información adicional?"
+                      :label="$t('form.addInforBill')"
                     ></v-checkbox>
                   </v-col>
                   <v-col
@@ -279,7 +290,9 @@
                 </v-row>
                 <v-row class="mt-5">
                   <v-col cols="6" class="s-col-form">
-                    <label class="label-field">Pagador de Flete</label>
+                    <label class="label-field">{{
+                      $t("form.pagadorFlete")
+                    }}</label>
                     <v-text-field
                       outlined
                       color="success"
@@ -287,7 +300,9 @@
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6" class="s-col-form">
-                    <label class="label-field">Lugar de Pago</label>
+                    <label class="label-field">{{
+                      $t("form.lugarPago")
+                    }}</label>
                     <v-text-field
                       outlined
                       color="success"
@@ -298,7 +313,9 @@
 
                 <v-row>
                   <cols cols="4" class="s-col-form">
-                    <label class="label-field">Tipo Emision de BL</label>
+                    <label class="label-field">{{
+                      $t("form.tipoEmision")
+                    }}</label>
                     <v-checkbox
                       v-model="swbBL"
                       @change="handleBLChange('swbBL')"
@@ -314,7 +331,7 @@
                     <v-checkbox
                       v-model="originalBL"
                       @change="handleBLChange('originalBL')"
-                      label="ORIGINAL IMPRESO EN DESTINO"
+                      :label="$t('form.originalBL')"
                       class="mt-n1"
                     ></v-checkbox>
                     <v-checkbox
@@ -340,10 +357,9 @@
 
                 <v-row>
                   <v-col cols="12" class="mt-2 s-col-form">
-                    <label class="label-field"
-                      >Especificaciones adicionales respecto al pago de flete
-                      (opcional)</label
-                    >
+                    <label class="label-field">{{
+                      $t("form.espeAdicionales")
+                    }}</label>
                     <v-text-field
                       outlined
                       v-model="freightPayerInfoAdd"
@@ -360,14 +376,16 @@
                 <div class="mt-3 data-consignee">
                   <v-row>
                     <v-col
-                      ><label style="color: red; font-weight: bold"
-                        >Información Consignatario</label
-                      ></v-col
+                      ><label style="color: red; font-weight: bold">{{
+                        $t("form.consigneeInfo")
+                      }}</label></v-col
                     >
                   </v-row>
                   <v-row>
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field">Nombre de Consignatario</label>
+                      <label class="label-field">{{
+                        $t("form.consigneeInfo")
+                      }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -376,7 +394,9 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field">Dirección</label>
+                      <label class="label-field">{{
+                        $t("form.direccionConsignee")
+                      }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -385,7 +405,9 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field">Telefono 1</label>
+                      <label class="label-field">{{
+                        $t("form.telefono1")
+                      }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -397,7 +419,9 @@
 
                   <v-row>
                     <v-col cols="6" class="s-col-form">
-                      <label class="label-field">Telefono 2</label>
+                      <label class="label-field">{{
+                        $t("form.telefono2")
+                      }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -426,7 +450,9 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field">Persona de contacto</label>
+                      <label class="label-field">{{
+                        $t("form.contactPerson")
+                      }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -435,9 +461,7 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field"
-                        >Identificación Fiscal (opcional)</label
-                      >
+                      <label class="label-field">{{ $t("form.taxID") }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -449,7 +473,7 @@
 
                   <v-row>
                     <v-col cols="6" class="s-col-form">
-                      <label class="label-field">Correo Electrónico</label>
+                      <label class="label-field">{{ $t("form.email") }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -458,7 +482,9 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="6" class="s-col-form">
-                      <label class="label-field">Website (opcional)</label>
+                      <label class="label-field">{{
+                        $t("form.website")
+                      }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -477,14 +503,14 @@
                     <v-row>
                       <v-col
                         ><label style="color: red; font-weight: bold"
-                          >Información Notificante {{ index + 1 }}</label
+                          >{{ $t("form.notifierInfo") }} {{ index + 1 }}</label
                         ></v-col
                       >
                     </v-row>
                     <v-row>
                       <v-col cols="4" class="s-col-form">
                         <label class="label-field"
-                          >Nombre de Notificante {{ index + 1 }}</label
+                          >{{ $t("form.nameNotifier") }} {{ index + 1 }}</label
                         >
                         <v-text-field
                           outlined
@@ -494,7 +520,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Dirección</label>
+                        <label class="label-field"
+                          >{{ $t("form.direccionConsignee") }}
+                        </label>
                         <v-text-field
                           outlined
                           color="success"
@@ -503,7 +531,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Telefono 1</label>
+                        <label class="label-field">{{
+                          $t("form.telefono1")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -515,7 +545,9 @@
 
                     <v-row>
                       <v-col cols="6" class="s-col-form">
-                        <label class="label-field">Telefono 2</label>
+                        <label class="label-field">{{
+                          $t("form.telefono2")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -544,7 +576,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Persona de contacto</label>
+                        <label class="label-field">{{
+                          $t("form.contactPerson")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -553,9 +587,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field"
-                          >Identificación Fiscal (opcional)</label
-                        >
+                        <label class="label-field">{{
+                          $t("form.taxID")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -567,7 +601,9 @@
 
                     <v-row>
                       <v-col cols="6" class="s-col-form">
-                        <label class="label-field">Correo Electrónico</label>
+                        <label class="label-field">{{
+                          $t("form.email")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -576,7 +612,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="6" class="s-col-form">
-                        <label class="label-field">Website (opcional)</label>
+                        <label class="label-field">{{
+                          $t("form.website")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -596,14 +634,12 @@
                     "
                   >
                     <v-icon style="margin-right: 3px">mdi-plus-circle</v-icon>
-                    Agregar Notificante
+                    {{ $t("form.botonNotificante") }}
                   </v-btn>
                 </div>
                 <v-row>
                   <v-col cols="12" class="mt-6 s-col-form">
-                    <label class="label-field"
-                      >Información adicional en el B/L (opcional)</label
-                    >
+                    <label class="label-field">{{ $t("form.infoBL") }}</label>
                     <v-text-field
                       outlined
                       v-model="BLInfoAdd"
@@ -627,27 +663,28 @@
                   <v-divider class="border-opacity-100"></v-divider>
                 </v-row>
 
-                <div class="mt-2 phytoPart">
+                <div class="mt-4 phytoPart">
                   <v-row>
                     <v-col
                       ><label style="color: red; font-weight: bold"
-                        >Certificado Fitosanitario / Sanitario
+                        >{{ $t("form.phytoCertificado") }}
                       </label></v-col
                     >
                   </v-row>
-                  <v-row class="mt-2">
+                  <v-row class="mt-1">
                     <v-col cols="12" class="s-col-form">
                       <v-checkbox
                         v-model="isAllowedPhyto"
-                        label="Requiere Permiso de importación (Colombia / Hondura /
-                      Vietnam)"
+                        :label="$t('form.isAllowedPhyto')"
                       ></v-checkbox>
                     </v-col>
                   </v-row>
 
                   <v-row class="mt-5">
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field">Nombre </label>
+                      <label class="label-field"
+                        >{{ $t("form.phytoName") }}
+                      </label>
                       <v-select
                         v-model="phytoNameSelectedOption"
                         :items="phytoNameOptions"
@@ -658,7 +695,10 @@
                       ></v-select>
                     </v-col>
                     <v-col
-                      v-if="phytoNameSelectedOption === 'Otra (Detallar)'"
+                      v-if="
+                        phytoNameSelectedOption === 'Otra (Detallar)' ||
+                        phytoNameSelectedOption === 'Other (Describe)'
+                      "
                       cols="8"
                       class="s-col-form align-self-end"
                     >
@@ -672,7 +712,9 @@
                   </v-row>
                   <v-row>
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field">Dirección </label>
+                      <label class="label-field"
+                        >{{ $t("form.phytoAddress") }}
+                      </label>
                       <v-select
                         v-model="phytoAddressSelectedOption"
                         :items="phytoAddressOptions"
@@ -683,7 +725,10 @@
                       ></v-select>
                     </v-col>
                     <v-col
-                      v-if="phytoAddressSelectedOption === 'Otra (Detallar)'"
+                      v-if="
+                        phytoAddressSelectedOption === 'Otra (Detallar)' ||
+                        phytoAddressSelectedOption === 'Other (Describe)'
+                      "
                       cols="8"
                       class="s-col-form align-self-end"
                     >
@@ -697,7 +742,9 @@
                   </v-row>
                   <v-row>
                     <v-col cols="6" class="s-col-form">
-                      <label class="label-field">Puerto Destino / País</label>
+                      <label class="label-field">{{
+                        $t("form.phytoPuerto")
+                      }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -705,9 +752,9 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="6" class="s-col-form">
-                      <label class="label-field"
-                        >Indicar Pais de Transito</label
-                      >
+                      <label class="label-field">{{
+                        $t("form.phytoDestino")
+                      }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -718,13 +765,12 @@
 
                   <v-row>
                     <v-col cols="6" class="s-col-form">
-                      <label class="label-field"
-                        >Información Adicional en el certificado
-                        (opcional)</label
-                      >
+                      <label class="label-field">{{
+                        $t("form.infoPhyto")
+                      }}</label>
                       <v-checkbox
                         v-model="phytoInfoAdd"
-                        label="Se requiere que se incluya una glosa adicional en el Fitosanitario"
+                        :label="$t('form.phytoInfoAdd')"
                       ></v-checkbox>
                     </v-col>
                     <v-col
@@ -743,13 +789,12 @@
 
                   <v-row>
                     <v-col cols="12" class="s-col-form">
-                      <label class="label-field"
-                        >Para Re-Exportación (opcional)</label
-                      >
+                      <label class="label-field">{{
+                        $t("form.reExport")
+                      }}</label>
                       <v-file-input
                         v-model="phytoExportSENASA"
-                        label="Adjuntar solicitud para
-                      SENASA"
+                        :label="$t('form.senasa')"
                         accept=".doc,.docx,.xls,.xlsx,.pdf,.txt,.csv,.ppt,.pptx,.jpg,.jpeg,.png,.gif"
                         @change="onFileChange"
                       ></v-file-input>
@@ -765,15 +810,15 @@
                   <v-row>
                     <v-col
                       ><label style="color: red; font-weight: bold"
-                        >Certificado de Origen
+                        >{{ $t("form.certOrigen") }}
                       </label></v-col
                     >
                   </v-row>
                   <v-row class="mt-2">
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field"
-                        >Nombre en el certificado de Origen</label
-                      >
+                      <label class="label-field">{{
+                        $t("form.certName")
+                      }}</label>
                       <v-select
                         v-model="certificateNameOriginSelectedOption"
                         :items="certificateNameOriginOptions"
@@ -786,7 +831,9 @@
                     <v-col
                       v-if="
                         certificateNameOriginSelectedOption ===
-                        'Otra (Detallar)'
+                          'Otra (Detallar)' ||
+                        certificateNameOriginSelectedOption ===
+                          'Other (Describe)'
                       "
                       cols="8"
                       class="s-col-form align-self-end"
@@ -802,9 +849,9 @@
 
                   <v-row class="mt-2">
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field"
-                        >Dirección en el certificado de Origen</label
-                      >
+                      <label class="label-field">{{
+                        $t("form.certAddress")
+                      }}</label>
                       <v-select
                         v-model="certificateAddressOriginSelectedOption"
                         :items="certificateAddressOriginOptions"
@@ -817,7 +864,9 @@
                     <v-col
                       v-if="
                         certificateAddressOriginSelectedOption ===
-                        'Otra (Detallar)'
+                          'Otra (Detallar)' ||
+                        certificateAddressOriginSelectedOption ===
+                          'Other (Describe)'
                       "
                       cols="8"
                       class="s-col-form align-self-end"
@@ -833,13 +882,12 @@
 
                   <v-row>
                     <v-col cols="6" class="s-col-form">
-                      <label class="label-field"
-                        >Información Adicional para el Certificado de Origen
-                        (opcional)</label
-                      >
+                      <label class="label-field">{{
+                        $t("form.certInfo")
+                      }}</label>
                       <v-checkbox
                         v-model="certificateInfoAdd"
-                        label="Se requiere que se incluya una glosa adicional en el Certificado de Origen"
+                        :label="$t('form.infoLabelCert')"
                       ></v-checkbox>
                     </v-col>
                     <v-col
@@ -864,8 +912,7 @@
                   <v-row>
                     <v-col
                       ><label style="color: red; font-weight: bold"
-                        >Certificado de Calidad y Otros Documentos Adicionales
-                        Requeridos
+                        >{{ $t("form.certQuality") }}
                       </label></v-col
                     >
                   </v-row>
@@ -873,32 +920,32 @@
                     <v-col cols="6" class="s-col-form">
                       <v-checkbox
                         v-model="packingList"
-                        label="Packing List: Plantilla / Formato propio"
+                        :label="$t('form.packingList')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="plasticStatement"
-                        label="Declaración de plástico (Unión Europea)"
+                        :label="$t('form.plasticStatement')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="INVIMA"
-                        label="Carta INVIMA"
+                        :label="$t('form.INVIMA')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="FDA"
-                        label="Información de aviso previo de la FDA"
+                        :label="$t('form.FDA')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="PPQ"
-                        label="PPQ 203 (Si es que aplica)"
+                        :label="$t('form.PPQ')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="ColdTreatment"
-                        label="Cartas COLD TREATMENT"
+                        :label="$t('form.ColdTreatment')"
                         class="mt-n1"
                       ></v-checkbox>
                     </v-col>
@@ -906,32 +953,32 @@
                     <v-col cols="6" class="s-col-form">
                       <v-checkbox
                         v-model="InspectionFormat"
-                        label="Formato de inspección de contenedores"
+                        :label="$t('form.InspectionFormat')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="MicrobioAnalysis"
-                        label="Certificado de Análisis Microbiológico"
+                        :label="$t('form.MicrobioAnalysis')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="InsuranceCertificate"
-                        label="Claim Guide and Insurance certificate (If CIF incoterms)"
+                        :label="$t('form.InsuranceCertificate')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="DAM"
-                        label="Declaración de Aduanas (DAM)"
+                        :label="$t('form.DAM')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="QualityReport"
-                        label="Reporte de Calidad"
+                        :label="$t('form.QualityReport')"
                         class="mt-n1"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="OtherCert"
-                        label="Otros (detallar)"
+                        :label="$t('form.OtherCert')"
                         class="mt-n1"
                       ></v-checkbox>
                     </v-col>
@@ -965,7 +1012,7 @@
                   <v-row>
                     <v-col
                       ><label style="color: red; font-weight: bold"
-                        >Dirección para el envio de los Documentos Originales
+                        >{{ $t("form.addressSend") }}
                       </label></v-col
                     >
                   </v-row>
@@ -973,7 +1020,7 @@
                     <v-col cols="6" class="s-col-form">
                       <v-checkbox
                         v-model="isConsigneeSendDoc"
-                        label="Misma del Consignatario"
+                        :label="$t('form.consigneSend')"
                         @change="
                           handleCheckboxChangeConsigneeSendDocs(
                             'isConsigneeSendDoc'
@@ -984,7 +1031,7 @@
                         <v-checkbox
                           style="align-self: flex-end"
                           v-model="isNotifierSendDoc"
-                          label="Misma del Notificante"
+                          :label="$t('form.notifierSend')"
                           @change="
                             handleCheckboxChangeConsigneeSendDocs(
                               'isNotifierSendDoc'
@@ -1005,7 +1052,7 @@
 
                       <v-checkbox
                         v-model="isOtherSendDoc"
-                        label="Otros (Detallar)"
+                        :label="$t('form.OtherCert')"
                         @change="
                           handleCheckboxChangeConsigneeSendDocs(
                             'isOtherSendDoc'
@@ -1023,7 +1070,9 @@
                   >
                     <v-row>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Nombre de la Empresa</label>
+                        <label class="label-field">{{
+                          $t("form.otherSendName")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1032,7 +1081,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Dirección</label>
+                        <label class="label-field">{{
+                          $t("form.otherSendAddress")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1041,7 +1092,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Telefono</label>
+                        <label class="label-field">{{
+                          $t("form.otherSendTel")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1053,7 +1106,9 @@
 
                     <v-row>
                       <v-col cols="6" class="s-col-form">
-                        <label class="label-field">Persona de contacto</label>
+                        <label class="label-field">{{
+                          $t("form.contactPerson")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1062,9 +1117,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="6" class="s-col-form">
-                        <label class="label-field"
-                          >Identificación Fiscal (opcional)</label
-                        >
+                        <label class="label-field">{{
+                          $t("form.taxID")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1076,7 +1131,9 @@
 
                     <v-row>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Correo Electrónico</label>
+                        <label class="label-field">{{
+                          $t("form.email")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1085,7 +1142,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">País</label>
+                        <label class="label-field">{{
+                          $t("form.otherSendCountry")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1094,7 +1153,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Ciudad</label>
+                        <label class="label-field">{{
+                          $t("form.otherSendCity")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1106,7 +1167,9 @@
 
                     <v-row class="mb-5">
                       <v-col cols="6" class="s-col-form">
-                        <label class="label-field">Estado</label>
+                        <label class="label-field">{{
+                          $t("form.otherSendState")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1114,7 +1177,9 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="6" class="s-col-form">
-                        <label class="label-field">Codigo Postal</label>
+                        <label class="label-field">{{
+                          $t("form.otherSendPostalCode")
+                        }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -1132,8 +1197,7 @@
                   <v-row>
                     <v-col
                       ><label style="color: red; font-weight: bold"
-                        >Correo Electrónicos para el Envio de los Documentos
-                        Escaneados
+                        >{{ $t("form.emailAddress") }}
                       </label></v-col
                     >
                   </v-row>
@@ -1147,7 +1211,7 @@
                       cols="4"
                       class="s-col-form"
                     >
-                      <label class="label-field">Correo Electrónico</label>
+                      <label class="label-field">{{ $t("form.email") }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -1167,7 +1231,7 @@
                   "
                 >
                   <v-icon style="margin-right: 3px">mdi-plus-circle</v-icon>
-                  Agregar Correo Electrónicos
+                  {{ $t("form.emailAddressButton") }}
                 </v-btn>
 
                 <v-row class="mt-5">
@@ -1178,7 +1242,7 @@
                   <v-row>
                     <v-col
                       ><label style="color: red; font-weight: bold"
-                        >Del Envio de Documentos, seleccionar:
+                        >{{ $t("form.sendChoice") }}
                       </label></v-col
                     >
                   </v-row>
@@ -1186,12 +1250,12 @@
                     <v-col cols="12" class="s-col-form">
                       <v-checkbox
                         v-model="isSendScanning"
-                        label="Requiere Documentos Escaneados"
+                        :label="$t('form.scanningDoc')"
                         @change="handleCheckboxSendDocs('isSendScanning')"
                       ></v-checkbox>
                       <v-checkbox
                         v-model="isSendPhysicalDocument"
-                        label="Requiere Valija con los siguientes Documentos Físicos"
+                        :label="$t('form.nextDoc')"
                         @change="
                           handleCheckboxSendDocs('isSendPhysicalDocument')
                         "
@@ -1211,29 +1275,29 @@
                       <v-col cols="4" class="s-col-form reqDocPhy">
                         <v-checkbox
                           v-model="isSendPhysicalDocument.bill"
-                          label="Factura"
+                          :label="$t('form.invoiceCheck')"
                           class="mt-n1"
                         ></v-checkbox>
                         <v-checkbox
                           v-model="isSendPhysicalDocument.originalCertificate"
-                          label="Certificado de Origen"
+                          :label="$t('form.originCheck')"
                           class="mt-n1"
                         ></v-checkbox>
                         <v-checkbox
                           v-model="isSendPhysicalDocument.packingList"
-                          label="Packing List"
+                          :label="$t('form.packingCheck')"
                           class="mt-n1"
                         ></v-checkbox>
                         <v-checkbox
                           v-model="
                             isSendPhysicalDocument.phytosanitaryCertificate
                           "
-                          label="Certificado Fitosanitario"
+                          :label="$t('form.phytoDataCheck')"
                           class="mt-n1"
                         ></v-checkbox>
                         <v-checkbox
                           v-model="isSendPhysicalDocument.otherSendingPacking"
-                          label="Otros (especificar)"
+                          :label="$t('form.otherCheck')"
                           class="mt-n1"
                         ></v-checkbox>
                       </v-col>
@@ -1280,18 +1344,51 @@
 import _Form from "../services/Form/FormService";
 import "vuetify/dist/vuetify.min.css";
 
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 import "@mdi/font/css/materialdesignicons.min.css";
 
 export default {
   setup() {
-    const { locale } = useI18n();
+    const { locale, t } = useI18n();
     const switchLocale = (lang) => {
       locale.value = lang;
     };
 
-    return { switchLocale };
+    const commonOptions = computed(() => {
+      if (locale.value === "en") {
+        return ["Same as the consignee", "Other (Describe)"];
+      } else {
+        return ["Misma del Consignatario", "Otra (Detallar)"];
+      }
+    });
+
+    return {
+      switchLocale,
+      commonOptions,
+    };
+  },
+  computed: {
+    billNameOptions() {
+      return this.commonOptions;
+    },
+    billDirectionOptions() {
+      return this.commonOptions;
+    },
+    phytoNameOptions() {
+      return this.commonOptions;
+    },
+    phytoAddressOptions() {
+      return this.commonOptions;
+    },
+
+    certificateNameOriginOptions() {
+      return this.commonOptions;
+    },
+    certificateAddressOriginOptions() {
+      return this.commonOptions;
+    },
   },
   data() {
     return {
@@ -1301,20 +1398,16 @@ export default {
       //NOMBRE FACTURA
       billNameSelectedOption: null,
       billNameCustomOption: "",
-      billNameOptions: ["Misma del consignatario", "Otra (Detallar)"],
 
       //DIRECCION FACTURA
       billDirectionSelectedOption: null,
       billDirectionCustomOption: "",
-      billDirectionOptions: ["Misma del consignatario", "Otra (Detallar)"],
 
       phytoNameSelectedOption: null,
       phytoNameCustomOption: "",
-      phytoNameOptions: ["Misma del consignatario", "Otra (Detallar)"],
 
       phytoAddressSelectedOption: null,
       phytoAddressCustomOption: "",
-      phytoAddressOptions: ["Misma del consignatario", "Otra (Detallar)"],
 
       //INFO ADICIONAL FACTURA
       checkBoxValueInfoBill: false,
@@ -1352,19 +1445,11 @@ export default {
       //certificado de Origen
       certificateNameOriginSelectedOption: null,
       certificateNameOriginCustomOption: "",
-      certificateNameOriginOptions: [
-        "Misma del consignatario",
-        "Otra (Detallar)",
-      ],
 
       itemsNotifierSendDoc: [],
 
       certificateAddressOriginSelectedOption: null,
       certificateAddressOriginCustomOption: "",
-      certificateAddressOriginOptions: [
-        "Misma del consignatario",
-        "Otra (Detallar)",
-      ],
 
       certificateInfoAdd: false,
       textFieldValueCertificateInfoAdd: "",
@@ -1552,7 +1637,10 @@ export default {
   },
   methods: {
     toggleTextFieldBillName() {
-      if (this.billNameSelectedOption === "Otra (Detallar)") {
+      if (
+        this.billNameSelectedOption == "Otra (Detallar)" ||
+        this.billNameSelectedOption == "Other (Describe)"
+      ) {
         this.billNameCustomOption = "";
       }
     },
@@ -1983,16 +2071,29 @@ export default {
     createForm(filePath) {
       //VALIDACIONES
       let billName;
-      if (this.billNameSelectedOption === "Misma del consignatario") {
+      console.log("NAME BILL: ", this.billNameSelectedOption);
+      if (
+        this.billNameSelectedOption === "Misma del Consignatario" ||
+        this.billNameSelectedOption === "Same as the consignee"
+      ) {
         billName = this.nameConsignee;
-      } else if (this.billNameSelectedOption === "Otra (Detallar)") {
+      } else if (
+        this.billNameSelectedOption === "Otra (Detallar)" ||
+        this.billNameSelectedOption === "Other (Describe)"
+      ) {
         billName = this.billNameCustomOption;
       }
 
       let billDirection;
-      if (this.billDirectionSelectedOption === "Misma del consignatario") {
+      if (
+        this.billDirectionSelectedOption === "Misma del Consignatario" ||
+        this.billDirectionSelectedOption === "Same as the consignee"
+      ) {
         billDirection = this.directionConsignee;
-      } else if (this.billDirectionSelectedOption === "Otra (Detallar)") {
+      } else if (
+        this.billDirectionSelectedOption === "Otra (Detallar)" ||
+        this.billDirectionSelectedOption === "Other (Describe)"
+      ) {
         billDirection = this.billDirectionCustomOption;
       }
 
@@ -2004,16 +2105,28 @@ export default {
       }
 
       let phytoName;
-      if (this.phytoNameSelectedOption === "Misma del consignatario") {
+      if (
+        this.phytoNameSelectedOption === "Misma del Consignatario" ||
+        this.phytoNameSelectedOption === "Same as the consignee"
+      ) {
         phytoName = this.nameConsignee;
-      } else if (this.phytoNameSelectedOption === "Otra (Detallar)") {
+      } else if (
+        this.phytoNameSelectedOption === "Otra (Detallar)" ||
+        this.phytoNameSelectedOption === "Other (Describe)"
+      ) {
         phytoName = this.phytoNameCustomOption;
       }
 
       let phytoAddress;
-      if (this.phytoAddressSelectedOption === "Misma del consignatario") {
+      if (
+        this.phytoAddressSelectedOption === "Misma del Consignatario" ||
+        this.phytoAddressSelectedOption === "Same as the consignee"
+      ) {
         phytoAddress = this.directionConsignee;
-      } else if (this.phytoAddressSelectedOption === "Otra (Detallar)") {
+      } else if (
+        this.phytoAddressSelectedOption === "Otra (Detallar)" ||
+        this.phytoAddressSelectedOption === "Other (Describe)"
+      ) {
         phytoAddress = this.phytoAddressCustomOption;
       }
 
@@ -2036,11 +2149,14 @@ export default {
 
       let certificateNameOrigin;
       if (
-        this.certificateNameOriginSelectedOption === "Misma del consignatario"
+        this.certificateNameOriginSelectedOption ===
+          "Misma del Consignatario" ||
+        this.certificateNameOriginSelectedOption === "Same as the consignee"
       ) {
         certificateNameOrigin = this.nameConsignee;
       } else if (
-        this.certificateNameOriginSelectedOption === "Otra (Detallar)"
+        this.certificateNameOriginSelectedOption === "Otra (Detallar)" ||
+        this.certificateNameOriginSelectedOption === "Other (Describe)"
       ) {
         certificateNameOrigin = this.certificateNameOriginCustomOption;
       }
@@ -2048,11 +2164,13 @@ export default {
       let certificateAddressOrigin;
       if (
         this.certificateAddressOriginSelectedOption ===
-        "Misma del consignatario"
+          "Misma del Consignatario" ||
+        this.certificateAddressOriginSelectedOption === "Same as the consignee"
       ) {
         certificateAddressOrigin = this.directionConsignee;
       } else if (
-        this.certificateAddressOriginSelectedOption === "Otra (Detallar)"
+        this.certificateAddressOriginSelectedOption === "Otra (Detallar)" ||
+        this.certificateAddressOriginSelectedOption === "Other (Describe)"
       ) {
         certificateAddressOrigin = this.certificateAddressOriginCustomOption;
       }
@@ -2159,7 +2277,7 @@ export default {
         };
 
         // Usa 'param' aquí para lo que necesites
-        console.log("prueba" + param.PhytoExportSENASA);
+        console.log("BILLNAME" + param.BillName);
         console.log("CountryName " + param.CountryName);
         console.log("emissionType " + param.emissionType);
         _Form
