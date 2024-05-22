@@ -148,6 +148,11 @@ const messages = {
       otherCheck: "Otros (especificar)",
 
       swal: "Fill the fields: ",
+
+      //REDIRECT PAGE
+      thanks: "Thank You for Submitting the Form!",
+      thanks2:
+        "We appreciate your time and effort. Your submission has been received successfully.",
     },
   },
   es: {
@@ -201,7 +206,7 @@ const messages = {
       phytoName: "Nombre",
       phytoAddress: "Dirección",
       phytoPuerto: "Puerto Destino / País",
-      phytoDestino: "For international Transit",
+      phytoDestino: "Para Transito Internacional",
       infoPhyto: "Información Adicional en el certificado (opcional)",
       reExport: "Para Re-Exportación (opcional)",
 
@@ -266,6 +271,11 @@ const messages = {
       phytoDataCheck: "Certificado Fitosanitario",
       otherCheck: "Otros (especificar)",
       swal: "Completar los datos: ",
+
+      //REDIRECT PAGE
+      thanks: "¡Gracias por completar el formulario!",
+      thanks2:
+        "Apreciamos su tiempo y esfuerzo. Su envío ha sido recibido exitosamente.",
     },
   },
 };
