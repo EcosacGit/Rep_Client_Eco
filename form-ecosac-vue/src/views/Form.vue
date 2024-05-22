@@ -1348,6 +1348,8 @@ import "vuetify/dist/vuetify.min.css";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
+import Swal from "sweetalert2";
+
 import "@mdi/font/css/materialdesignicons.min.css";
 
 export default {
@@ -2070,7 +2072,6 @@ export default {
     },
 
     createForm(filePath) {
-      //VALIDACIONES
       let billName;
       console.log("NAME BILL: ", this.billNameSelectedOption);
       if (
@@ -2223,6 +2224,206 @@ export default {
         isSendScanning = 1;
       }
 
+      //VALIDACIONES SWAL
+
+      //validation
+      const isCountryValid =
+        this.selectedCountry || this.selectedCountryField.trim();
+      const isPortValid = this.selectedPort || this.selectedPortField.trim();
+      const isPortFinalValid =
+        this.selectedPortFinal || this.selectedPortFinalField.trim();
+
+      // Construir el mensaje personalizado
+      let message = this.$t("form.swal");
+      if (!isCountryValid) {
+        message += this.$t("form.country") + " || ";
+      }
+      if (!isPortValid) {
+        message += this.$t("form.puertoDestino") + " || ";
+      }
+      if (!isPortFinalValid) {
+        message += this.$t("form.puertoFinal") + " || ";
+      }
+      if (billName == undefined) {
+        message += this.$t("form.billName") + " || ";
+      }
+      if (billDirection == undefined) {
+        message += this.$t("form.billAddress") + " || ";
+      }
+      if (this.freigthPayer == "") {
+        message += this.$t("form.pagadorFlete") + " || ";
+      }
+      if (this.placePayment == "") {
+        message += this.$t("form.lugarPago") + " || ";
+      }
+      if (this.emissionType == "") {
+        message += this.$t("form.tipoEmision") + " || ";
+      }
+      if (phytoName == undefined) {
+        message += this.$t("form.phytoName") + " || ";
+      }
+      if (phytoAddress == undefined) {
+        message += this.$t("form.phytoAddress") + " || ";
+      }
+      if (this.phytoCountryPort == "") {
+        message += this.$t("form.phytoPuerto") + " || ";
+      }
+      if (this.phytoTransitCountry == "") {
+        message += this.$t("form.phytoDestino") + " || ";
+      }
+
+      if (certificateNameOrigin == undefined) {
+        message += this.$t("form.certName") + " || ";
+      }
+      if (certificateAddressOrigin == undefined) {
+        message += this.$t("form.certAddress") + " || ";
+      }
+
+      let certQualityValidation =
+        this.packingList == false &&
+        this.plasticStatement == false &&
+        this.INVIMA == false &&
+        this.FDA == false &&
+        this.PPQ == false &&
+        this.ColdTreatment == false &&
+        this.InspectionFormat == false &&
+        this.MicrobioAnalysis == false &&
+        this.InsuranceCertificate == false &&
+        this.DAM == false &&
+        this.QualityReport == false &&
+        this.OtherCert == false;
+
+      if (certQualityValidation) {
+        message += this.$t("form.certQuality") + " || ";
+      }
+
+      let addressSend =
+        this.isConsigneeSendDoc == false &&
+        this.isNotifierSendDoc == false &&
+        this.isOtherSendDoc == false;
+
+      if (addressSend) {
+        message += this.$t("form.addressSend") + " || ";
+      }
+
+      let sendDocs =
+        this.isSendScanning == false && this.isSendPhysicalDocument == false;
+
+      if (sendDocs) {
+        message += this.$t("form.sendChoice") + " || ";
+      }
+
+      //consignatario data!!!!!
+      let consigneeValidation =
+        this.nameConsignee == "" ||
+        this.directionConsignee == "" ||
+        this.telf1Consignee == "" ||
+        this.telf2Consignee == "" ||
+        this.faxConsignee == "" ||
+        this.contactPersonConsignee == "" ||
+        this.emailConsignee == "";
+
+      // Add EORIConsignee validation if showEORIField is true
+      if (this.showEORIField) {
+        consigneeValidation = consigneeValidation || this.EORIConsignee == "";
+        if (this.EORIConsignee == "") {
+          message += "EORI Consignee || ";
+        }
+      }
+
+      if (consigneeValidation) {
+        message += this.$t("form.consigneeInfo") + " || ";
+      }
+
+      //validar envio de correo
+      let emailValidation = false;
+      if (Array.isArray(this.emails)) {
+        const emailObject = this.emails.some(
+          (item) => typeof item === "object" && item !== null
+        );
+
+        if (emailObject) {
+          emailValidation = this.emails.some((item) => item.email == "");
+          if (emailValidation) {
+            message += this.$t("form.emailAddress") + " || ";
+          }
+        }
+      }
+
+      let notifierValidation = false;
+      //validación Notifier
+      if (Array.isArray(this.notifiers)) {
+        const notifierObject = this.notifiers.some(
+          (item) => typeof item === "object" && item !== null
+        );
+
+        if (notifierObject) {
+          notifierValidation = this.notifiers.some(
+            (item) =>
+              item.nameNotifier == "" ||
+              item.directionNotifier == "" ||
+              item.telf1Notifier == "" ||
+              item.telf2Notifier == "" ||
+              item.faxNotifier == "" ||
+              item.contactPersonNotifier == "" ||
+              item.emailNotifier == ""
+          );
+
+          if (this.showEORIField) {
+            notifierValidation =
+              notifierValidation ||
+              this.notifiers.some((item) => item.EORINotifier == "");
+            if (this.notifiers.some((item) => item.EORINotifier == "")) {
+              message += "EORI Notifier || ";
+            }
+          }
+          console.log("NOTIFIERS contains an object");
+
+          if (notifierValidation) {
+            message += this.$t("form.notifierInfo") + " || ";
+          }
+        } else {
+          console.log("NOTIFIERS does not contain an object");
+        }
+      } else {
+        console.log("NOTIFIERS is not an array");
+      }
+
+      if (
+        !isCountryValid ||
+        !isPortValid ||
+        !isPortFinalValid ||
+        billName == undefined ||
+        billDirection == undefined ||
+        this.freigthPayer == "" ||
+        this.placePayment == "" ||
+        this.emissionType == "" ||
+        consigneeValidation ||
+        notifierValidation ||
+        phytoName == undefined ||
+        phytoAddress == undefined ||
+        this.phytoCountryPort == "" ||
+        this.phytoTransitCountry == "" ||
+        certificateNameOrigin == undefined ||
+        certificateAddressOrigin == undefined ||
+        certQualityValidation ||
+        addressSend ||
+        sendDocs ||
+        emailValidation
+      ) {
+        Swal.fire({
+          text: message,
+          icon: "error",
+          toast: true,
+          position: "center",
+          showConfirmButton: false,
+          timer: 3000,
+          width: "400px", // Ajusta el ancho según tus necesidades
+          timerProgressBar: true,
+        });
+        return false; // Evita el envío del formulario
+      }
+
       try {
         if (this.selectedCountryField) {
           this.createCountry();
@@ -2279,6 +2480,9 @@ export default {
 
         // Usa 'param' aquí para lo que necesites
         console.log("BILLNAME" + param.BillName);
+        console.log("TEST ", this.destinationFinal);
+        console.log("pago ", param.FreightPayer);
+
         console.log("CountryName " + param.CountryName);
         console.log("emissionType " + param.emissionType);
         _Form

@@ -17,6 +17,9 @@ import Form from "./views/Form.vue";
 import RedirectPage from "./views/RedirectPage.vue";
 import { createMemoryHistory, createRouter } from "vue-router";
 
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
 const routes = [
   { path: "/", component: Form },
   { path: "/thanks", component: RedirectPage },
@@ -92,7 +95,7 @@ const messages = {
       addressSend: "Address to Send the Original Documents",
       emailAddress: "Email for sending Scanned Documents",
       emailAddressButton: "Add Email Address",
-      sendChoice: "Please Mark: ",
+      sendChoice: "Sending Documents, please Mark: ",
 
       otherSendName: "Company",
       otherSendAddress: "Address",
@@ -143,6 +146,8 @@ const messages = {
       packingCheck: "Packing List",
       phytoDataCheck: "PhytoSanitary Certificate",
       otherCheck: "Otros (especificar)",
+
+      swal: "Fill the fields: ",
     },
   },
   es: {
@@ -260,6 +265,7 @@ const messages = {
       packingCheck: "Packing List",
       phytoDataCheck: "Certificado Fitosanitario",
       otherCheck: "Otros (especificar)",
+      swal: "Completar los datos: ",
     },
   },
 };
@@ -286,4 +292,9 @@ const vuetify = createVuetify({
   directives,
 });
 
-createApp(Core).use(vuetify).use(i18n).use(router).mount("#app");
+createApp(Core)
+  .use(vuetify)
+  .use(i18n)
+  .use(VueSweetalert2)
+  .use(router)
+  .mount("#app");
