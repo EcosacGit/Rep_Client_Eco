@@ -33,6 +33,7 @@
                   outlined
                   color="success"
                   v-model="clientName"
+                  readonly
                 ></v-text-field>
               </v-col>
             </v-row>
