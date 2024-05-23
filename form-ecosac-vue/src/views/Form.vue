@@ -2186,11 +2186,6 @@ export default {
       } else if (this.certificateInfoAdd == true) {
         certificateInfoAdd = this.textFieldValuePhytoInfoAdd;
       }
-      if (this.nameConsignee) {
-        this.createDataConsignee();
-      }
-
-      this.createDataNotifier();
 
       //direccion envio
       let isConsigneeSendDoc;
@@ -2491,6 +2486,9 @@ export default {
         if (this.isSendPhysicalDocument) {
           this.createSendPhysicalDocuments();
         }
+
+        this.createDataConsignee();
+        this.createDataNotifier();
 
         if (this.freightPayerInfoAdd == null) {
           this.freightPayerInfoAdd =
