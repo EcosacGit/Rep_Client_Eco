@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\DB;
 class FormRepository implements IFormRepository
 {
     //METHODS GET
-    public function getForm($idClient)
+    public function getForm()
     {
-        $result = DB::select('EXEC Form_GetForm ?', [$idClient]);
+        $result = DB::select('EXEC Form_GetForm');
         return $result;
     }
 

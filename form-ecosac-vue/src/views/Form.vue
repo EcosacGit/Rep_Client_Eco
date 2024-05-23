@@ -2235,6 +2235,8 @@ export default {
 
       // Construir el mensaje personalizado
       let message = this.$t("form.swal");
+      let messageWarning = this.$t("form.swal3");
+
       if (!isCountryValid) {
         message += this.$t("form.country") + " || ";
       }
@@ -2389,7 +2391,41 @@ export default {
         console.log("NOTIFIERS is not an array");
       }
 
-      if (
+      let errorCount = 0;
+      if (!isCountryValid) errorCount++;
+      if (!isPortValid) errorCount++;
+      if (!isPortFinalValid) errorCount++;
+      if (billName == undefined) errorCount++;
+      if (billDirection == undefined) errorCount++;
+      if (this.freigthPayer == "") errorCount++;
+      if (this.placePayment == "") errorCount++;
+      if (this.emissionType == "") errorCount++;
+      if (consigneeValidation) errorCount++;
+      if (notifierValidation) errorCount++;
+      if (phytoName == undefined) errorCount++;
+      if (phytoAddress == undefined) errorCount++;
+      if (this.phytoCountryPort == "") errorCount++;
+      if (this.phytoTransitCountry == "") errorCount++;
+      if (certificateNameOrigin == undefined) errorCount++;
+      if (certificateAddressOrigin == undefined) errorCount++;
+      if (certQualityValidation) errorCount++;
+      if (addressSend) errorCount++;
+      if (sendDocs) errorCount++;
+      if (emailValidation) errorCount++;
+
+      // Mostrar SweetAlert si hay más de 5 condiciones que no se cumplen
+      if (errorCount > 3) {
+        Swal.fire({
+          title: "Oops...",
+          text: "Por favor, llene el formulario correctamente",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 3000,
+          width: "400px",
+          timerProgressBar: true,
+        });
+        return false; // Evita el envío del formulario
+      } else if (
         !isCountryValid ||
         !isPortValid ||
         !isPortFinalValid ||
@@ -2412,10 +2448,9 @@ export default {
         emailValidation
       ) {
         Swal.fire({
+          title: "Oops...",
           text: message,
           icon: "error",
-          toast: true,
-          position: "center",
           showConfirmButton: false,
           timer: 3000,
           width: "400px", // Ajusta el ancho según tus necesidades

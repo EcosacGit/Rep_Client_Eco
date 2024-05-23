@@ -22,9 +22,9 @@ class FormService implements IFormService
         $this->client = new Client();
     }
 
-    public function getForm($idClient)
+    public function getForm()
     {
-        return $this->formRepository->getForm($idClient);
+        return $this->formRepository->getForm();
     }
 
     public function getFormAddressEmail()

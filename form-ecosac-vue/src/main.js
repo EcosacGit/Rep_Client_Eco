@@ -148,6 +148,7 @@ const messages = {
       otherCheck: "Otros (especificar)",
 
       swal: "Fill the fields: ",
+      swal3: "Complete the form before send",
 
       //REDIRECT PAGE
       thanks: "Thank You for Submitting the Form!",
@@ -276,6 +277,8 @@ const messages = {
       thanks: "¡Gracias por completar el formulario!",
       thanks2:
         "Apreciamos su tiempo y esfuerzo. Su envío ha sido recibido exitosamente.",
+
+      swal3: "Completa todo el formulario antes de enviar",
     },
   },
 };

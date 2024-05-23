@@ -4,7 +4,7 @@ namespace App\Services\Form\Contracts;
 
 interface IFormService
 {
-    public function getForm($idClient);
+    public function getForm();
     public function getFormAddressEmail();
     public function getFormAddressOriginalsDoc();
 

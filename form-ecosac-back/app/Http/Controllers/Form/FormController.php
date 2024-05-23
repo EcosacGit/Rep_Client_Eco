@@ -19,9 +19,9 @@ class FormController extends Controller
         $this->formService = $formService;
     }
 
-    public function get_form(Request $request)
+    public function get_form()
     {
-        $response = $this->formService->getForm($request->idClient);
+        $response = $this->formService->getForm();
 
         return response()->json($response);
     }

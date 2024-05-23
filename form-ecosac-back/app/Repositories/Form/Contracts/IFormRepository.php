@@ -4,7 +4,7 @@ namespace App\Repositories\Form\Contracts;
 
 interface IFormRepository
 {
-    public function getForm($idClient);
+    public function getForm();
     public function getFormAddressEmail();
     public function getFormAddressOriginalsDoc();
 
