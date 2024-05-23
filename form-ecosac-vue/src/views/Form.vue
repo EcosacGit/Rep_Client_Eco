@@ -1831,7 +1831,7 @@ export default {
 
     getClientData() {
       let param = {
-        bspCardCode: "CE00000000367",
+        bspCardCode: "CE00000000127",
       };
       _Form
         .showBusinessPartners(param)
@@ -2186,6 +2186,9 @@ export default {
       } else if (this.certificateInfoAdd == true) {
         certificateInfoAdd = this.textFieldValuePhytoInfoAdd;
       }
+      if (this.nameConsignee) {
+        this.createDataConsignee();
+      }
 
       this.createDataNotifier();
 
@@ -2485,12 +2488,13 @@ export default {
           this.createPortFinal();
         }
 
-        if (this.nameConsignee) {
-          this.createDataConsignee();
-        }
-
         if (this.isSendPhysicalDocument) {
           this.createSendPhysicalDocuments();
+        }
+
+        if (this.freightPayerInfoAdd == null) {
+          this.freightPayerInfoAdd =
+            "No se agrego información adicional respecto al pago flete";
         }
 
         console.log("nameNotifier value:", this.nameNotifier);
