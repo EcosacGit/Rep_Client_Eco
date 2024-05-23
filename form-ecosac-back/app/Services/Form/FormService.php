@@ -13,7 +13,7 @@ use GuzzleHttp\Exception\ServerException;
 class FormService implements IFormService
 {
     protected $formRepository;
-    protected $client;
+    public $client;
 
 
     public function __construct(IFormRepository $formRepository)
