@@ -14,14 +14,17 @@ class FormRepository implements IFormRepository
         return $result;
     }
 
-    public function getFormAddressEmail()
+    public function getFormAddressEmail($idClient, $idDataConsignee)
     {
-        return DB::select('EXEC Form_GetFormAddressEmail');
+        return DB::select(
+            'EXEC Form_GetFormAddressEmail ?, ?',
+            [$idClient, $idDataConsignee]
+        );
     }
 
-    public function getFormAddressOriginalsDoc()
+    public function getFormAddressOriginalsDoc($idClient, $idDataConsignee)
     {
-        return DB::select('EXEC Form_GetFormAddressOriginalsDoc');
+        return DB::select('EXEC Form_GetFormAddressOriginalsDoc ?, ?', [$idClient, $idDataConsignee]);
     }
 
     public function getFormCountryEN()
@@ -34,14 +37,14 @@ class FormRepository implements IFormRepository
         return DB::select('EXEC Form_GetFormCountryES');
     }
 
-    public function getFormDataConsignee()
+    public function getFormDataConsignee($idClient)
     {
-        return DB::select('EXEC Form_GetFormDataConsignee');
+        return DB::select('EXEC Form_GetFormDataConsignee ?', [$idClient]);
     }
 
-    public function getFormDataNotifier()
+    public function getFormDataNotifier($idDataConsignee)
     {
-        return DB::select('EXEC Form_GetFormDataNotifier');
+        return DB::select('EXEC Form_GetFormDataNotifier ?', [$idDataConsignee]);
     }
 
     public function getFormPort($idCountry)
@@ -56,14 +59,17 @@ class FormRepository implements IFormRepository
         return $result;
     }
 
-    public function getFormRequiredDocuments()
+    public function getFormRequiredDocuments($idClient, $idDataConsignee)
     {
-        return DB::select('EXEC Form_GetFormRequiredDocuments');
+        return DB::select('EXEC Form_GetFormRequiredDocuments ? , ?', [$idClient, $idDataConsignee]);
     }
 
-    public function getFormSendPhysicalDocuments()
+    public function getFormSendPhysicalDocuments($idClient, $idDataConsignee)
     {
-        return DB::select('EXEC Form_GetFormSendPhysicalDocuments');
+        return DB::select(
+            'EXEC Form_GetFormSendPhysicalDocuments ? , ?',
+            [$idClient, $idDataConsignee]
+        );
     }
 
     //METHODS POST

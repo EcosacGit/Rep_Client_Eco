@@ -5,17 +5,19 @@ namespace App\Services\Form\Contracts;
 interface IFormService
 {
     public function getForm();
-    public function getFormAddressEmail();
-    public function getFormAddressOriginalsDoc();
+    public function getFormAddressEmail($idClient, $idDataConsignee);
+    public function getFormAddressOriginalsDoc($idClient, $idDataConsignee);
 
     public function getFormCountryEN();
     public function getFormCountryES();
-    public function getFormDataConsignee();
-    public function getFormDataNotifier();
+    public function getFormDataConsignee($idClient);
+    public function getFormDataNotifier($idDataConsignee);
     public function getFormPort($idCountry);
     public function getFormPortDestination($idCountry);
-    public function getFormRequiredDocuments();
-    public function getFormSendPhysicalDocuments();
+    public function getFormRequiredDocuments($idClient, $idDataConsignee);
+    public function getFormSendPhysicalDocuments($idClient, $idDataConsignee);
+
+
     public function createFormCountry($data);
     public function createFormAddressEmail($data);
     public function createFormAddressOriginalsDoc($data);

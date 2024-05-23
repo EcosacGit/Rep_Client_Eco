@@ -1497,6 +1497,7 @@ export default {
       newEmail: {
         email: "",
       },
+      emailAdded: false,
 
       //send scanning o physical documents
       isSendScanning: false,
@@ -1738,6 +1739,7 @@ export default {
 
     addEmail() {
       this.emails.push(Object.assign({}, this.newEmail));
+      this.emailAdded = true; // Actualiza la bandera
     },
 
     addSendPhysicalDocument() {
@@ -2454,6 +2456,19 @@ export default {
           showConfirmButton: false,
           timer: 3000,
           width: "400px", // Ajusta el ancho según tus necesidades
+          timerProgressBar: true,
+        });
+        return false; // Evita el envío del formulario
+      }
+
+      if (!this.emailAdded) {
+        Swal.fire({
+          title: "Oops...",
+          text: "Por favor, añada su dirección de correo electrónico",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 3000,
+          width: "400px",
           timerProgressBar: true,
         });
         return false; // Evita el envío del formulario

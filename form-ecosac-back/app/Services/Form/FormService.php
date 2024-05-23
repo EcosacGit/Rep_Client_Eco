@@ -27,14 +27,14 @@ class FormService implements IFormService
         return $this->formRepository->getForm();
     }
 
-    public function getFormAddressEmail()
+    public function getFormAddressEmail($idClient, $idDataConsignee)
     {
-        return $this->formRepository->getFormAddressEmail();
+        return $this->formRepository->getFormAddressEmail($idClient, $idDataConsignee);
     }
 
-    public function getFormAddressOriginalsDoc()
+    public function getFormAddressOriginalsDoc($idClient, $idDataConsignee)
     {
-        return $this->formRepository->getFormAddressOriginalsDoc();
+        return $this->formRepository->getFormAddressOriginalsDoc($idClient, $idDataConsignee);
     }
 
     public function getFormCountryEN()
@@ -46,14 +46,14 @@ class FormService implements IFormService
         return $this->formRepository->getFormCountryES();
     }
 
-    public function getFormDataConsignee()
+    public function getFormDataConsignee($idClient)
     {
-        return $this->formRepository->getFormDataConsignee();
+        return $this->formRepository->getFormDataConsignee($idClient);
     }
 
-    public function getFormDataNotifier()
+    public function getFormDataNotifier($idDataConsignee)
     {
-        return $this->formRepository->getFormDataNotifier();
+        return $this->formRepository->getFormDataNotifier($idDataConsignee);
     }
 
     public function getFormPort($idCountry)
@@ -66,14 +66,14 @@ class FormService implements IFormService
         return $this->formRepository->getFormPortDestination($idCountry);
     }
 
-    public function getFormRequiredDocuments()
+    public function getFormRequiredDocuments($idClient, $idDataConsignee)
     {
-        return $this->formRepository->getFormRequiredDocuments();
+        return $this->formRepository->getFormRequiredDocuments($idClient, $idDataConsignee);
     }
 
-    public function getFormSendPhysicalDocuments()
+    public function getFormSendPhysicalDocuments($idClient, $idDataConsignee)
     {
-        return $this->formRepository->getFormSendPhysicalDocuments();
+        return $this->formRepository->getFormSendPhysicalDocuments($idClient, $idDataConsignee);
     }
 
     public function createFormCountry($data)

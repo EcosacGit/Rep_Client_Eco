@@ -26,15 +26,26 @@ class FormController extends Controller
         return response()->json($response);
     }
 
-    public function get_form_address_email()
+    public function get_form_address_email(Request $request)
     {
-        $response = $this->formService->getFormAddressEmail();
+        $idClient = $request->input('idClient');
+        $idDataConsignee = $request->input('idDataConsignee');
+
+        $response = $this->formService->getFormAddressEmail(
+            $idClient,
+            $idDataConsignee
+        );
+
         return response()->json($response);
     }
 
-    public function get_form_address_originals_doc()
+    public function get_form_address_originals_doc(Request $request)
     {
-        $response = $this->formService->getFormAddressOriginalsDoc();
+        $idClient = $request->input('idClient');
+        $idDataConsignee = $request->input('idDataConsignee');
+
+        $response = $this->formService->getFormAddressOriginalsDoc($idClient, $idDataConsignee);
+
         return response()->json($response);
     }
 
@@ -50,15 +61,15 @@ class FormController extends Controller
         return response()->json($response);
     }
 
-    public function get_form_data_consignee()
+    public function get_form_data_consignee(Request $request)
     {
-        $response = $this->formService->getFormDataConsignee();
+        $response = $this->formService->getFormDataConsignee($request->idClient);
         return response()->json($response);
     }
 
-    public function get_form_data_notifier()
+    public function get_form_data_notifier(Request $request)
     {
-        $response = $this->formService->getFormDataNotifier();
+        $response = $this->formService->getFormDataNotifier($request->idDataConsignee);
         return response()->json($response);
     }
 
@@ -74,15 +85,24 @@ class FormController extends Controller
         return response()->json($response);
     }
 
-    public function get_form_required_documents()
+    public function get_form_required_documents(Request $request)
     {
-        $response = $this->formService->getFormRequiredDocuments();
+        $idClient = $request->input('idClient');
+        $idDataConsignee = $request->input('idDataConsignee');
+
+        $response = $this->formService->getFormRequiredDocuments($idClient, $idDataConsignee);
+
         return response()->json($response);
     }
 
-    public function get_form_send_physical_documents()
+    public function get_form_send_physical_documents(Request $request)
     {
-        $response = $this->formService->getFormSendPhysicalDocuments();
+
+        $idClient = $request->input('idClient');
+        $idDataConsignee = $request->input('idDataConsignee');
+
+        $response = $this->formService->getFormSendPhysicalDocuments($idClient, $idDataConsignee);
+
         return response()->json($response);
     }
 
