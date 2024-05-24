@@ -242,43 +242,42 @@ class FormService implements IFormService
     {
         $url = 'http://api.ecosac.com.pe:58000/api/maeBusinessPartner/get-business-partner-by-id';
 
-        try {
-            $response = $this->client->request('POST', $url, [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => $postData,
-            ]);
+        $ch = curl_init($url);
 
-            $statusCode = $response->getStatusCode();
-            $body = $response->getBody()->getContents();
+        $payload = json_encode($postData);
 
-            if ($statusCode == 200) {
-                return json_decode($body, true);
-            }
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Accept: application/json',
+            'Content-Type: application/json',
+        ]);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 
+        $response = curl_exec($ch);
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if (curl_errno($ch)) {
+            $error_msg = curl_error($ch);
+        }
+
+        curl_close($ch);
+
+        if (isset($error_msg)) {
             return [
-                'error' => 'Failed to fetch data',
-                'status' => $statusCode,
-            ];
-        } catch (ClientException $e) {
-            // Errores 4xx
-            return [
-                'error' => 'Client error: ' . $e->getMessage(),
-                'response' => $e->getResponse()->getBody()->getContents(),
-            ];
-        } catch (ServerException $e) {
-            // Errores 5xx
-            return [
-                'error' => 'Server error: ' . $e->getMessage(),
-                'response' => $e->getResponse()->getBody()->getContents(),
-            ];
-        } catch (RequestException $e) {
-            // Otros errores de la solicitud
-            return [
-                'error' => 'Request error: ' . $e->getMessage(),
+                'error' => 'cURL error: ' . $error_msg,
             ];
         }
+
+        if ($httpCode == 200) {
+            return json_decode($response, true);
+        }
+
+        return [
+            'error' => 'Failed to fetch data',
+            'status' => $httpCode,
+            'response' => $response,
+        ];
     }
 }
