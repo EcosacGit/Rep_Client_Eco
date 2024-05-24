@@ -66,6 +66,7 @@ Route::post('form/create-send-physical-documents', [FormController::class, 'crea
 
 Route::post('form/create', [FormController::class, 'create']);
 Route::post('form/upload-file', [FormController::class, 'uploadFile']);
+Route::post('form/download-file', [FormController::class, 'downloadFile']);
 
 //Third Api
 Route::post('form/get-business-partner-by-id', [FormController::class, 'showBusinessPartners']);

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Services\Form\Contracts\IFormService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -266,6 +268,39 @@ class FormController extends Controller
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+
+    public function downloadFile(Request $request)
+    {
+        try {
+            $fileName = $request->input('fileName');
+
+            $filePath = '\\\\10.10.100.155\\Sistemas_Fotos\\Cliente_Exportaciones\\Formulario\\' . $fileName;
+
+            if (!file_exists($filePath)) {
+                throw new Exception('File not found');
+            }
+
+            if (!Storage::disk('cliente_exportaciones')->exists($fileName)) {
+                throw new Exception('File not found');
+            }
+
+            $file = Storage::disk('cliente_exportaciones')->get($fileName);
+            $mimeType = Storage::disk('cliente_exportaciones')->mimeType($fileName);
+
+            $headers = [
+                'Content-Type' => $mimeType,
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            ];
+
+            return response()->make($file, 200, $headers);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+
     public function showBusinessPartners(Request $request)
     {
         try {

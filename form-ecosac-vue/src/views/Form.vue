@@ -117,6 +117,7 @@
                   outlined
                   variant="underlined"
                   color="success"
+                  class="code"
                   v-model="selectedCountryField"
                 ></v-text-field>
                 <small v-if="!selectedCountry" class="text-red"
@@ -1831,7 +1832,7 @@ export default {
 
     getClientData() {
       let param = {
-        bspCardCode: "CE00000000367",
+        bspCardCode: "CE00000000475",
       };
       _Form
         .showBusinessPartners(param)
@@ -2187,8 +2188,6 @@ export default {
         certificateInfoAdd = this.textFieldValuePhytoInfoAdd;
       }
 
-      this.createDataNotifier();
-
       //direccion envio
       let isConsigneeSendDoc;
       let isNotifierSendDoc;
@@ -2485,12 +2484,16 @@ export default {
           this.createPortFinal();
         }
 
-        if (this.nameConsignee) {
-          this.createDataConsignee();
-        }
-
         if (this.isSendPhysicalDocument) {
           this.createSendPhysicalDocuments();
+        }
+
+        this.createDataConsignee();
+        this.createDataNotifier();
+
+        if (this.freightPayerInfoAdd == null) {
+          this.freightPayerInfoAdd =
+            "No se agrego información adicional respecto al pago flete";
         }
 
         console.log("nameNotifier value:", this.nameNotifier);
