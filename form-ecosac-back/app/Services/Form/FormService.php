@@ -238,39 +238,74 @@ class FormService implements IFormService
         }
     }
 
+    // public function getBusinessPartners($postData)
+    // {
+    //     $url = 'http://api.ecosac.com.pe:58000/api/maeBusinessPartner/get-business-partner-by-id';
+
+    //     try {
+    //         $response = $this->client->request('POST', $url, [
+    //             'headers' => [
+    //                 'Accept' => 'application/json',
+    //                 'Content-Type' => 'application/json',
+    //             ],
+    //             'json' => $postData,
+    //         ]);
+
+    //         $statusCode = $response->getStatusCode();
+    //         $body = $response->getBody()->getContents();
+
+    //         if ($statusCode == 200) {
+    //             return json_decode($body, true);
+    //         }
+
+    //         return [
+    //             'error' => 'Failed to fetch data',
+    //             'status' => $statusCode,
+    //         ];
+    //     } catch (ClientException $e) {
+    //         // Errores 4xx
+    //         return [
+    //             'error' => 'Client error: ' . $e->getMessage(),
+    //             'response' => $e->getResponse()->getBody()->getContents(),
+    //         ];
+    //     } catch (ServerException $e) {
+    //         // Errores 5xx
+    //         return [
+    //             'error' => 'Server error: ' . $e->getMessage(),
+    //             'response' => $e->getResponse()->getBody()->getContents(),
+    //         ];
+    //     } catch (RequestException $e) {
+    //         // Otros errores de la solicitud
+    //         return [
+    //             'error' => 'Request error: ' . $e->getMessage(),
+    //         ];
+    //     }
+    // }
+
     public function getBusinessPartners($postData)
     {
         $url = 'http://api.ecosac.com.pe:58000/api/maeBusinessPartner/get-business-partner-by-id';
 
-        $ch = curl_init($url);
+        $options = [
+            'http' => [
+                'header' => "Content-Type: application/json\r\n" .
+                    "Accept: application/json\r\n",
+                'method' => 'POST',
+                'content' => json_encode($postData),
+            ],
+        ];
 
-        $payload = json_encode($postData);
+        $context = stream_context_create($options);
+        $response = file_get_contents($url, false, $context);
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Accept: application/json',
-            'Content-Type: application/json',
-        ]);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-
-        $response = curl_exec($ch);
-
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        if (curl_errno($ch)) {
-            $error_msg = curl_error($ch);
-        }
-
-        curl_close($ch);
-
-        if (isset($error_msg)) {
+        if ($response === FALSE) {
             return [
-                'error' => 'cURL error: ' . $error_msg,
+                'error' => 'Failed to fetch data',
             ];
         }
 
-        if ($httpCode == 200) {
+        $httpCode = $http_response_header[0];
+        if (strpos($httpCode, "200") !== false) {
             return json_decode($response, true);
         }
 
