@@ -117,6 +117,7 @@
                   outlined
                   variant="underlined"
                   color="success"
+                  class="code"
                   v-model="selectedCountryField"
                 ></v-text-field>
                 <small v-if="!selectedCountry" class="text-red"
@@ -1831,7 +1832,7 @@ export default {
 
     getClientData() {
       let param = {
-        bspCardCode: "CE00000000127",
+        bspCardCode: "CE00000000475",
       };
       _Form
         .showBusinessPartners(param)
