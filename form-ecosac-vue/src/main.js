@@ -17,6 +17,8 @@ import Form from "./views/Form.vue";
 import RedirectPage from "./views/RedirectPage.vue";
 import { createMemoryHistory, createRouter } from "vue-router";
 
+import axiosInstances from "axios"; // Import the Axios configuration
+
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
@@ -305,9 +307,13 @@ const vuetify = createVuetify({
   directives,
 });
 
-createApp(Core)
+const app = createApp(Core)
   .use(vuetify)
   .use(i18n)
   .use(VueSweetalert2)
-  .use(router)
-  .mount("#app");
+  .use(router);
+
+app.config.globalProperties.$axios = axiosInstances.api;
+app.config.globalProperties.$urlApi = axiosInstances.urlApi;
+
+app.mount("#app");
