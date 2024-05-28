@@ -1936,8 +1936,10 @@ export default {
 
     //jalar el id !!
     getClientData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bspCardCode = urlParams.get("bspCardCode");
       let param = {
-        bspCardCode: "CE00000000475",
+        bspCardCode: bspCardCode,
       };
       _Form
         .showBusinessPartners(param)

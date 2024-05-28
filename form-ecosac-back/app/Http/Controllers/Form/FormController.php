@@ -302,7 +302,7 @@ class FormController extends Controller
     {
         try {
             $postData = $request->all(); // Obtener todos los datos del formulario
-            
+
 
             $businessPartners = $this->formService->getBusinessPartners($postData);
 
