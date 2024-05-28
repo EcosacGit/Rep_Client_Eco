@@ -282,7 +282,7 @@ class FormService implements IFormService
     //     }
     // }
 
-    public function getBusinessPartners($postData)
+   /* public function getBusinessPartners($postData)
     {
         $url = 'http://api.ecosac.com.pe:58000/api/maeBusinessPartner/get-business-partner-by-id';
 
@@ -305,6 +305,45 @@ class FormService implements IFormService
         }
 
         $httpCode = $http_response_header[0];
+        if (strpos($httpCode, "200") !== false) {
+            return json_decode($response, true);
+        }
+
+        return [
+            'error' => 'Failed to fetch data',
+            'status' => $httpCode,
+            'response' => $response,
+        ];
+    }*/
+    public function getBusinessPartners($postData)
+    {
+        $url = 'http://api.ecosac.com.pe:58000/api/maeBusinessPartner/get-business-partner-by-id';
+
+        $curl = curl_init($url);
+
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_HTTPHEADER => [
+                "Content-Type: application/json",
+                "Accept: application/json",
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        if ($response === false) {
+            $error = curl_error($curl);
+            curl_close($curl);
+            return [
+                'error' => "Failed to fetch data: $error",
+            ];
+        }
+
+        curl_close($curl);
+
         if (strpos($httpCode, "200") !== false) {
             return json_decode($response, true);
         }
