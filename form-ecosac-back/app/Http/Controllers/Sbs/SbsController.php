@@ -3,33 +3,34 @@
 namespace App\Http\Controllers\Sbs;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
+use App\Services\Sbs\Contracts\ISbsService;
+use Exception;
 use Illuminate\Http\Request;
 
 
 class SbsController extends Controller
 {
+    protected $sbsService;
+
+    public function __construct(ISbsService $sbsService)
+    {
+        $this->sbsService = $sbsService;
+    }
+
     public function obtenerTipoCambio(Request $request)
     {
-        $token = env('TOKENSBS');
-        $client = new Client();
-        $url = env('URLSBS');
-        $month = $request->input('month');
-        $year = $request->input('year');
+        try {
+            $postData = $request->all(); // Obtener todos los datos del formulario
 
-        $response = $client->get($url, [
-            'query' => [
-                'month' => $month,
-                'year' => $year,
-            ],
-            'headers' =>
-            [
-                'Authorization' => "Bearer {$token}"
-            ]
-        ]);
+            $businessPartners = $this->sbsService->obtenerTipoCambio($postData);
 
-        $data = json_decode($response->getBody());
+            if (isset($businessPartners['error'])) {
+                return response()->json($businessPartners, 500);
+            }
 
-        return response()->json($data);
+            return response()->json($businessPartners, 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
