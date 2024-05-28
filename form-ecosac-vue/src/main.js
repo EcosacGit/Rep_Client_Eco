@@ -39,7 +39,7 @@ const messages = {
       },
     },
     form: {
-      title: "Ecosac Form",
+      title: "ECOSAC CUSTOMER INFORMATION FORM",
       nameClient: "Customer Name",
       country: "Destination Country",
       puertoDestino: "Port of Discharge",
@@ -145,7 +145,7 @@ const messages = {
       originCheck: "Certificate of Origen",
       packingCheck: "Packing List",
       phytoDataCheck: "PhytoSanitary Certificate",
-      otherCheck: "Otros (especificar)",
+      otherCheck: "Other (describe) ",
 
       swal: "Fill the fields: ",
       swal3: "Complete the form before send",
@@ -165,7 +165,7 @@ const messages = {
       },
     },
     form: {
-      title: "Formulario Ecosac",
+      title: "FORMULARIO PARA INFORMACIÓN DE CLIENTES ECOSAC",
       nameClient: "Nombre del Cliente",
       country: "País de Destino",
       puertoDestino: "Puerto de Destino",

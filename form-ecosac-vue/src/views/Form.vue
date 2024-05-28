@@ -3,7 +3,7 @@
     <div
       style="
         display: flex;
-        width: 90%;
+        width: 93%;
         margin: 0 auto;
         justify-content: space-between;
       "
@@ -22,7 +22,7 @@
         color="success"
       ></v-switch>
     </div>
-    <v-card elevation="0" flat dense outlined rounded class="mt-1 mb-1">
+    <v-card elevation="0" flat dense outlined rounded class="mb-1">
       <v-card-text>
         <v-container class="mb-4">
           <v-form ref="miFormulario" v-model="isFormValid" lazy-validation>
@@ -32,6 +32,8 @@
                 <v-text-field
                   outlined
                   color="success"
+                  class="mt-2"
+                  variant="solo-filled"
                   v-model="clientName"
                   readonly
                 ></v-text-field>
@@ -50,6 +52,8 @@
                       v-model="selectedCountry"
                       :items="country.map((item) => item.descCountry)"
                       item-text="descCountry"
+                      variant="solo-filled"
+                      class="mt-2"
                       item-value="idCountry"
                       color="success"
                       return-object
@@ -75,6 +79,8 @@
                       :items="port.map((item) => item.descPort)"
                       item-value="idPort"
                       item-text="descPort"
+                      variant="solo-filled"
+                      class="mt-2"
                       color="success"
                       return-object
                       dense
@@ -99,6 +105,8 @@
                       :items="portFinal.map((item) => item.descPortFinal)"
                       item-value="idPortFinal"
                       item-text="descPortFinal"
+                      variant="solo-filled"
+                      class="mt-2"
                       return-object
                       color="success"
                       dense
@@ -198,6 +206,8 @@
                     <label class="label-field">{{ $t("form.billName") }}</label>
                     <v-select
                       v-model="billNameSelectedOption"
+                      variant="solo-filled"
+                      class="mt-2"
                       :items="billNameOptions"
                       outlined
                       color="success"
@@ -215,6 +225,7 @@
                   >
                     <v-text-field
                       outlined
+                      variant="solo-filled"
                       color="success"
                       v-model="billNameCustomOption"
                       dense
@@ -231,6 +242,8 @@
                       v-model="billDirectionSelectedOption"
                       :items="billDirectionOptions"
                       outlined
+                      class="mt-2"
+                      variant="solo-filled"
                       dense
                       color="success"
                       @change="toggleTextFieldBillDirection"
@@ -246,6 +259,7 @@
                   >
                     <v-text-field
                       outlined
+                      variant="solo-filled"
                       color="success"
                       v-model="billDirectionCustomOption"
                       dense
@@ -270,6 +284,7 @@
                     <v-text-field
                       outlined
                       v-model="textFieldValueInfoBill"
+                      variant="solo-filled"
                       color="success"
                       dense
                     ></v-text-field>
@@ -297,6 +312,8 @@
                     }}</label>
                     <v-text-field
                       outlined
+                      variant="solo-filled"
+                      class="mt-2"
                       color="success"
                       v-model="freigthPayer"
                     ></v-text-field>
@@ -308,6 +325,8 @@
                     <v-text-field
                       outlined
                       color="success"
+                      variant="solo-filled"
+                      class="mt-2"
                       v-model="placePayment"
                     ></v-text-field>
                   </v-col>
@@ -364,6 +383,8 @@
                     }}</label>
                     <v-text-field
                       outlined
+                      variant="solo-filled"
+                      class="mt-2"
                       v-model="freightPayerInfoAdd"
                       color="success"
                       dense
@@ -391,6 +412,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="nameConsignee"
                         required
                       ></v-text-field>
@@ -402,6 +425,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="directionConsignee"
                         required
                       ></v-text-field>
@@ -412,6 +437,8 @@
                       }}</label>
                       <v-text-field
                         outlined
+                        variant="solo-filled"
+                        class="mt-2"
                         color="success"
                         v-model="telf1Consignee"
                         required
@@ -427,6 +454,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="telf2Consignee"
                         required
                       ></v-text-field>
@@ -436,6 +465,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="EORIConsignee"
                       ></v-text-field>
                     </v-col>
@@ -447,6 +478,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="faxConsignee"
                         required
                       ></v-text-field>
@@ -458,6 +491,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="contactPersonConsignee"
                         required
                       ></v-text-field>
@@ -467,6 +502,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="taxIDConsignee"
                         required
                       ></v-text-field>
@@ -479,6 +516,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="emailConsignee"
                         required
                       ></v-text-field>
@@ -490,6 +529,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="webisteConsignee"
                       ></v-text-field>
                     </v-col>
@@ -517,6 +558,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="notifier.nameNotifier"
                           required
                         ></v-text-field>
@@ -527,6 +570,8 @@
                         </label>
                         <v-text-field
                           outlined
+                          variant="solo-filled"
+                          class="mt-2"
                           color="success"
                           v-model="notifier.directionNotifier"
                           required
@@ -539,6 +584,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="notifier.telf1Notifier"
                           required
                         ></v-text-field>
@@ -553,6 +600,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="notifier.telf2Notifier"
                           required
                         ></v-text-field>
@@ -562,6 +611,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="notifier.EORINotifier"
                         ></v-text-field>
                       </v-col>
@@ -573,6 +624,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="notifier.faxNotifier"
                           required
                         ></v-text-field>
@@ -584,6 +637,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="notifier.contactPersonNotifier"
                           required
                         ></v-text-field>
@@ -595,6 +650,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="notifier.taxIDNotifier"
                           required
                         ></v-text-field>
@@ -609,6 +666,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="notifier.emailNotifier"
                           required
                         ></v-text-field>
@@ -619,6 +678,8 @@
                         }}</label>
                         <v-text-field
                           outlined
+                          variant="solo-filled"
+                          class="mt-2"
                           color="success"
                           v-model="notifier.websiteNotifier"
                         ></v-text-field>
@@ -631,7 +692,7 @@
                     @click="addNotifier"
                     style="
                       background-color: #def1c1;
-                      width: 20%;
+                      width: 25%;
                       padding: 1rem 0 2rem 0;
                     "
                   >
@@ -646,6 +707,8 @@
                       outlined
                       v-model="BLInfoAdd"
                       color="success"
+                      variant="solo-filled"
+                      class="mt-2"
                       dense
                     ></v-text-field>
                   </v-col>
@@ -691,6 +754,8 @@
                         v-model="phytoNameSelectedOption"
                         :items="phytoNameOptions"
                         outlined
+                        variant="solo-filled"
+                        class="mt-2"
                         color="success"
                         dense
                         @change="toggleTextFieldPhytoName"
@@ -706,6 +771,7 @@
                     >
                       <v-text-field
                         outlined
+                        variant="solo-filled"
                         color="success"
                         v-model="phytoNameCustomOption"
                         dense
@@ -722,6 +788,8 @@
                         :items="phytoAddressOptions"
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         dense
                         @change="toggleTextFieldPhytoAddress"
                       ></v-select>
@@ -737,6 +805,7 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
                         v-model="phytoAddressCustomOption"
                         dense
                       ></v-text-field>
@@ -750,6 +819,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="phytoCountryPort"
                       ></v-text-field>
                     </v-col>
@@ -760,6 +831,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="phytoTransitCountry"
                       ></v-text-field>
                     </v-col>
@@ -784,6 +857,7 @@
                         outlined
                         v-model="textFieldValuePhytoInfoAdd"
                         color="success"
+                        variant="solo-filled"
                         dense
                       ></v-text-field>
                     </v-col>
@@ -797,6 +871,8 @@
                       <v-file-input
                         v-model="phytoExportSENASA"
                         :label="$t('form.senasa')"
+                        variant="solo-filled"
+                        class="mt-2"
                         accept=".doc,.docx,.xls,.xlsx,.pdf,.txt,.csv,.ppt,.pptx,.jpg,.jpeg,.png,.gif"
                         @change="onFileChange"
                       ></v-file-input>
@@ -826,6 +902,8 @@
                         :items="certificateNameOriginOptions"
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         dense
                         @change="toggleTextFieldCertificateNameOrigin"
                       ></v-select>
@@ -842,6 +920,7 @@
                     >
                       <v-text-field
                         outlined
+                        variant="solo-filled"
                         color="success"
                         v-model="certificateNameOriginCustomOption"
                         dense
@@ -860,6 +939,8 @@
                         outlined
                         color="success"
                         dense
+                        variant="solo-filled"
+                        class="mt-2"
                         @change="toggleTextFieldCertificateAddressOrigin"
                       ></v-select>
                     </v-col>
@@ -876,6 +957,7 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
                         v-model="certificateAddressOriginCustomOption"
                         dense
                       ></v-text-field>
@@ -901,6 +983,7 @@
                         outlined
                         v-model="textFieldValueCertificateInfoAdd"
                         color="success"
+                        variant="solo-filled"
                         dense
                       ></v-text-field>
                     </v-col>
@@ -990,6 +1073,7 @@
                     <v-col cols="12" class="s-col-form">
                       <v-text-field
                         outlined
+                        variant="solo-filled"
                         v-model="OtherCertText"
                         label="Detalles de otros certificado"
                       ></v-text-field>
@@ -1019,7 +1103,7 @@
                     >
                   </v-row>
                   <v-row class="mt-1">
-                    <v-col cols="6" class="s-col-form">
+                    <v-col cols="5" class="s-col-form">
                       <v-checkbox
                         v-model="isConsigneeSendDoc"
                         :label="$t('form.consigneSend')"
@@ -1078,6 +1162,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="otherSend.nameCompany"
                           required
                         ></v-text-field>
@@ -1089,6 +1175,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="otherSend.addressCompany"
                           required
                         ></v-text-field>
@@ -1100,6 +1188,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="otherSend.telef"
                           required
                         ></v-text-field>
@@ -1114,6 +1204,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="otherSend.contactPerson"
                           required
                         ></v-text-field>
@@ -1125,6 +1217,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="otherSend.taxID"
                           required
                         ></v-text-field>
@@ -1139,6 +1233,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="otherSend.emailAddress"
                           required
                         ></v-text-field>
@@ -1150,6 +1246,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="otherSend.country"
                           required
                         ></v-text-field>
@@ -1160,6 +1258,8 @@
                         }}</label>
                         <v-text-field
                           outlined
+                          variant="solo-filled"
+                          class="mt-2"
                           color="success"
                           v-model="otherSend.city"
                           required
@@ -1175,6 +1275,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="otherSend.state_city"
                         ></v-text-field>
                       </v-col>
@@ -1185,6 +1287,8 @@
                         <v-text-field
                           outlined
                           color="success"
+                          variant="solo-filled"
+                          class="mt-2"
                           v-model="otherSend.postalCode"
                         ></v-text-field>
                       </v-col>
@@ -1217,6 +1321,8 @@
                       <v-text-field
                         outlined
                         color="success"
+                        variant="solo-filled"
+                        class="mt-2"
                         v-model="email.email"
                         required
                       ></v-text-field>
@@ -1305,13 +1411,14 @@
                       </v-col>
                       <v-col
                         v-if="isSendPhysicalDocument.otherSendingPacking"
-                        cols="6"
+                        cols="4"
                         class="s-col-form align-self-end"
                       >
                         <v-text-field
                           outlined
                           v-model="textFieldValueOtherSendingPacking"
                           color="success"
+                          variant="solo-filled"
                           dense
                         ></v-text-field>
                       </v-col>
@@ -1335,9 +1442,6 @@
           >
         </v-tabs-items>
       </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-      </v-card-actions>
     </v-card>
   </div>
 </template>
@@ -1830,6 +1934,7 @@ export default {
         });
     },
 
+    //jalar el id !!
     getClientData() {
       let param = {
         bspCardCode: "CE00000000475",
@@ -2607,5 +2712,9 @@ export default {
 .reqDocPhy {
   margin-top: -1rem;
   margin-left: 2rem;
+}
+
+.v-card .v-card-text {
+  background-color: rgb(255, 255, 255);
 }
 </style>
