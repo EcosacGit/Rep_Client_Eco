@@ -22,7 +22,7 @@ export default {
   },
 
   getFormCountryES() {
-    return api.post(`${form}/get-form-country-es`);
+    return api.post(`${form}/get-form-country-es`, {});
   },
 
   getFormDataConsignee() {
