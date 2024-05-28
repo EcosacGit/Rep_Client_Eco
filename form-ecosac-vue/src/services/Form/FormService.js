@@ -1,6 +1,8 @@
-import { api } from "../Service";
+import { api, urlApi } from "../Service";
 
+///maeBusinessPartner/get-business-partner-by-id
 const form = "form";
+const maeBusinessPartner = "maeBusinessPartner";
 
 export default {
   getForm(obj, requestID) {
@@ -93,6 +95,6 @@ export default {
 
   //obtener tercerizado
   showBusinessPartners(obj, requestID) {
-    return api.post(form + "/get-business-partner-by-id", obj);
+    return urlApi.post(maeBusinessPartner + "/get-business-partner-by-id", obj);
   },
 };
