@@ -12,7 +12,8 @@ use App\Repositories\Form\Contracts\IFormRepository;
 use App\Services\Form\FormService;
 //IServices
 use App\Services\Form\Contracts\IFormService;
-
+use App\Services\Sbs\Contracts\ISbsService;
+use App\Services\Sbs\SbsService;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(IFormRepository::class, FormRepository::class);
         $this->app->bind(IFormService::class, FormService::class);
+        $this->app->bind(ISbsService::class, SbsService::class);
     }
 
 
