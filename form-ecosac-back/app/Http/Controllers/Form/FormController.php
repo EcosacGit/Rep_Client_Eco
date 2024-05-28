@@ -298,9 +298,6 @@ class FormController extends Controller
         }
     }
 
-
-
-
     public function showBusinessPartners(Request $request)
     {
         try {

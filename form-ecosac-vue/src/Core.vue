@@ -1,6 +1,14 @@
 <template>
   <v-app class="app scroll">
-    <router-view></router-view>
+    <router-view
+      style="
+        width: 90%;
+        margin: 0 auto;
+        background-color: rgb(255, 255, 255);
+        border-radius: 1rem;
+      "
+      class="mt-4 mb-4"
+    ></router-view>
   </v-app>
 </template>
 
@@ -25,5 +33,10 @@ export default {
 
 * {
   font-family: "Ubuntu";
+}
+.v-application,
+.app,
+.scroll {
+  background-color: rgb(248, 248, 247);
 }
 </style>

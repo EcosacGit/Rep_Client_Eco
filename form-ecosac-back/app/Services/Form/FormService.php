@@ -238,120 +238,44 @@ class FormService implements IFormService
         }
     }
 
-    // public function getBusinessPartners($postData)
-    // {
-    //     $url = 'http://api.ecosac.com.pe:58000/api/maeBusinessPartner/get-business-partner-by-id';
-
-    //     try {
-    //         $response = $this->client->request('POST', $url, [
-    //             'headers' => [
-    //                 'Accept' => 'application/json',
-    //                 'Content-Type' => 'application/json',
-    //             ],
-    //             'json' => $postData,
-    //         ]);
-
-    //         $statusCode = $response->getStatusCode();
-    //         $body = $response->getBody()->getContents();
-
-    //         if ($statusCode == 200) {
-    //             return json_decode($body, true);
-    //         }
-
-    //         return [
-    //             'error' => 'Failed to fetch data',
-    //             'status' => $statusCode,
-    //         ];
-    //     } catch (ClientException $e) {
-    //         // Errores 4xx
-    //         return [
-    //             'error' => 'Client error: ' . $e->getMessage(),
-    //             'response' => $e->getResponse()->getBody()->getContents(),
-    //         ];
-    //     } catch (ServerException $e) {
-    //         // Errores 5xx
-    //         return [
-    //             'error' => 'Server error: ' . $e->getMessage(),
-    //             'response' => $e->getResponse()->getBody()->getContents(),
-    //         ];
-    //     } catch (RequestException $e) {
-    //         // Otros errores de la solicitud
-    //         return [
-    //             'error' => 'Request error: ' . $e->getMessage(),
-    //         ];
-    //     }
-    // }
-
-   /* public function getBusinessPartners($postData)
-    {
-        $url = 'http://api.ecosac.com.pe:58000/api/maeBusinessPartner/get-business-partner-by-id';
-
-        $options = [
-            'http' => [
-                'header' => "Content-Type: application/json\r\n" .
-                    "Accept: application/json\r\n",
-                'method' => 'POST',
-                'content' => json_encode($postData),
-            ],
-        ];
-
-        $context = stream_context_create($options);
-        $response = file_get_contents($url, false, $context);
-
-        if ($response === FALSE) {
-            return [
-                'error' => 'Failed to fetch data',
-            ];
-        }
-
-        $httpCode = $http_response_header[0];
-        if (strpos($httpCode, "200") !== false) {
-            return json_decode($response, true);
-        }
-
-        return [
-            'error' => 'Failed to fetch data',
-            'status' => $httpCode,
-            'response' => $response,
-        ];
-    }*/
     public function getBusinessPartners($postData)
     {
-        $url = 'http://api.ecosac.com.pe:58000/api/maeBusinessPartner/get-business-partner-by-id';
+        $url = env('API_URL_PRODUCTION');
 
-        $curl = curl_init($url);
+        try {
+            $response = $this->client->request('POST', $url, [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $postData,
+            ]);
 
-        curl_setopt_array($curl, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => json_encode($postData),
-            CURLOPT_HTTPHEADER => [
-                "Content-Type: application/json",
-                "Accept: application/json",
-            ],
-        ]);
+            $statusCode = $response->getStatusCode();
+            $body = $response->getBody()->getContents();
 
-        $response = curl_exec($curl);
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            if ($statusCode == 200) {
+                return json_decode($body, true);
+            }
 
-        if ($response === false) {
-            $error = curl_error($curl);
-            curl_close($curl);
             return [
-                'error' => "Failed to fetch data: $error",
+                'error' => 'Failed to fetch data',
+                'status' => $statusCode,
+            ];
+        } catch (ClientException $e) {
+            return [
+                'error' => 'Client error: ' . $e->getMessage(),
+                'response' => $e->getResponse()->getBody()->getContents(),
+            ];
+        } catch (ServerException $e) {
+            return [
+                'error' => 'Server error: ' . $e->getMessage(),
+                'response' => $e->getResponse()->getBody()->getContents(),
+            ];
+        } catch (RequestException $e) {
+            return [
+                'error' => 'Request error: ' . $e->getMessage(),
             ];
         }
-
-        curl_close($curl);
-
-        if (strpos($httpCode, "200") !== false) {
-            return json_decode($response, true);
-        }
-
-        return [
-            'error' => 'Failed to fetch data',
-            'status' => $httpCode,
-            'response' => $response,
-        ];
     }
 }

@@ -70,3 +70,7 @@ Route::post('form/download-file', [FormController::class, 'downloadFile']);
 
 //Third Api
 Route::post('form/get-business-partner-by-id', [FormController::class, 'showBusinessPartners']);
+
+Route::middleware('guest')->group(function () {
+    Route::get('/obtener-tipo-cambio', [\App\Http\Controllers\Sbs\SbsController::class, 'obtenerTipoCambio']);
+});
