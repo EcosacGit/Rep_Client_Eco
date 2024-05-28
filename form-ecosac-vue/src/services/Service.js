@@ -6,6 +6,12 @@ import axios from "axios";
 //const baseURL = "http://api.ecosac.com.pe:58000/api_form_client/public/api/";
 const baseURL = "http://190.119.54.14:58000/api_form_client/public/api/";
 
+const baseUrlAPI = "http://api.ecosac.com.pe:58000/api/";
+
 export const api = axios.create({
   baseURL,
+});
+
+export const urlApi = axios.create({
+  baseURL: baseUrlAPI,
 });
