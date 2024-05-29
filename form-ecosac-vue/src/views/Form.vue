@@ -1937,10 +1937,21 @@ export default {
     //jalar el id !!
     getClientData() {
       const urlParams = new URLSearchParams(window.location.search);
-      const bspCardCode = urlParams.get("bspCardCode");
+      const paramsIterator = urlParams.entries();
+      const firstParam = paramsIterator.next().value;
+      let bspCardCode = null;
+
+      // Busca el primer parámetro después del signo de interrogación
+      if (firstParam) {
+        bspCardCode = firstParam[1];
+      }
+
+      // Verifica si se encontró algún valor de bspCardCode
+
       let param = {
-        bspCardCode: bspCardCode,
+        bspCardCode: firstParam[0],
       };
+
       _Form
         .showBusinessPartners(param)
         .then((response) => {
@@ -1954,8 +1965,9 @@ export default {
         .catch((error) => {
           console.log("error", error);
         });
-    },
 
+      console.log(firstParam);
+    },
     //CREATE
     createCountry() {
       let param = {
