@@ -263,6 +263,7 @@ class FormService implements IFormService
                 'status' => $statusCode,
             ];
         } catch (ClientException $e) {
+            // Errores 4xx
             return [
                 'error' => 'Client error: ' . $e->getMessage(),
                 'response' => $e->getResponse()->getBody()->getContents(),

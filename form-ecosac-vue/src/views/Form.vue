@@ -2579,6 +2579,8 @@ export default {
         return false; // Evita el envío del formulario
       }
 
+      this.createDataConsignee();
+
       if (!this.emailAdded) {
         Swal.fire({
           title: "Oops...",
@@ -2607,9 +2609,6 @@ export default {
           this.createSendPhysicalDocuments();
         }
 
-        this.createDataConsignee();
-        this.createDataNotifier();
-
         if (this.freightPayerInfoAdd == null) {
           this.freightPayerInfoAdd =
             "No se agrego información adicional respecto al pago flete";
@@ -2620,6 +2619,8 @@ export default {
         this.createRequiredDocument();
         this.createAddressOriginalsDoc();
         this.createAddressEmail();
+
+        this.createDataNotifier();
 
         let param = {
           idClient: this.idClient,
