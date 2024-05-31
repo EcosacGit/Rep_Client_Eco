@@ -39,7 +39,7 @@ class FormRepository implements IFormRepository
 
     public function getFormDataConsignee($idClient, $idDataConsignee)
     {
-        return DB::select('EXEC Form_GetFormDataConsignee ? ?', [$idClient, $idDataConsignee]);
+        return DB::select('EXEC Form_GetFormDataConsignee ?, ?', [$idClient, $idDataConsignee]);
     }
 
     public function getFormDataNotifier($idDataConsignee)
