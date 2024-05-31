@@ -46,9 +46,9 @@ class FormService implements IFormService
         return $this->formRepository->getFormCountryES();
     }
 
-    public function getFormDataConsignee($idClient)
+    public function getFormDataConsignee($idClient, $idDataConsignee)
     {
-        return $this->formRepository->getFormDataConsignee($idClient);
+        return $this->formRepository->getFormDataConsignee($idClient, $idDataConsignee);
     }
 
     public function getFormDataNotifier($idDataConsignee)

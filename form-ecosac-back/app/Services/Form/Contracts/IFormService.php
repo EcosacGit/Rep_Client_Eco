@@ -10,7 +10,7 @@ interface IFormService
 
     public function getFormCountryEN();
     public function getFormCountryES();
-    public function getFormDataConsignee($idClient);
+    public function getFormDataConsignee($idClient, $idDataConsignee);
     public function getFormDataNotifier($idDataConsignee);
     public function getFormPort($idCountry);
     public function getFormPortDestination($idCountry);

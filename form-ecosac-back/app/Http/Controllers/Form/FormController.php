@@ -65,7 +65,10 @@ class FormController extends Controller
 
     public function get_form_data_consignee(Request $request)
     {
-        $response = $this->formService->getFormDataConsignee($request->idClient);
+        $idClient = $request->input('idClient');
+        $idDataConsignee = $request->input('idDataConsignee');
+        $response = $this->formService->getFormDataConsignee($idClient, $idDataConsignee);
+
         return response()->json($response);
     }
 
