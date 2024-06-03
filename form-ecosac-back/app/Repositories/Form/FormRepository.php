@@ -122,4 +122,11 @@ class FormRepository implements IFormRepository
     {
         return DB::select('EXEC Form_CreateForm ?', [$data]);
     }
+
+    //RETURN ALL DATA
+    public function getFormAllData()
+    {
+        $result = DB::select('EXEC Form_GetFormAllData');
+        return $result;
+    }
 }

@@ -318,4 +318,11 @@ class FormController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function get_form_all_data()
+    {
+        $response = $this->formService->getFormAllData();
+
+        return response()->json($response);
+    }
 }

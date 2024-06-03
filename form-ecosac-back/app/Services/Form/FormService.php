@@ -279,4 +279,9 @@ class FormService implements IFormService
             ];
         }
     }
+
+    public function getFormAllData()
+    {
+        return $this->formRepository->getFormAllData();
+    }
 }

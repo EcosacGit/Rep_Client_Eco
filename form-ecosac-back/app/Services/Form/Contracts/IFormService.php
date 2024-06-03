@@ -29,4 +29,7 @@ interface IFormService
     public function createFormSendPhysicalDocuments($data);
     public function createForm($data);
     public function getBusinessPartners($postData);
+
+
+    public function getFormAllData();
 }

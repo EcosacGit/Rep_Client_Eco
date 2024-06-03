@@ -75,3 +75,6 @@ Route::middleware('guest')->group(function () {
     //Third Api
     Route::post('form/get-business-partner-by-id', [FormController::class, 'showBusinessPartners']);
 });
+
+
+Route::post('form/get-form-all', [FormController::class, 'get_form_all_data']);

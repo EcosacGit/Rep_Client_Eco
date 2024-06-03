@@ -26,4 +26,5 @@ interface IFormRepository
     public function createFormRequiredDocument($data);
     public function createFormSendPhysicalDocuments($data);
     public function createForm($data);
+    public function getFormAllData();
 }
