@@ -346,7 +346,7 @@
                     <v-checkbox
                       v-model="telexBL"
                       @change="handleBLChange('telexBL')"
-                      label="TELEX RELEASE"
+                      label="ORIGINAL IMPRESO EN ORIGEN"
                       class="mt-n1"
                     ></v-checkbox>
                     <v-checkbox
@@ -1334,7 +1334,6 @@
                   @click="addEmail"
                   style="
                     background-color: #def1c1;
-
                     padding: 1rem 1rem 2rem 1rem;
                   "
                 >
@@ -1773,7 +1772,7 @@ export default {
         this.originalBL = false;
         this.otherBL = false;
       } else if (selected === "telexBL") {
-        this.emissionType = "TELEX RELEASE";
+        this.emissionType = "ORIGINAL IMPRESO EN ORIGEN";
         this.isOtherSelected = false;
         this.swbBL = false;
         this.originalBL = false;

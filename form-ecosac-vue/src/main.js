@@ -141,8 +141,8 @@ const messages = {
       consigneSend: "Same as the Consignee",
       notifierSend: "Same as the Notifier",
 
-      scanningDoc: "Requires scanned documents",
-      nextDoc: "Requires original documents (DHL)",
+      scanningDoc: "Only requires scanned documents",
+      nextDoc: "Only requires original documents (DHL)",
 
       invoiceCheck: "Invoice",
       originCheck: "Certificate of Origen",
@@ -266,8 +266,8 @@ const messages = {
 
       consigneSend: "Misma del Consignatario",
       notifierSend: "Misma del Notificante",
-      scanningDoc: "Requiere Documentos Escaneados",
-      nextDoc: "Requiere Valija con los siguientes Documentos",
+      scanningDoc: "Solo requiere documentos escaneados",
+      nextDoc: "Solo requiere valija con los siguientes documentos",
 
       invoiceCheck: "Factura",
       originCheck: "Certificado de Origen",
