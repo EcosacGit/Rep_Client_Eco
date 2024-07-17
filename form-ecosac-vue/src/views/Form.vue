@@ -698,6 +698,7 @@
                     </v-btn>
 
                     <v-btn
+                      v-if="existNotifier"
                       class="mt-4"
                       @click="removeNotifier"
                       style="background-color: #f26d6d; padding: 1rem 0 2rem 0"
@@ -1351,6 +1352,7 @@
                   </v-btn>
 
                   <v-btn
+                    v-if="existEmail"
                     class="mt-4"
                     @click="removeEmail"
                     style="
@@ -1499,6 +1501,13 @@ export default {
     };
   },
   computed: {
+    existNotifier() {
+      return this.notifiers.length > 0;
+    },
+
+    existEmail() {
+      return this.emails.length > 0;
+    },
     billNameOptions() {
       return this.commonOptions;
     },
@@ -1521,6 +1530,8 @@ export default {
   },
   data() {
     return {
+      existNotifier: false,
+      existEmail: false,
       //active tab
       activeTab: "tab1-1",
 
@@ -1782,6 +1793,7 @@ export default {
     },
 
     addNotifier() {
+      this.existNotifier = true;
       this.notifiers.push(Object.assign({}, this.newNotifier));
       this.itemsNotifierSendDoc.push(this.notifiers.length.toString()); // Agrega un nuevo ítem al array
     },
@@ -1790,6 +1802,11 @@ export default {
       if (this.notifiers.length > 0) {
         this.notifiers.pop();
         this.itemsNotifierSendDoc.pop();
+      }
+
+      // Actualizar existNotifier cuando no hay más notifiers
+      if (this.notifiers.length === 0) {
+        this.existNotifier = false;
       }
     },
 
@@ -1871,6 +1888,7 @@ export default {
     },
 
     addEmail() {
+      this.existEmail = true;
       this.emails.push(Object.assign({}, this.newEmail));
       this.emailAdded = true; // Actualiza la bandera
     },
@@ -1878,6 +1896,11 @@ export default {
     removeEmail() {
       if (this.emails.length > 0) {
         this.emails.pop();
+      }
+
+      // Actualizar existNotifier cuando no hay más notifiers
+      if (this.emails.length === 0) {
+        this.existEmail = false;
       }
     },
 
