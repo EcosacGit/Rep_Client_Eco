@@ -691,11 +691,7 @@
                     <v-btn
                       class="mt-4"
                       @click="addNotifier"
-                      style="
-                        background-color: #def1c1;
-                        width: 22%;
-                        padding: 1rem 0 2rem 0;
-                      "
+                      style="background-color: #def1c1; padding: 1rem 0 2rem 0"
                     >
                       <v-icon style="margin-right: 3px">mdi-plus-circle</v-icon>
                       {{ $t("form.botonNotificante") }}
@@ -703,12 +699,8 @@
 
                     <v-btn
                       class="mt-4"
-                      @click="removeNotifier(index)"
-                      style="
-                        background-color: #f26d6d;
-                        width: 22%;
-                        padding: 1rem 0 2rem 0;
-                      "
+                      @click="removeNotifier"
+                      style="background-color: #f26d6d; padding: 1rem 0 2rem 0"
                     >
                       <v-icon style="margin-right: 3px">mdi-delete</v-icon>
                       {{ $t("form.botonNotificanteDelete") }}
@@ -1344,17 +1336,32 @@
                     </v-col>
                   </v-row>
                 </div>
-                <v-btn
-                  class="mt-4"
-                  @click="addEmail"
-                  style="
-                    background-color: #def1c1;
-                    padding: 1rem 1rem 2rem 1rem;
-                  "
-                >
-                  <v-icon style="margin-right: 3px">mdi-plus-circle</v-icon>
-                  {{ $t("form.emailAddressButton") }}
-                </v-btn>
+
+                <v-row class="mt-1 d-flex justify-space-between">
+                  <v-btn
+                    class="mt-4"
+                    @click="addEmail"
+                    style="
+                      background-color: #def1c1;
+                      padding: 1rem 1rem 2rem 1rem;
+                    "
+                  >
+                    <v-icon style="margin-right: 3px">mdi-plus-circle</v-icon>
+                    {{ $t("form.emailAddressButton") }}
+                  </v-btn>
+
+                  <v-btn
+                    class="mt-4"
+                    @click="removeEmail"
+                    style="
+                      background-color: #f26d6d;
+                      padding: 1rem 1rem 2rem 1rem;
+                    "
+                  >
+                    <v-icon style="margin-right: 3px">mdi-delete</v-icon>
+                    {{ $t("form.emailAddressButtonRemove") }}
+                  </v-btn>
+                </v-row>
 
                 <v-row class="mt-5">
                   <v-divider color="success"></v-divider>
@@ -1779,9 +1786,11 @@ export default {
       this.itemsNotifierSendDoc.push(this.notifiers.length.toString()); // Agrega un nuevo ítem al array
     },
 
-    removeNotifier(index) {
-      this.notifiers.splice(index, 1);
-      this.itemsNotifierSendDoc.splice(index, 1);
+    removeNotifier() {
+      if (this.notifiers.length > 0) {
+        this.notifiers.pop();
+        this.itemsNotifierSendDoc.pop();
+      }
     },
 
     handleBLChange(selected) {
@@ -1864,6 +1873,12 @@ export default {
     addEmail() {
       this.emails.push(Object.assign({}, this.newEmail));
       this.emailAdded = true; // Actualiza la bandera
+    },
+
+    removeEmail() {
+      if (this.emails.length > 0) {
+        this.emails.pop();
+      }
     },
 
     addSendPhysicalDocument() {

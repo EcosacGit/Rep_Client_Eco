@@ -99,6 +99,7 @@ const messages = {
       addressSend: "Address to Send the Original Documents",
       emailAddress: "Email for sending Scanned Documents",
       emailAddressButton: "Add Email Address",
+      emailAddressButtonRemove: "Remove Email Address",
       sendChoice: "Sending Documents, please Mark: ",
 
       otherSendName: "Company",
@@ -227,6 +228,7 @@ const messages = {
       emailAddress:
         "Correo Electrónicos para el Envio de los Documentos Escaneados",
       emailAddressButton: "Añadir Correo Electrónico",
+      emailAddressButtonRemove: "Descartar Correo Electrónico",
       sendChoice: "Del Envio de Documentos, seleccionar",
 
       otherSendName: "Nombre de la Empresa",
