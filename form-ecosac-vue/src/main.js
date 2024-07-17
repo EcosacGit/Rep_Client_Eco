@@ -76,6 +76,7 @@ const messages = {
 
       notifierInfo: "Notifier Information",
       botonNotificante: "Add Notifier",
+      botonNotificanteDelete: "Remove Notifier",
       nameNotifier: "Notifier Information",
       infoBL: "Additional Information for the B/L(optional)",
 
@@ -201,6 +202,7 @@ const messages = {
       website: "Website(opcional)",
 
       botonNotificante: "Agregar Notificante",
+      botonNotificanteDelete: "Descartar Notificante",
       notifierInfo: "Información Notificante",
       nameNotifier: "Nombre de Notificante",
       infoBL: "Información adicional en el B/L (opcional)",

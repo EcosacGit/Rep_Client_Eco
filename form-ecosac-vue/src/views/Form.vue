@@ -687,18 +687,33 @@
                     </v-row>
                   </div>
 
-                  <v-btn
-                    class="mt-4"
-                    @click="addNotifier"
-                    style="
-                      background-color: #def1c1;
-                      width: 25%;
-                      padding: 1rem 0 2rem 0;
-                    "
-                  >
-                    <v-icon style="margin-right: 3px">mdi-plus-circle</v-icon>
-                    {{ $t("form.botonNotificante") }}
-                  </v-btn>
+                  <v-row class="mt-1 d-flex justify-space-between">
+                    <v-btn
+                      class="mt-4"
+                      @click="addNotifier"
+                      style="
+                        background-color: #def1c1;
+                        width: 22%;
+                        padding: 1rem 0 2rem 0;
+                      "
+                    >
+                      <v-icon style="margin-right: 3px">mdi-plus-circle</v-icon>
+                      {{ $t("form.botonNotificante") }}
+                    </v-btn>
+
+                    <v-btn
+                      class="mt-4"
+                      @click="removeNotifier(index)"
+                      style="
+                        background-color: #f26d6d;
+                        width: 22%;
+                        padding: 1rem 0 2rem 0;
+                      "
+                    >
+                      <v-icon style="margin-right: 3px">mdi-delete</v-icon>
+                      {{ $t("form.botonNotificanteDelete") }}
+                    </v-btn>
+                  </v-row>
                 </div>
                 <v-row>
                   <v-col cols="12" class="mt-6 s-col-form">
@@ -1762,6 +1777,11 @@ export default {
     addNotifier() {
       this.notifiers.push(Object.assign({}, this.newNotifier));
       this.itemsNotifierSendDoc.push(this.notifiers.length.toString()); // Agrega un nuevo ítem al array
+    },
+
+    removeNotifier(index) {
+      this.notifiers.splice(index, 1);
+      this.itemsNotifierSendDoc.splice(index, 1);
     },
 
     handleBLChange(selected) {
