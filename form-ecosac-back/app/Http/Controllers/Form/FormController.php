@@ -325,4 +325,12 @@ class FormController extends Controller
 
         return response()->json($response);
     }
+
+    public function getFormByDataSend(Request $request)
+    {
+        $idForm = $request->input('idForm');
+        $response = $this->formService->getFormByDataSend($idForm);
+
+        return response()->json($response);
+    }
 }

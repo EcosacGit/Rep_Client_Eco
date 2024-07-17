@@ -30,6 +30,8 @@ interface IFormService
     public function createForm($data);
     public function getBusinessPartners($postData);
 
-
     public function getFormAllData();
+
+    //update || re send
+    public function getFormByDataSend($idForm);
 }
