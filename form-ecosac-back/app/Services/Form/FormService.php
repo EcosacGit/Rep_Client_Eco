@@ -289,4 +289,9 @@ class FormService implements IFormService
     {
         return $this->formRepository->getFormByDataSend($idForm);
     }
+
+    public function getFormUpdate($idForm)
+    {
+        return $this->formRepository->getFormUpdate($idForm);
+    }
 }

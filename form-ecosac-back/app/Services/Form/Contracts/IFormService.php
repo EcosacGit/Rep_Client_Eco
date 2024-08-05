@@ -34,4 +34,6 @@ interface IFormService
 
     //update || re send
     public function getFormByDataSend($idForm);
+
+    public function getFormUpdate($idForm);
 }

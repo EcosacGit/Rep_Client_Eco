@@ -61,3 +61,5 @@ Route::middleware('guest')->group(function () {
 
 Route::post('form/get-form-all', [FormController::class, 'get_form_all_data']);
 Route::post('form/get-form-by-data-send', [FormController::class, 'getFormByDataSend']);
+
+Route::post('form/get-form-update', [FormController::class, 'getFormUpdate']);

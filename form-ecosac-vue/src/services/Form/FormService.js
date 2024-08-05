@@ -97,4 +97,10 @@ export default {
   showBusinessPartners(obj, requestID) {
     return urlApi.post(maeBusinessPartner + "/get-business-partner-by-id", obj);
   },
+
+  getFormUpdate(idForm) {
+    return api.post(`${form}/get-form-update`, {
+      idForm: idForm,
+    });
+  },
 };

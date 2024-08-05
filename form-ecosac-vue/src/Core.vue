@@ -15,6 +15,7 @@
 <script>
 import Form from "./views/Form.vue";
 import RedirectPage from "./views/RedirectPage.vue";
+import FormUpdate from "./views/FormUpdate.vue";
 export default {
   name: "App",
   data: () => ({
@@ -23,6 +24,7 @@ export default {
 
   components: {
     Form,
+    FormUpdate,
     RedirectPage,
   },
 };

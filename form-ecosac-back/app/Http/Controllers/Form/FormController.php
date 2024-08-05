@@ -333,4 +333,12 @@ class FormController extends Controller
 
         return response()->json($response);
     }
+
+    public function getFormUpdate(Request $request)
+    {
+        $idForm = $request->input('idForm');
+        $response = $this->formService->getFormUpdate($idForm);
+
+        return response()->json($response);
+    }
 }

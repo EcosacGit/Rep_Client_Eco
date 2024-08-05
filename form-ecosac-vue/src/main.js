@@ -15,6 +15,7 @@ import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 
 import Form from "./views/Form.vue";
 import RedirectPage from "./views/RedirectPage.vue";
+import FormUpdate from "./views/FormUpdate.vue";
 import { createMemoryHistory, createRouter } from "vue-router";
 
 import { api, urlApi } from "./services/Service"; // Importa las instancias de Axios
@@ -24,6 +25,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 const routes = [
   { path: "/", component: Form },
+  { path: "/update", component: FormUpdate },
   { path: "/thanks", component: RedirectPage },
 ];
 
@@ -65,7 +67,7 @@ const messages = {
         "Additional specification  about the freight payment(optional)",
 
       consigneeInfo: "Consignee Information",
-      nameConsignee: "Consignee",
+      nameConsignee: "Name Consignee",
       direccionConsignee: "Address",
       telefono1: "Phone 1",
       telefono2: "Phone 2",

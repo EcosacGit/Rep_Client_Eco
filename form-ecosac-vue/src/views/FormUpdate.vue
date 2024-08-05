@@ -407,7 +407,7 @@
                   <v-row>
                     <v-col cols="4" class="s-col-form">
                       <label class="label-field">{{
-                        $t("form.nameConsignee")
+                        $t("form.consigneeInfo")
                       }}</label>
                       <v-text-field
                         outlined
@@ -1477,7 +1477,6 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 import Swal from "sweetalert2";
-
 import "@mdi/font/css/materialdesignicons.min.css";
 
 export default {
@@ -1720,6 +1719,7 @@ export default {
 
   created() {
     this.getClientData();
+    this.getFormUpdate();
   },
 
   watch: {
@@ -1991,6 +1991,19 @@ export default {
         });
     },
 
+    getFormUpdate() {
+      _Form
+        .getFormUpdate(30)
+        .then((response) => {
+          let data = response.data;
+
+          console.log("Respuesta: " + JSON.stringify(data));
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+
     //jalar el id !!
     getClientData() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -2014,8 +2027,8 @@ export default {
         .then((response) => {
           let data = response.data;
 
-          console.log("Respuesta: " + JSON.stringify(data));
-          console.log("Respuesta: " + data[0].BspCardName);
+          console.log("Respuesta UPDATE: " + JSON.stringify(data));
+          console.log("Respuesta UPDATE: " + data[0].BspCardName);
           this.clientName = data[0].BspCardName;
           this.idClient = data[0].BspCardCode;
         })
