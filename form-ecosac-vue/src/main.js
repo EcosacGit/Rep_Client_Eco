@@ -148,6 +148,9 @@ const messages = {
       scanningDoc: "Only requires scanned documents",
       nextDoc: "Only requires original documents (DHL)",
 
+      validationConsigneeChoose:
+        "You must fill out consignee information in the Bill of Lading",
+
       invoiceCheck: "Invoice",
       originCheck: "Certificate of Origen",
       packingCheck: "Packing List",
@@ -156,11 +159,16 @@ const messages = {
 
       swal: "Fill the fields: ",
       swal3: "Complete the form before send",
+      fax: "Fax(optional)",
 
       //REDIRECT PAGE
       thanks: "Thank You for Submitting the Form!",
       thanks2:
         "We appreciate your time and effort. Your submission has been received successfully.",
+      espeAdicionalesCorreo:
+        "Additional specifications regarding email (optional)",
+      espeAdicionalesOriginalDocuments:
+        "Additional information on address for sending original documents (optional)",
     },
   },
   es: {
@@ -194,6 +202,8 @@ const messages = {
       espeAdicionales:
         "Especificaciones adicionales respecto al pago de flete (opcional)",
 
+      espeAdicionalesCorreo:
+        "Especificaciones adicionales respecto al correo electrónico (opcional)",
       consigneeInfo: "Información Consignatario",
       nameConsignee: "Nombre de Consignatario",
       direccionConsignee: "Dirección",
@@ -211,6 +221,7 @@ const messages = {
       infoBL: "Información adicional en el B/L (opcional)",
       submit: "Enviar",
 
+      fax: "Fax(opcional)",
       phytoCertificado: "Certificado Fitosanitario / Sanitario",
       phytoName: "Nombre",
       phytoAddress: "Dirección",
@@ -282,12 +293,17 @@ const messages = {
       otherCheck: "Otros (especificar)",
       swal: "Completar los datos: ",
 
+      validationConsigneeChoose:
+        "Debe llenar informacion de consignatario en Conocimiento de Embarque",
+
       //REDIRECT PAGE
       thanks: "¡Gracias por completar el formulario!",
       thanks2:
         "Apreciamos su tiempo y esfuerzo. Su envío ha sido recibido exitosamente.",
 
       swal3: "Completa todo el formulario antes de enviar",
+      espeAdicionalesOriginalDocuments:
+        "Información Adicional en direccion para el envio de documentos originales (opcional)",
     },
   },
 };

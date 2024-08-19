@@ -35,7 +35,6 @@
                   class="mt-2"
                   variant="solo-filled"
                   v-model="clientName"
-                  readonly
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -215,6 +214,7 @@
                       @change="toggleTextFieldBillName"
                     ></v-select>
                   </v-col>
+
                   <v-col
                     v-if="
                       billNameSelectedOption == 'Otra (Detallar)' ||
@@ -229,6 +229,25 @@
                       color="success"
                       v-model="billNameCustomOption"
                       dense
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    v-if="
+                      billNameSelectedOption == 'Same as the consignee' ||
+                      billNameSelectedOption == 'Misma del Consignatario'
+                    "
+                    cols="8"
+                    class="s-col-form align-self-end"
+                  >
+                    <v-text-field
+                      outlined
+                      variant="solo-filled"
+                      color="success"
+                      v-model="nameConsignee"
+                      dense
+                      readonly
+                      :placeholder="consigneePlaceholder"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -263,6 +282,25 @@
                       color="success"
                       v-model="billDirectionCustomOption"
                       dense
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    v-if="
+                      billDirectionSelectedOption == 'Same as the consignee' ||
+                      billDirectionSelectedOption == 'Misma del Consignatario'
+                    "
+                    cols="8"
+                    class="s-col-form align-self-end"
+                  >
+                    <v-text-field
+                      outlined
+                      variant="solo-filled"
+                      color="success"
+                      v-model="directionConsignee"
+                      dense
+                      readonly
+                      :placeholder="consigneePlaceholder"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -474,14 +512,13 @@
 
                   <v-row>
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field">Fax</label>
+                      <label class="label-field">{{ $t("form.fax") }}</label>
                       <v-text-field
                         outlined
                         color="success"
                         variant="solo-filled"
                         class="mt-2"
                         v-model="faxConsignee"
-                        required
                       ></v-text-field>
                     </v-col>
                     <v-col cols="4" class="s-col-form">
@@ -620,14 +657,13 @@
 
                     <v-row>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Fax</label>
+                        <label class="label-field">{{ $t("form.fax") }}</label>
                         <v-text-field
                           outlined
                           color="success"
                           variant="solo-filled"
                           class="mt-2"
                           v-model="notifier.faxNotifier"
-                          required
                         ></v-text-field>
                       </v-col>
                       <v-col cols="4" class="s-col-form">
@@ -785,6 +821,25 @@
                         dense
                       ></v-text-field>
                     </v-col>
+
+                    <v-col
+                      v-if="
+                        phytoNameSelectedOption == 'Same as the consignee' ||
+                        phytoNameSelectedOption == 'Misma del Consignatario'
+                      "
+                      cols="8"
+                      class="s-col-form align-self-end"
+                    >
+                      <v-text-field
+                        outlined
+                        variant="solo-filled"
+                        color="success"
+                        v-model="nameConsignee"
+                        dense
+                        readonly
+                        :placeholder="consigneePlaceholder"
+                      ></v-text-field>
+                    </v-col>
                   </v-row>
                   <v-row>
                     <v-col cols="4" class="s-col-form">
@@ -816,6 +871,24 @@
                         variant="solo-filled"
                         v-model="phytoAddressCustomOption"
                         dense
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                      v-if="
+                        phytoAddressSelectedOption == 'Same as the consignee' ||
+                        phytoAddressSelectedOption == 'Misma del Consignatario'
+                      "
+                      cols="8"
+                      class="s-col-form align-self-end"
+                    >
+                      <v-text-field
+                        outlined
+                        variant="solo-filled"
+                        color="success"
+                        v-model="directionConsignee"
+                        dense
+                        readonly
+                        :placeholder="consigneePlaceholder"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -934,6 +1007,27 @@
                         dense
                       ></v-text-field>
                     </v-col>
+
+                    <v-col
+                      v-if="
+                        certificateNameOriginSelectedOption ==
+                          'Same as the consignee' ||
+                        certificateNameOriginSelectedOption ==
+                          'Misma del Consignatario'
+                      "
+                      cols="8"
+                      class="s-col-form align-self-end"
+                    >
+                      <v-text-field
+                        outlined
+                        variant="solo-filled"
+                        color="success"
+                        v-model="nameConsignee"
+                        dense
+                        readonly
+                        :placeholder="consigneePlaceholder"
+                      ></v-text-field>
+                    </v-col>
                   </v-row>
 
                   <v-row class="mt-2">
@@ -968,6 +1062,26 @@
                         variant="solo-filled"
                         v-model="certificateAddressOriginCustomOption"
                         dense
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                      v-if="
+                        certificateAddressOriginSelectedOption ==
+                          'Same as the consignee' ||
+                        certificateAddressOriginSelectedOption ==
+                          'Misma del Consignatario'
+                      "
+                      cols="8"
+                      class="s-col-form align-self-end"
+                    >
+                      <v-text-field
+                        outlined
+                        variant="solo-filled"
+                        color="success"
+                        v-model="directionConsignee"
+                        dense
+                        readonly
+                        :placeholder="consigneePlaceholder"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -1106,273 +1220,6 @@
                   <v-row>
                     <v-col
                       ><label style="color: red; font-weight: bold"
-                        >{{ $t("form.addressSend") }}
-                      </label></v-col
-                    >
-                  </v-row>
-                  <v-row class="mt-1">
-                    <v-col cols="5" class="s-col-form">
-                      <v-checkbox
-                        v-model="isConsigneeSendDoc"
-                        :label="$t('form.consigneSend')"
-                        @change="
-                          handleCheckboxChangeConsigneeSendDocs(
-                            'isConsigneeSendDoc'
-                          )
-                        "
-                      ></v-checkbox>
-                      <div style="display: flex; gap: 1rem">
-                        <v-checkbox
-                          style="align-self: flex-end"
-                          v-model="isNotifierSendDoc"
-                          :label="$t('form.notifierSend')"
-                          @change="
-                            handleCheckboxChangeConsigneeSendDocs(
-                              'isNotifierSendDoc'
-                            )
-                          "
-                        ></v-checkbox>
-                        <v-combobox
-                          v-if="isNotifierSendDoc"
-                          color="success"
-                          :items="
-                            notifiers.map(
-                              (notifier) => notifier.directionNotifier
-                            )
-                          "
-                          v-model="selectedNotifierAddress"
-                        ></v-combobox>
-                      </div>
-
-                      <v-checkbox
-                        v-model="isOtherSendDoc"
-                        :label="$t('form.OtherCert')"
-                        @change="
-                          handleCheckboxChangeConsigneeSendDocs(
-                            'isOtherSendDoc'
-                          )
-                        "
-                      ></v-checkbox>
-                    </v-col>
-                  </v-row>
-                </div>
-                <div class="mt-3 otherSend">
-                  <div
-                    class="mt-3 data-otherSend"
-                    v-for="(otherSend, index) in otherSends"
-                    :key="index"
-                  >
-                    <v-row>
-                      <v-col cols="4" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.otherSendName")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          color="success"
-                          variant="solo-filled"
-                          class="mt-2"
-                          v-model="otherSend.nameCompany"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="4" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.otherSendAddress")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          color="success"
-                          variant="solo-filled"
-                          class="mt-2"
-                          v-model="otherSend.addressCompany"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="4" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.otherSendTel")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          color="success"
-                          variant="solo-filled"
-                          class="mt-2"
-                          v-model="otherSend.telef"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-
-                    <v-row>
-                      <v-col cols="6" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.contactPerson")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          color="success"
-                          variant="solo-filled"
-                          class="mt-2"
-                          v-model="otherSend.contactPerson"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="6" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.taxID")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          color="success"
-                          variant="solo-filled"
-                          class="mt-2"
-                          v-model="otherSend.taxID"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-
-                    <v-row>
-                      <v-col cols="4" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.email")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          color="success"
-                          variant="solo-filled"
-                          class="mt-2"
-                          v-model="otherSend.emailAddress"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="4" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.otherSendCountry")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          color="success"
-                          variant="solo-filled"
-                          class="mt-2"
-                          v-model="otherSend.country"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="4" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.otherSendCity")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          variant="solo-filled"
-                          class="mt-2"
-                          color="success"
-                          v-model="otherSend.city"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-
-                    <v-row class="mb-5">
-                      <v-col cols="6" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.otherSendState")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          color="success"
-                          variant="solo-filled"
-                          class="mt-2"
-                          v-model="otherSend.state_city"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="6" class="s-col-form">
-                        <label class="label-field">{{
-                          $t("form.otherSendPostalCode")
-                        }}</label>
-                        <v-text-field
-                          outlined
-                          color="success"
-                          variant="solo-filled"
-                          class="mt-2"
-                          v-model="otherSend.postalCode"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </div>
-
-                <v-row>
-                  <v-divider color="success"></v-divider>
-                </v-row>
-                <div class="mt-5">
-                  <v-row>
-                    <v-col
-                      ><label style="color: red; font-weight: bold"
-                        >{{ $t("form.emailAddress") }}
-                      </label></v-col
-                    >
-                  </v-row>
-                </div>
-
-                <div class="mt-3 data-email">
-                  <v-row>
-                    <v-col
-                      v-for="(email, index) in emails"
-                      :key="index"
-                      cols="4"
-                      class="s-col-form"
-                    >
-                      <label class="label-field">{{ $t("form.email") }}</label>
-                      <v-text-field
-                        outlined
-                        color="success"
-                        variant="solo-filled"
-                        class="mt-2"
-                        v-model="email.email"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </div>
-
-                <v-row class="mt-1 d-flex justify-space-between">
-                  <v-btn
-                    class="mt-4"
-                    @click="addEmail"
-                    style="
-                      background-color: #def1c1;
-                      padding: 1rem 1rem 2rem 1rem;
-                    "
-                  >
-                    <v-icon style="margin-right: 3px">mdi-plus-circle</v-icon>
-                    {{ $t("form.emailAddressButton") }}
-                  </v-btn>
-
-                  <v-btn
-                    v-if="existEmail"
-                    class="mt-4"
-                    @click="removeEmail"
-                    style="
-                      background-color: #f26d6d;
-                      padding: 1rem 1rem 2rem 1rem;
-                    "
-                  >
-                    <v-icon style="margin-right: 3px">mdi-delete</v-icon>
-                    {{ $t("form.emailAddressButtonRemove") }}
-                  </v-btn>
-                </v-row>
-
-                <v-row class="mt-5">
-                  <v-divider color="success"></v-divider>
-                </v-row>
-
-                <div class="mt-5">
-                  <v-row>
-                    <v-col
-                      ><label style="color: red; font-weight: bold"
                         >{{ $t("form.sendChoice") }}
                       </label></v-col
                     >
@@ -1448,6 +1295,326 @@
                     </v-row>
                   </div>
                 </div>
+
+                <div v-if="isSendPhysicalDocument" class="mt-5">
+                  <v-row>
+                    <v-col
+                      ><label style="color: red; font-weight: bold"
+                        >{{ $t("form.addressSend") }}
+                      </label></v-col
+                    >
+                  </v-row>
+                  <v-row class="mt-1">
+                    <v-col cols="12" class="s-col-form">
+                      <div style="display: flex; gap: 1rem">
+                        <v-checkbox
+                          v-model="isConsigneeSendDoc"
+                          :label="$t('form.consigneSend')"
+                          @change="
+                            handleCheckboxChangeConsigneeSendDocs(
+                              'isConsigneeSendDoc'
+                            )
+                          "
+                        ></v-checkbox>
+                        <v-col
+                          v-if="isConsigneeSendDoc"
+                          cols="8"
+                          class="s-col-form align-self-end"
+                        >
+                          <v-text-field
+                            outlined
+                            variant="solo-filled"
+                            color="success"
+                            v-model="directionConsignee"
+                            dense
+                            readonly
+                            :placeholder="consigneePlaceholder"
+                          ></v-text-field>
+                        </v-col>
+                      </div>
+
+                      <div style="display: flex; gap: 1rem">
+                        <v-checkbox
+                          style="align-self: flex-end"
+                          v-model="isNotifierSendDoc"
+                          :label="$t('form.notifierSend')"
+                          @change="
+                            handleCheckboxChangeConsigneeSendDocs(
+                              'isNotifierSendDoc'
+                            )
+                          "
+                        ></v-checkbox>
+                        <v-combobox
+                          v-if="isNotifierSendDoc"
+                          color="success"
+                          :items="
+                            notifiers.map(
+                              (notifier) => notifier.directionNotifier
+                            )
+                          "
+                          v-model="selectedNotifierAddress"
+                        ></v-combobox>
+                      </div>
+
+                      <v-checkbox
+                        v-model="isOtherSendDoc"
+                        :label="$t('form.OtherCert')"
+                        @change="
+                          handleCheckboxChangeConsigneeSendDocs(
+                            'isOtherSendDoc'
+                          )
+                        "
+                      ></v-checkbox>
+                    </v-col>
+                  </v-row>
+
+                  <div class="mt-3 otherSend">
+                    <div
+                      class="mt-3 data-otherSend"
+                      v-for="(otherSend, index) in otherSends"
+                      :key="index"
+                    >
+                      <v-row>
+                        <v-col cols="4" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.otherSendName")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            color="success"
+                            variant="solo-filled"
+                            class="mt-2"
+                            v-model="otherSend.nameCompany"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="4" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.otherSendAddress")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            color="success"
+                            variant="solo-filled"
+                            class="mt-2"
+                            v-model="otherSend.addressCompany"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="4" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.otherSendTel")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            color="success"
+                            variant="solo-filled"
+                            class="mt-2"
+                            v-model="otherSend.telef"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+
+                      <v-row>
+                        <v-col cols="6" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.contactPerson")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            color="success"
+                            variant="solo-filled"
+                            class="mt-2"
+                            v-model="otherSend.contactPerson"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="6" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.taxID")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            color="success"
+                            variant="solo-filled"
+                            class="mt-2"
+                            v-model="otherSend.taxID"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+
+                      <v-row>
+                        <v-col cols="4" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.email")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            color="success"
+                            variant="solo-filled"
+                            class="mt-2"
+                            v-model="otherSend.emailAddress"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="4" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.otherSendCountry")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            color="success"
+                            variant="solo-filled"
+                            class="mt-2"
+                            v-model="otherSend.country"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="4" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.otherSendCity")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            variant="solo-filled"
+                            class="mt-2"
+                            color="success"
+                            v-model="otherSend.city"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+
+                      <v-row class="mb-5">
+                        <v-col cols="6" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.otherSendState")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            color="success"
+                            variant="solo-filled"
+                            class="mt-2"
+                            v-model="otherSend.state_city"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="6" class="s-col-form">
+                          <label class="label-field">{{
+                            $t("form.otherSendPostalCode")
+                          }}</label>
+                          <v-text-field
+                            outlined
+                            color="success"
+                            variant="solo-filled"
+                            class="mt-2"
+                            v-model="otherSend.postalCode"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </div>
+                  <v-row>
+                    <v-col cols="12" class="mt-2 s-col-form">
+                      <label class="label-field">{{
+                        $t("form.espeAdicionalesOriginalDocuments")
+                      }}</label>
+                      <v-text-field
+                        outlined
+                        variant="solo-filled"
+                        class="mt-2"
+                        v-model="originalDocInfoAdd"
+                        color="success"
+                        dense
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </div>
+
+                <v-row>
+                  <v-divider color="success"></v-divider>
+                </v-row>
+
+                <div v-if="isSendScanning">
+                  <div class="mt-5">
+                    <v-row>
+                      <v-col
+                        ><label style="color: red; font-weight: bold"
+                          >{{ $t("form.emailAddress") }}
+                        </label></v-col
+                      >
+                    </v-row>
+                  </div>
+
+                  <div class="mt-3 data-email">
+                    <v-row>
+                      <v-col
+                        v-for="(email, index) in emails"
+                        :key="index"
+                        cols="4"
+                        class="s-col-form"
+                      >
+                        <label class="label-field">{{
+                          $t("form.email")
+                        }}</label>
+                        <v-text-field
+                          outlined
+                          color="success"
+                          variant="solo-filled"
+                          class="mt-2"
+                          v-model="email.email"
+                          required
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </div>
+
+                  <v-row class="mt-1 d-flex justify-space-between">
+                    <v-btn
+                      class="mt-4"
+                      @click="addEmail"
+                      style="
+                        background-color: #def1c1;
+                        padding: 1rem 1rem 2rem 1rem;
+                      "
+                    >
+                      <v-icon style="margin-right: 3px">mdi-plus-circle</v-icon>
+                      {{ $t("form.emailAddressButton") }}
+                    </v-btn>
+
+                    <v-btn
+                      v-if="existEmail"
+                      class="mt-4"
+                      @click="removeEmail"
+                      style="
+                        background-color: #f26d6d;
+                        padding: 1rem 1rem 2rem 1rem;
+                      "
+                    >
+                      <v-icon style="margin-right: 3px">mdi-delete</v-icon>
+                      {{ $t("form.emailAddressButtonRemove") }}
+                    </v-btn>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" class="mt-2 s-col-form">
+                      <label class="label-field">{{
+                        $t("form.espeAdicionalesCorreo")
+                      }}</label>
+                      <v-text-field
+                        outlined
+                        variant="solo-filled"
+                        class="mt-2"
+                        v-model="emailInfoAdd"
+                        color="success"
+                        dense
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row class="mt-5">
+                    <v-divider color="success"></v-divider>
+                  </v-row>
+                </div>
               </v-form>
             </v-container>
           </v-tab-item>
@@ -1501,6 +1668,16 @@ export default {
     };
   },
   computed: {
+    consigneePlaceholder() {
+      if (!this.nameConsignee) {
+        return this.$t("form.validationConsigneeChoose");
+      }
+
+      if (!this.directionConsignee) {
+        return this.$t("form.validationConsigneeChoose");
+      }
+      return "";
+    },
     existNotifier() {
       return this.notifiers.length > 0;
     },
@@ -2498,7 +2675,6 @@ export default {
         this.directionConsignee == "" ||
         this.telf1Consignee == "" ||
         this.telf2Consignee == "" ||
-        this.faxConsignee == "" ||
         this.contactPersonConsignee == "" ||
         this.emailConsignee == "";
 
@@ -2543,7 +2719,6 @@ export default {
               item.directionNotifier == "" ||
               item.telf1Notifier == "" ||
               item.telf2Notifier == "" ||
-              item.faxNotifier == "" ||
               item.contactPersonNotifier == "" ||
               item.emailNotifier == ""
           );

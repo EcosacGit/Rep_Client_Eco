@@ -35,7 +35,6 @@
                   class="mt-2"
                   variant="solo-filled"
                   v-model="clientName"
-                  readonly
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -474,7 +473,7 @@
 
                   <v-row>
                     <v-col cols="4" class="s-col-form">
-                      <label class="label-field">Fax</label>
+                      <label class="label-field">{{ $t("form.fax") }}</label>
                       <v-text-field
                         outlined
                         color="success"
@@ -620,7 +619,7 @@
 
                     <v-row>
                       <v-col cols="4" class="s-col-form">
-                        <label class="label-field">Fax</label>
+                        <label class="label-field">{{ $t("form.fax") }}</label>
                         <v-text-field
                           outlined
                           color="success"
@@ -2511,7 +2510,6 @@ export default {
         this.directionConsignee == "" ||
         this.telf1Consignee == "" ||
         this.telf2Consignee == "" ||
-        this.faxConsignee == "" ||
         this.contactPersonConsignee == "" ||
         this.emailConsignee == "";
 
@@ -2556,7 +2554,6 @@ export default {
               item.directionNotifier == "" ||
               item.telf1Notifier == "" ||
               item.telf2Notifier == "" ||
-              item.faxNotifier == "" ||
               item.contactPersonNotifier == "" ||
               item.emailNotifier == ""
           );
