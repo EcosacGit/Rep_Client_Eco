@@ -16,7 +16,7 @@ import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 import Form from "./views/Form.vue";
 import RedirectPage from "./views/RedirectPage.vue";
 import FormUpdate from "./views/FormUpdate.vue";
-import { createMemoryHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 
 import { api, urlApi } from "./services/Service"; // Importa las instancias de Axios
 
@@ -25,12 +25,12 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 const routes = [
   { path: "/", component: Form },
-  { path: "/update", component: FormUpdate },
+  { path: "/update/:bspCardCode", component: FormUpdate },
   { path: "/thanks", component: RedirectPage },
 ];
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(),
   routes,
 });
 
