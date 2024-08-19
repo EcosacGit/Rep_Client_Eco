@@ -1731,6 +1731,9 @@ export default {
       textFieldValueInfoBill: "",
       clientName: "",
 
+      emailInfoAdd: "",
+      originalDocInfoAdd: "",
+
       //TIPO EMISION BL
       swbBL: false,
       telexBL: false,
@@ -2343,16 +2346,16 @@ export default {
     createAddressOriginalsDoc() {
       for (let otherSend of this.otherSends) {
         let param = {
-          nameCompany: otherSend.nameCompany,
-          addressCompany: otherSend.addressCompany,
-          telef: otherSend.telef,
-          contactPerson: otherSend.contactPerson,
-          taxID: otherSend.taxID,
-          emailAddress: otherSend.emailAddress,
-          country: otherSend.country,
-          city: otherSend.city,
-          state_city: otherSend.state_city,
-          postalCode: otherSend.postalCode,
+          nameCompany: otherSend.nameCompany || "",
+          addressCompany: otherSend.addressCompany || "",
+          telef: otherSend.telef || "",
+          contactPerson: otherSend.contactPerson || "",
+          taxID: otherSend.taxID || "",
+          emailAddress: otherSend.emailAddress || "",
+          country: otherSend.country || "",
+          city: otherSend.city || "",
+          state_city: otherSend.state_city || "",
+          postalCode: otherSend.postalCode || "",
         };
         _Form
           .createAddressOriginalsDoc(param)
@@ -2691,19 +2694,19 @@ export default {
       }
 
       //validar envio de correo
-      let emailValidation = false;
-      if (Array.isArray(this.emails)) {
-        const emailObject = this.emails.some(
-          (item) => typeof item === "object" && item !== null
-        );
+      // let emailValidation = false;
+      // if (Array.isArray(this.emails)) {
+      //   const emailObject = this.emails.some(
+      //     (item) => typeof item === "object" && item !== null
+      //   );
 
-        if (emailObject) {
-          emailValidation = this.emails.some((item) => item.email == "");
-          if (emailValidation) {
-            message += this.$t("form.emailAddress") + " || ";
-          }
-        }
-      }
+      //   if (emailObject) {
+      //     emailValidation = this.emails.some((item) => item.email == "");
+      //     if (emailValidation) {
+      //       message += this.$t("form.emailAddress") + " || ";
+      //     }
+      //   }
+      // }
 
       let notifierValidation = false;
       //validación Notifier
@@ -2761,9 +2764,6 @@ export default {
       if (certificateNameOrigin == undefined) errorCount++;
       if (certificateAddressOrigin == undefined) errorCount++;
       if (certQualityValidation) errorCount++;
-      if (addressSend) errorCount++;
-      if (sendDocs) errorCount++;
-      if (emailValidation) errorCount++;
 
       // Mostrar SweetAlert si hay más de 5 condiciones que no se cumplen
       if (errorCount > 3) {
@@ -2794,10 +2794,7 @@ export default {
         this.phytoTransitCountry == "" ||
         certificateNameOrigin == undefined ||
         certificateAddressOrigin == undefined ||
-        certQualityValidation ||
-        addressSend ||
-        sendDocs ||
-        emailValidation
+        certQualityValidation
       ) {
         Swal.fire({
           title: "Oops...",
@@ -2813,19 +2810,6 @@ export default {
 
       this.createDataConsignee();
 
-      if (!this.emailAdded) {
-        Swal.fire({
-          title: "Oops...",
-          text: "Por favor, añada su dirección de correo electrónico",
-          icon: "error",
-          showConfirmButton: false,
-          timer: 3000,
-          width: "400px",
-          timerProgressBar: true,
-        });
-        return false; // Evita el envío del formulario
-      }
-
       try {
         if (this.selectedCountryField) {
           this.createCountry();
@@ -2839,6 +2823,7 @@ export default {
 
         if (this.isSendPhysicalDocument) {
           this.createSendPhysicalDocuments();
+          this.createAddressOriginalsDoc(); //para que inserte null
         }
 
         if (this.freightPayerInfoAdd == null) {
@@ -2881,6 +2866,8 @@ export default {
           isConsigneeSendDoc: isConsigneeSendDoc,
           isNotifierSendDoc: isNotifierSendDoc,
           IsSendScanning: isSendScanning,
+          EmailInfoAdd: this.emailInfoAdd,
+          OriginalDocInfoAdd: this.originalDocInfoAdd,
         };
 
         // Usa 'param' aquí para lo que necesites
