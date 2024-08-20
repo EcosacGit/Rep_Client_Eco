@@ -384,7 +384,7 @@
                     <v-checkbox
                       v-model="telexBL"
                       @change="handleBLChange('telexBL')"
-                      label="ORIGINAL IMPRESO EN ORIGEN"
+                      :label="$t('form.originalImpresoOrigen')"
                       class="mt-n1"
                     ></v-checkbox>
                     <v-checkbox
@@ -1895,6 +1895,8 @@ export default {
       notifierAddresses: {},
       selectedNotifier: "",
       idClient: "",
+
+      getDataUpdate: [],
     };
   },
 
@@ -2120,55 +2122,49 @@ export default {
     },
 
     //GETs
-    getFormCountryES() {
-      _Form
-        .getFormCountryES()
-        .then((response) => {
-          this.country = response.data.map((item) => ({
-            idRegion: item.idRegion,
-            idCountry: item.idCountry,
-            descCountry: item.descCountry,
-          }));
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
+    async getFormCountryES() {
+      try {
+        const response = await _Form.getFormCountryES();
+        this.country = response.data.map((item) => ({
+          idRegion: item.idRegion,
+          idCountry: item.idCountry,
+          descCountry: item.descCountry,
+        }));
+      } catch (error) {
+        console.log("error", error);
+      }
     },
 
-    getFormPort(idCountry) {
+    async getFormPort(idCountry) {
       let param = {
         idCountry: idCountry,
       };
 
-      _Form
-        .getFormPort(param)
-        .then((response) => {
-          this.port = response.data.map((item) => ({
-            idPort: item.idPort,
-            descPort: item.descPort,
-          }));
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
+      try {
+        const response = await _Form.getFormPort(param);
+        this.port = response.data.map((item) => ({
+          idPort: item.idPort,
+          descPort: item.descPort,
+        }));
+      } catch (error) {
+        console.log("error", error);
+      }
     },
 
-    getFormFinalDestiny(idCountry) {
+    async getFormFinalDestiny(idCountry) {
       let param = {
         idCountry: idCountry,
       };
 
-      _Form
-        .getFormPortDestination(param)
-        .then((response) => {
-          this.portFinal = response.data.map((item) => ({
-            idPortFinal: item.idPort,
-            descPortFinal: item.descPort,
-          }));
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
+      try {
+        const response = await _Form.getFormPortDestination(param);
+        this.portFinal = response.data.map((item) => ({
+          idPortFinal: item.idPort,
+          descPortFinal: item.descPort,
+        }));
+      } catch (error) {
+        console.log("error", error);
+      }
     },
 
     //jalar el id !!
@@ -2891,11 +2887,310 @@ export default {
         console.log("Error in createForm process", error);
       }
     },
+
+    async getFormUpdate() {
+      try {
+        // Obtener el idForm desde el parámetro de la URL
+        const idForm = this.$route.params.idForm;
+
+        const response = await _Form.getFormUpdate(idForm);
+        const data = response.data;
+
+        const cantRegistros = data.length;
+
+        console.log("response " + JSON.stringify(response.data));
+        console.log("response lenght " + cantRegistros);
+
+        for (let i = 0; i <= cantRegistros; i++) {
+          if (data && data.length > 0) {
+            const formUpdateData = data[i];
+
+            this.clientName = formUpdateData.nombreCliente;
+            this.idClient = formUpdateData.idCliente;
+
+            const countryObject = this.country.filter(
+              (item) => item.descCountry === formUpdateData.nombrePais
+            )[0];
+            this.selectedCountry = countryObject
+              ? countryObject.descCountry
+              : "";
+
+            await this.getFormPort(formUpdateData.idCountry);
+            this.selectedPort = formUpdateData.nombrePuertoDestino;
+            this.selectedPortFinal = formUpdateData.nombrePuertoFinal;
+
+            this.billNameSelectedOption = formUpdateData.NombreFactura;
+            this.billDirectionSelectedOption = formUpdateData.DireccionFactura;
+
+            this.freigthPayer = formUpdateData.PagadorFlete;
+            this.placePayment = formUpdateData.LugarPago;
+            this.swbBL = formUpdateData.TipoEmisionBL;
+
+            if (
+              formUpdateData.InfoAdicionalFactura ==
+              "No se agrego información adicional para la factura"
+            ) {
+              this.checkBoxValueInfoBill = false;
+            } else {
+              this.checkBoxValueInfoBill = true;
+              this.textFieldValueInfoBill = formUpdateData.InfoAdicionalFactura;
+            }
+
+            if (formUpdateData.TipoEmisionBL == "SWB") {
+              this.swbBL = true;
+            } else if (
+              formUpdateData.TipoEmisionBL == "ORIGINAL IMPRESO EN ORIGEN"
+            ) {
+              this.telexBL = true;
+            } else if (
+              formUpdateData.TipoEmisionBL == "ORIGINAL IMPRESO EN DESTINO"
+            ) {
+              this.originalBL = true;
+            } else {
+              this.otherBL = true;
+              this.txtDataBL = formUpdateData.TipoEmisionBL;
+            }
+
+            this.freightPayerInfoAdd = formUpdateData.InfoAdicionalPagoFlete;
+
+            //notifier
+
+              this.addNotifier();
+
+              const currentNotifier = this.notifiers[i];
+
+              currentNotifier.nameNotifier = formUpdateData.NombreNotificante;
+              currentNotifier.directionNotifier =
+                formUpdateData.DireccionNotificante;
+              currentNotifier.telf1Notifier =
+                formUpdateData.telefono1Notificante;
+              currentNotifier.telf2Notifier =
+                formUpdateData.telefono2Notificante;
+              currentNotifier.EORINotifier = formUpdateData.EoriNotificante;
+              currentNotifier.faxNotifier = formUpdateData.FaxNotificante;
+              currentNotifier.contactPersonNotifier =
+                formUpdateData.PersonaContactoNotificante;
+              currentNotifier.taxIDNotifier =
+                formUpdateData.IdentificacionFiscalNotificante;
+              currentNotifier.emailNotifier = formUpdateData.EmailNotificante;
+              currentNotifier.websiteNotifier =
+                formUpdateData.websiteNotificante;
+
+            //consignatario
+            this.nameConsignee = formUpdateData.NombreConsignatario;
+            this.directionConsignee = formUpdateData.direccionConsignatario;
+            this.telf1Consignee = formUpdateData.telefono1Consignatario;
+            this.telf2Consignee = formUpdateData.telefono2Consignatario;
+            this.EORIConsignee = formUpdateData.EoriConsignatario;
+            this.faxConsignee = formUpdateData.FaxConsignatario;
+            this.contactPersonConsignee =
+              formUpdateData.PersonaContactoConsignatario;
+            this.taxIDConsignee =
+              formUpdateData.IdentificacionFiscalConsignatario;
+            this.emailConsignee = formUpdateData.EmailConsignatario;
+            this.webisteConsignee = formUpdateData.websiteConsignatario;
+
+            if (formUpdateData.RequierePermisoImportacion == 0) {
+              this.isAllowedPhyto = false;
+            } else {
+              this.isAllowedPhyto = true;
+            }
+
+            if (
+              formUpdateData.InfoAdicionalFitosanitario ==
+              "No se agrego glosa adicional en el FitoSanitario"
+            ) {
+              this.phytoInfoAdd = false;
+            } else {
+              this.phytoInfoAdd = true;
+              this.textFieldValuePhytoInfoAdd =
+                formUpdateData.InfoAdicionalFitosanitario;
+            }
+
+            if (
+              formUpdateData.InfoAdicionalCertificado ==
+              "No se agrego glosa adicional en el Certificado de Origen"
+            ) {
+              this.certificateInfoAdd = false;
+            } else {
+              this.certificateInfoAdd = true;
+              this.textFieldValueCertificateInfoAdd =
+                formUpdateData.InfoAdicionalCertificado;
+            }
+
+            this.BLInfoAdd = formUpdateData.InfoAdicionalBL;
+
+            this.phytoNameSelectedOption = formUpdateData.NombreFitosanitario;
+            this.phytoAddressSelectedOption =
+              formUpdateData.DireccionFitosanitario;
+
+            this.certificateNameOriginSelectedOption =
+              formUpdateData.NombreCertificadoOrigen;
+            this.certificateAddressOriginSelectedOption =
+              formUpdateData.DireccionCertificadoOrigen;
+
+            this.phytoCountryPort =
+              formUpdateData.PuertoDestinoPaisFitosanitario;
+
+            this.phytoTransitCountry = formUpdateData.TransitoInternacional;
+
+            // CERTIFICADOS DE CALIDAD
+            if (formUpdateData.packingList == 1) {
+              this.packingList = true;
+            } else {
+              this.packingList = false;
+            }
+
+            if (formUpdateData.plasticStatement == 1) {
+              this.plasticStatement = true;
+            } else {
+              this.plasticStatement = false;
+            }
+
+            if (formUpdateData.INVIMA == 1) {
+              this.INVIMA = true;
+            } else {
+              this.INVIMA = false;
+            }
+
+            if (formUpdateData.FDA == 1) {
+              this.FDA = true;
+            } else {
+              this.FDA = false;
+            }
+
+            if (formUpdateData.PPQ == 1) {
+              this.PPQ = true;
+            } else {
+              this.PPQ = false;
+            }
+
+            if (formUpdateData.ColdTreatment == 1) {
+              this.ColdTreatment = true;
+            } else {
+              this.ColdTreatment = false;
+            }
+
+            if (formUpdateData.InspectionFormat == 1) {
+              this.InspectionFormat = true;
+            } else {
+              this.InspectionFormat = false;
+            }
+
+            if (formUpdateData.MicrobioAnalysis == 1) {
+              this.MicrobioAnalysis = true;
+            } else {
+              this.MicrobioAnalysis = false;
+            }
+
+            if (formUpdateData.InsuranceCertificate == 1) {
+              this.InsuranceCertificate = true;
+            } else {
+              this.InsuranceCertificate = false;
+            }
+
+            if (formUpdateData.DAM == 1) {
+              this.DAM = true;
+            } else {
+              this.DAM = false;
+            }
+
+            if (formUpdateData.QualityReport == 1) {
+              this.QualityReport = true;
+            } else {
+              this.QualityReport = false;
+            }
+
+            if (formUpdateData.OtherDocumentosRequerimientos == "-") {
+              this.OtherCert = false;
+            } else {
+              this.OtherCert = true;
+              this.OtherCertText = formUpdateData.OtherDocumentosRequerimientos;
+            }
+
+            //parte final
+            if (formUpdateData.SoloRequerieDocScaneados == 1) {
+              this.isSendScanning = true;
+            } else if (formUpdateData.SoloRequerieDocScaneados == 0) {
+              this.isSendPhysicalDocument = true;
+              this.addSendPhysicalDocument();
+
+              if (formUpdateData.MismaConsignatario != null) {
+                this.isConsigneeSendDoc = true;
+                this.directionConsignee = formUpdateData.MismaConsignatario;
+              } else if (formUpdateData.MismaNotifier != null) {
+                this.isNotifierSendDoc = true;
+                this.selectedNotifierAddress = formUpdateData.MismaNotifier;
+              } else if (
+                formUpdateData.MismaConsignatario == null &&
+                formUpdateData.MismaNotifier == null
+              ) {
+                this.isOtherSendDoc = true;
+                this.addOtherSendDoc();
+
+                const currentSendDoc = this.otherSends[0];
+
+                currentSendDoc.nameCompany =
+                  formUpdateData.NombreEmpresaDocumentoOriginal;
+                currentSendDoc.addressCompany =
+                  formUpdateData.DireccionDocumentoOriginal;
+                currentSendDoc.telef = formUpdateData.TelefonoDocumentoOriginal;
+                currentSendDoc.contactPerson =
+                  formUpdateData.PersonaContactoDocumentoOriginal;
+                currentSendDoc.taxID = formUpdateData.TaxDocumentoOriginal;
+                currentSendDoc.emailAddress =
+                  formUpdateData.CorreoElectronicoDocumentoOriginal;
+                currentSendDoc.country = formUpdateData.PaisDocumentoOriginal;
+                currentSendDoc.city = formUpdateData.CiudadDocumentoOriginal;
+                currentSendDoc.state_city =
+                  formUpdateData.EstadoDocumentoOriginal;
+                currentSendDoc.postalCode =
+                  formUpdateData.CodigoPostalDocumentoOriginal;
+              }
+
+              const currentDocument = this.SendPhysicalDocuments[0];
+
+              if (formUpdateData.billDocumentos == 1) {
+                currentDocument.bill = true;
+              } else {
+                currentDocument.bill = false;
+              }
+
+              if (formUpdateData.certificadoOriginalDocumentos == 1) {
+                currentDocument.originalCertificate = true;
+              } else {
+                currentDocument.originalCertificate = false;
+              }
+
+              if (formUpdateData.packingListCertificadoDocumentos == 1) {
+                currentDocument.packingList = true;
+              } else {
+                currentDocument.packingList = false;
+              }
+
+              if (formUpdateData.certFitoDocumentos == 1) {
+                currentDocument.phytosanitaryCertificate = true;
+              } else {
+                currentDocument.phytosanitaryCertificate = false;
+              }
+            }
+
+            this.originalDocInfoAdd = formUpdateData.OriginalDocInfoAdd;
+            this.emailInfoAdd = formUpdateData.EmailInfoAdd;
+          } else {
+            console.error("No data found in response");
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching form update data:", error);
+      }
+    },
   },
 
-  mounted() {
+  async mounted() {
     this.activeTab = "tab1-1";
     this.getFormCountryES();
+    await this.getFormUpdate();
   },
 };
 </script>

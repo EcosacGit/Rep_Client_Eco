@@ -25,7 +25,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 const routes = [
   { path: "/", component: Form },
-  { path: "/update/:bspCardCode", component: FormUpdate },
+  { path: "/update/:idForm", component: FormUpdate },
   { path: "/thanks", component: RedirectPage },
 ];
 
@@ -121,6 +121,7 @@ const messages = {
         "If you require additional text to be added to the invoice, check here and describe it below:",
 
       originalBL: "ORIGINAL PRINTED AT DESTINATION",
+      originalImpresoOrigen: "ORIGINAL PRINTED IN ORIGIN",
       isAllowedPhyto: "Import license required (Colombia / Honduras / Vietnam)",
       phytoInfoAdd:
         "If you require additional text to be added to the Phytosanitary Certificate, check here and describe it below:",
@@ -235,7 +236,7 @@ const messages = {
       certAddress: "Dirección en el certificado de Origen",
       certInfo: "Información Adicional para el Certificado de Origen(opcional)",
       certQuality:
-        "Certificado de Calidad y Otros Documentos Adicionales  Requeridos",
+        "Certificado de Calidad y Otros Documentos Adicionales Requeridos",
 
       addressSend: "Dirección para el envio de los Documentos Originales",
       emailAddress:
@@ -259,6 +260,7 @@ const messages = {
 
       addInforBill: "¿Agregar información adicional?",
       originalBL: "ORIGINAL IMPRESO EN DESTINO",
+      originalImpresoOrigen: "ORIGINAL IMPRESO EN ORIGEN",
       isAllowedPhyto:
         "Requiere Permiso de importación (Colombia / Hondura / Vietnam)",
       phytoInfoAdd:
