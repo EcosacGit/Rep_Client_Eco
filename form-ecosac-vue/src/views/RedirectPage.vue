@@ -25,7 +25,7 @@
 export default {
   methods: {
     goHome() {
-      this.$router.push("/");
+      this.$router.push("/?");
     },
   },
 };

@@ -1,17 +1,17 @@
 USE [SINCRO_PCPNISIRA]
 GO
-/****** Object:  StoredProcedure [dbo].[Form_CreateForm]    Script Date: 20/05/2024 10:36:39 ******/
+/****** Object:  StoredProcedure [dbo].[Form_CreateForm]    Script Date: 20/08/2024 15:04:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 ALTER PROCEDURE [dbo].[Form_CreateForm]
-        @json VARCHAR(MAX)
+    @json VARCHAR(MAX)
 AS
 BEGIN
     SET XACT_ABORT ON
     SET NOCOUNT ON;
-	DECLARE
+    DECLARE
         -- Variables para los parámetros
         @idClient varchar(100),
         @nameClient VARCHAR(200),
@@ -38,12 +38,15 @@ BEGIN
         @CertificateInfoAdd VARCHAR(500),
         @isConsigneeSendDoc VARCHAR(200),
 		@isNotifierSendDoc varchar(200),
+        @EmailInfoAdd VARCHAR(500),
+        @OriginalDocInfoAdd VARCHAR(500),
+
         @IsSendScanning TINYINT,
 		@msg_error VARCHAR(200) = '',
         @FilasAfectadas INT;
 
 
-	 -- Parsear el JSON para extraer los valores
+    -- Parsear el JSON para extraer los valores
     SELECT
         @idClient = JSON_VALUE(@json, '$.idClient'),
         @nameClient = JSON_VALUE(@json, '$.nameClient'),
@@ -69,76 +72,89 @@ BEGIN
         @CertificateAddressOrigin = JSON_VALUE(@json, '$.CertificateAddressOrigin'),
         @CertificateInfoAdd = JSON_VALUE(@json, '$.CertificateInfoAdd'),
         @isConsigneeSendDoc = JSON_VALUE(@json, '$.isConsigneeSendDoc'),
-		@isNotifierSendDoc = JSON_VALUE(@json, '$.isNotifierSendDoc'),
-        @IsSendScanning = JSON_VALUE(@json, '$.IsSendScanning');
+        @isNotifierSendDoc = JSON_VALUE(@json, '$.isNotifierSendDoc'),
+        @IsSendScanning = JSON_VALUE(@json, '$.IsSendScanning'),
+        @EmailInfoAdd = JSON_VALUE(@json, '$.EmailInfoAdd'),
+        @OriginalDocInfoAdd = JSON_VALUE(@json, '$.OriginalDocInfoAdd');
 
-	DECLARE @LastConsigneeId INT;
+    DECLARE @LastConsigneeId INT;
     DECLARE @LastNotifierId INT;
-	DECLARE @LastDocReq INT;
+    DECLARE @LastDocReq INT;
 
-	DECLARE @LastSendPhysicalDocument INT;
-	DECLARE @LastSendOriginalDocument INT;
+    DECLARE @LastSendPhysicalDocument INT;
+    DECLARE @LastSendOriginalDocument INT;
 
 
 
 
     -- Obtener el último idDataConsignee e idDataNotifier insertado
-    SELECT TOP 1 @LastConsigneeId = idDataConsignee
+    SELECT TOP 1
+        @LastConsigneeId = idDataConsignee
     FROM FormDataConsignee
     ORDER BY idDataConsignee DESC;
 
-	select top 1 @LastDocReq = idDocReq
-	from FormRequiredDocuments
-	order by idDocReq DESC;
+    select top 1
+        @LastDocReq = idDocReq
+    from FormRequiredDocuments
+    order by idDocReq DESC;
 
 
 
-	IF @CountryName IS NULL
+    IF @CountryName IS NULL
 	BEGIN
-		SELECT TOP 1 @CountryName = idCountry
-		FROM FormCountry
-		ORDER BY idCountry DESC
-	END;
-
-	IF @DestinationPort IS NULL
-	BEGIN
-		SELECT TOP 1 @DestinationPort = idPort
-		FROM FormPort
-		ORDER BY idPort DESC
-	END;
-
-	IF @DestinationFinal IS NULL
-	BEGIN
-		SELECT TOP 1 @DestinationFinal = idPort
-		FROM FormPortDestination
-		ORDER BY idPort DESC
-	END;
-
-	IF @IsSendScanning = 0
-	BEGIN
-		SELECT TOP 1 @LastSendPhysicalDocument = idSendPhysicalDocument
-		FROM FormSendPhysicalDocuments
-		ORDER BY idSendPhysicalDocument DESC;
-	END;
-	ELSE
-    BEGIN
-        SET @LastSendPhysicalDocument = NULL; -- Si IsSendScanning es 1, idSendPhysicalDocument será NULL
+        SELECT TOP 1
+            @CountryName = idCountry
+        FROM FormCountry
+        ORDER BY idCountry DESC
     END;
 
-	IF @isNotifierSendDoc IS NOT NULL
+    IF @DestinationPort IS NULL
+	BEGIN
+        SELECT TOP 1
+            @DestinationPort = idPort
+        FROM FormPort
+        ORDER BY idPort DESC
+    END;
+
+    IF @DestinationFinal IS NULL
+	BEGIN
+        SELECT TOP 1
+            @DestinationFinal = idPort
+        FROM FormPortDestination
+        ORDER BY idPort DESC
+    END;
+
+    IF @IsSendScanning = 0
+	BEGIN
+        SELECT TOP 1
+            @LastSendPhysicalDocument = idSendPhysicalDocument
+        FROM FormSendPhysicalDocuments
+        ORDER BY idSendPhysicalDocument DESC;
+    END;
+	ELSE
+    BEGIN
+        SET @LastSendPhysicalDocument = NULL;
+    -- Si IsSendScanning es 1, idSendPhysicalDocument será NULL
+    END;
+
+    IF @isNotifierSendDoc IS NOT NULL
     BEGIN
         SET @isConsigneeSendDoc = NULL;
         SET @LastSendOriginalDocument = NULL;
     END;
 	ELSE IF @isConsigneeSendDoc IS NULL and @isNotifierSendDoc IS NULL
 	BEGIN
-		SELECT TOP 1 @LastSendOriginalDocument = idAddressOriginalsDoc
-		FROM FormAddressOriginalsDoc
-		ORDER BY idAddressOriginalsDoc DESC;
-	END;
+        SELECT TOP 1
+            @LastSendOriginalDocument = idAddressOriginalsDoc
+        FROM FormAddressOriginalsDoc
+        WHERE secCreate >= DATEADD(mi, -1, GETDATE())
+        ORDER BY idAddressOriginalsDoc DESC;
+
+    END;
 	ELSE
     BEGIN
-        SET @LastSendOriginalDocument = NULL; -- Si @isConsigneeSendDoc es 1, idSendPhysicalDocument será NULL
+        SET @LastSendOriginalDocument = NULL;
+    -- Si @isConsigneeSendDoc es 1, idSendPhysicalDocument será NULL
     END;
 
 
@@ -146,45 +162,47 @@ BEGIN
         -- Inserta en la tabla Form
         INSERT INTO Form
         (
-            idClient,
-            nameClient,
-            CountryName,
-            DestinationPort,
-            DestinationFinal,
-            BillName,
-            BillAddress,
-            BillInfoAdd,
-            FreightPayer,
-            PlacePayment,
-            emissionType,
-            FreightPayerInfoAdd,
-            idDataConsignee,
+        idClient,
+        nameClient,
+        CountryName,
+        DestinationPort,
+        DestinationFinal,
+        BillName,
+        BillAddress,
+        BillInfoAdd,
+        FreightPayer,
+        PlacePayment,
+        emissionType,
+        FreightPayerInfoAdd,
+        idDataConsignee,
 
-            BLDataInfoAdd,
-            IsAllowedPhyto,
-            PhytoName,
-            PhytoAddress,
-            PhytoCountryPort,
-            PhytoInfoAdd,
-            PhytoTransitCountry,
-            PhytoExportSENASA,
-            CertificateNameOrigin,
-            CertificateAddressOrigin,
-            CertificateInfoAdd,
-            idDocReq,
-            isConsigneeSendDoc,
-			isNotifierSendDoc,
-            idAddressOriginalsDoc,
+        BLDataInfoAdd,
+        IsAllowedPhyto,
+        PhytoName,
+        PhytoAddress,
+        PhytoCountryPort,
+        PhytoInfoAdd,
+        PhytoTransitCountry,
+        PhytoExportSENASA,
+        CertificateNameOrigin,
+        CertificateAddressOrigin,
+        CertificateInfoAdd,
+        idDocReq,
+        isConsigneeSendDoc,
+        isNotifierSendDoc,
+        idAddressOriginalsDoc,
 
-            IsSendScanning,
-            idSendPhysicalDocument,
-            estado,
-            secCreate,
-            secUpdate
+        IsSendScanning,
+        idSendPhysicalDocument,
+        EmailInfoAdd,
+        OriginalDocInfoAdd,
+        estado,
+        secCreate,
+        secUpdate
         )
-        VALUES
+    VALUES
         (
-             @idClient,
+            @idClient,
             @nameClient,
             @CountryName,
             @DestinationPort,
@@ -211,12 +229,14 @@ BEGIN
             @CertificateInfoAdd,
             @LastDocReq,
             @isConsigneeSendDoc,
-			@isNotifierSendDoc,
+            @isNotifierSendDoc,
 
             @LastSendOriginalDocument,
 
             @IsSendScanning ,
             @LastSendPhysicalDocument,
+            @EmailInfoAdd,
+            @OriginalDocInfoAdd,
             1,
             GETDATE(),
             NULL
@@ -227,21 +247,19 @@ BEGIN
 
         IF @FilasAfectadas > 0
         BEGIN
-            SET @msg_error = 'Registro exitoso';
-        END
+        SET @msg_error = 'Registro exitoso';
+    END
         ELSE
         BEGIN
-            SET @msg_error = 'No se realizó el registro';
-            THROW 50001, @msg_error, 1;
-        END
+        SET @msg_error = 'No se realizó el registro';
+        THROW 50001, @msg_error, 1;
+    END
     END TRY
     BEGIN CATCH
         SELECT ERROR_MESSAGE() AS ErrorMessage;
     END CATCH
-	SELECT @msg_error AS mensaje;
+    SELECT @msg_error AS mensaje;
 END
-
-
 
 
 

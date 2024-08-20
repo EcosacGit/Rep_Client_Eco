@@ -2420,6 +2420,7 @@ export default {
 
     createForm(filePath) {
       let billName;
+      
       console.log("NAME BILL: ", this.billNameSelectedOption);
       if (
         this.billNameSelectedOption === "Misma del Consignatario" ||
@@ -2431,7 +2432,11 @@ export default {
         this.billNameSelectedOption === "Other (Describe)"
       ) {
         billName = this.billNameCustomOption;
+      } else {
+        billName = this.billNameSelectedOption
       }
+
+      
 
       let billDirection;
       if (
@@ -2444,6 +2449,8 @@ export default {
         this.billDirectionSelectedOption === "Other (Describe)"
       ) {
         billDirection = this.billDirectionCustomOption;
+      } else {
+        billDirection = this.billDirectionSelectedOption
       }
 
       let billInfoAdd;
@@ -2464,6 +2471,8 @@ export default {
         this.phytoNameSelectedOption === "Other (Describe)"
       ) {
         phytoName = this.phytoNameCustomOption;
+      } else {
+        phytoName = this.phytoNameSelectedOption
       }
 
       let phytoAddress;
@@ -2477,6 +2486,8 @@ export default {
         this.phytoAddressSelectedOption === "Other (Describe)"
       ) {
         phytoAddress = this.phytoAddressCustomOption;
+      } else {
+        phytoAddress = this.phytoAddressSelectedOption
       }
 
       //
@@ -2508,6 +2519,8 @@ export default {
         this.certificateNameOriginSelectedOption === "Other (Describe)"
       ) {
         certificateNameOrigin = this.certificateNameOriginCustomOption;
+      } else {
+        certificateNameOrigin = this.certificateNameOriginSelectedOption
       }
 
       let certificateAddressOrigin;
@@ -2522,6 +2535,8 @@ export default {
         this.certificateAddressOriginSelectedOption === "Other (Describe)"
       ) {
         certificateAddressOrigin = this.certificateAddressOriginCustomOption;
+      } else {
+        certificateAddressOrigin = this.certificateAddressOriginSelectedOption
       }
 
       let certificateInfoAdd;
@@ -2938,14 +2953,17 @@ export default {
 
             if (formUpdateData.TipoEmisionBL == "SWB") {
               this.swbBL = true;
+              this.emissionType = "SWB";
             } else if (
               formUpdateData.TipoEmisionBL == "ORIGINAL IMPRESO EN ORIGEN"
             ) {
               this.telexBL = true;
+              this.emissionType = "ORIGINAL IMPRESO EN ORIGEN";
             } else if (
               formUpdateData.TipoEmisionBL == "ORIGINAL IMPRESO EN DESTINO"
             ) {
               this.originalBL = true;
+              this.emissionType = "ORIGINAL IMPRESO EN DESTINO";
             } else {
               this.otherBL = true;
               this.txtDataBL = formUpdateData.TipoEmisionBL;
@@ -2955,26 +2973,25 @@ export default {
 
             //notifier
 
+            if (formUpdateData.NombreNotificante != null) {
               this.addNotifier();
+            }
 
-              const currentNotifier = this.notifiers[i];
+            const currentNotifier = this.notifiers[i];
 
-              currentNotifier.nameNotifier = formUpdateData.NombreNotificante;
-              currentNotifier.directionNotifier =
-                formUpdateData.DireccionNotificante;
-              currentNotifier.telf1Notifier =
-                formUpdateData.telefono1Notificante;
-              currentNotifier.telf2Notifier =
-                formUpdateData.telefono2Notificante;
-              currentNotifier.EORINotifier = formUpdateData.EoriNotificante;
-              currentNotifier.faxNotifier = formUpdateData.FaxNotificante;
-              currentNotifier.contactPersonNotifier =
-                formUpdateData.PersonaContactoNotificante;
-              currentNotifier.taxIDNotifier =
-                formUpdateData.IdentificacionFiscalNotificante;
-              currentNotifier.emailNotifier = formUpdateData.EmailNotificante;
-              currentNotifier.websiteNotifier =
-                formUpdateData.websiteNotificante;
+            currentNotifier.nameNotifier = formUpdateData.NombreNotificante;
+            currentNotifier.directionNotifier =
+              formUpdateData.DireccionNotificante;
+            currentNotifier.telf1Notifier = formUpdateData.telefono1Notificante;
+            currentNotifier.telf2Notifier = formUpdateData.telefono2Notificante;
+            currentNotifier.EORINotifier = formUpdateData.EoriNotificante;
+            currentNotifier.faxNotifier = formUpdateData.FaxNotificante;
+            currentNotifier.contactPersonNotifier =
+              formUpdateData.PersonaContactoNotificante;
+            currentNotifier.taxIDNotifier =
+              formUpdateData.IdentificacionFiscalNotificante;
+            currentNotifier.emailNotifier = formUpdateData.EmailNotificante;
+            currentNotifier.websiteNotifier = formUpdateData.websiteNotificante;
 
             //consignatario
             this.nameConsignee = formUpdateData.NombreConsignatario;
@@ -3021,13 +3038,10 @@ export default {
             this.BLInfoAdd = formUpdateData.InfoAdicionalBL;
 
             this.phytoNameSelectedOption = formUpdateData.NombreFitosanitario;
-            this.phytoAddressSelectedOption =
-              formUpdateData.DireccionFitosanitario;
+            this.phytoAddressSelectedOption = formUpdateData.DireccionFitosanitario;
 
-            this.certificateNameOriginSelectedOption =
-              formUpdateData.NombreCertificadoOrigen;
-            this.certificateAddressOriginSelectedOption =
-              formUpdateData.DireccionCertificadoOrigen;
+            this.certificateNameOriginSelectedOption = formUpdateData.NombreCertificadoOrigen;
+            this.certificateAddressOriginSelectedOption = formUpdateData.DireccionCertificadoOrigen;
 
             this.phytoCountryPort =
               formUpdateData.PuertoDestinoPaisFitosanitario;
