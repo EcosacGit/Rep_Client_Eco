@@ -2916,6 +2916,10 @@ export default {
         console.log("response " + JSON.stringify(response.data));
         console.log("response lenght " + cantRegistros);
 
+
+        let physicalDocumentAdded = false;
+        let otherSendDocAdded = false;
+
         for (let i = 0; i <= cantRegistros; i++) {
           if (data && data.length > 0) {
             const formUpdateData = data[i];
@@ -3127,7 +3131,11 @@ export default {
               this.isSendScanning = true;
             } else if (formUpdateData.SoloRequerieDocScaneados == 0) {
               this.isSendPhysicalDocument = true;
-              this.addSendPhysicalDocument();
+              if (!physicalDocumentAdded) {
+                this.isSendPhysicalDocument = true;
+                this.addSendPhysicalDocument();
+                physicalDocumentAdded = true; // Marca como llamado
+              }
 
               if (formUpdateData.MismaConsignatario != null) {
                 this.isConsigneeSendDoc = true;
@@ -3139,8 +3147,11 @@ export default {
                 formUpdateData.MismaConsignatario == null &&
                 formUpdateData.MismaNotifier == null
               ) {
+                if (!otherSendDocAdded) { 
                 this.isOtherSendDoc = true;
                 this.addOtherSendDoc();
+
+                otherSendDocAdded = true; // Marca como llamado
 
                 const currentSendDoc = this.otherSends[0];
 
@@ -3160,6 +3171,8 @@ export default {
                   formUpdateData.EstadoDocumentoOriginal;
                 currentSendDoc.postalCode =
                   formUpdateData.CodigoPostalDocumentoOriginal;
+                }
+                
               }
 
               const currentDocument = this.SendPhysicalDocuments[0];
